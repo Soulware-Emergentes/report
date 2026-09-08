@@ -1,0 +1,300 @@
+- title: "Carátula"
+  skip_title: true
+
+- title: "Registro de Versiones del Informe"
+  alias: "versiones"
+
+- title: "Project Report Collaboration Insights"
+  alias: "insights"
+
+- title: "Contenido"
+  alias: "INDEX"
+
+- title: "Student Outcome"
+  alias: "outcome"
+
+- title: "Capítulo I: Introducción"
+  alias: "intro"
+  children:
+    - title: "Startup Profile"
+      alias: "startup"
+      children:
+        - title: "Descripción de la Startup"
+          alias: "descripcion"
+        - title: "Perfiles de integrantes del equipo"
+          alias: "perfiles"
+    - title: "Solution Profile"
+      alias: "solution"
+      children:
+        - title: "Antecedentes y problemática"
+          alias: "antecedentes"
+        - title: "Lean UX Process"
+          alias: "lean-ux"
+          children:
+            - title: "Lean UX Problem Statements"
+              alias: "problems"
+            - title: "Lean UX Assumptions"
+              alias: "assumptions"
+            - title: "Lean UX Hypothesis Statements"
+              alias: "hypothesis"
+            - title: "Lean UX Canvas"
+              alias: "canvas"
+    - title: "Segmentos objetivo"
+      alias: "segmentos"
+
+- title: "Capítulo II: Requirements Elicitation & Analysis"
+  alias: "elicitation"
+  children:
+    - title: "Competidores"
+      children:
+        - title: "Análisis competitivo"
+          alias: "analisis"
+        - title: "Estrategias y tácticas frente a competidores"
+          alias: "estrategias"
+    - title: "Entrevistas"
+      children:
+        - title: "Diseño de entrevistas"
+          custom_id: "needfinding-diseno"
+          alias: "diseno"
+        - title: "Registro de entrevistas"
+          custom_id: "needfinding-registro"
+          alias: "registro"
+        - title: "Análisis de entrevistas"
+          alias: "analisis"
+    - title: "Needfinding"
+      children:
+        - title: "User Personas"
+          alias: "personas"
+        - title: "User Task Matrix"
+          alias: "task-matrix"
+        - title: "Empathy Mapping"
+          alias: "empathy"
+        - title: "As-is Scenario Mapping"
+          alias: "as-is"
+    - title: "Ubiquitous Language"
+      alias: "glossary"
+
+- title: "Capítulo III: Requirements Specification"
+  alias: "specification"
+  children:
+    - title: "To-Be Scenario Mapping"
+      alias: "to-be"
+    - title: "User Stories"
+    - title: "Impact Mapping"
+    - title: "Product Backlog"
+      alias: "backlog"
+
+- title: "Capítulo IV: Strategic-Level Software Design"
+  alias: "strategic-design"
+  children:
+    - title: "Strategic-Level Attribute-Driven Design"
+      alias: "add"
+      children:
+        - title: "Design Purpose"
+          alias: "purpose"
+        - title: "Attribute-Driven Design Inputs"
+          alias: "inputs"
+          children:
+            - title: "Primary Functionality (Primary User Stories)"
+              alias: "functionality"
+            - title: "Quality attribute Scenarios"
+              alias: "scenarios"
+            - title: "Constraints"
+        - title: "Architectural Drivers Backlog"
+          alias: "drivers"
+        - title: "Architectural Design Decisions"
+          alias: "decisions"
+        - title: "Quality Attribute Scenario Refinements"
+          alias: "refinements"
+    - title: "Strategic-Level Domain-Driven Design"
+      alias: "ddd"
+      children:
+        - title: "EventStorming"
+        - title: "Candidate Context Discovery"
+          alias: "discovery"
+        - title: "Domain Message Flows Modeling"
+          alias: "message-flows"
+        - title: "Bounded Context Canvases"
+          alias: "bc-canvases"
+        - title: "Context Mapping"
+          alias: "mapping"
+    - title: "Software Architecture"
+      alias: "architecture"
+      children:
+        - title: "Software Architecture System Landscape Diagram"
+          alias: "landscape"
+        - title: "Software Architecture Context Level Diagrams"
+          alias: "context-level"
+        - title: "Software Architecture Container Level Diagrams"
+          alias: "container-level"
+        - title: "Software Architecture Deployment Diagrams"
+          alias: "deployment"
+
+# Capítulos V-VII are out of scope for the TB1 deliverable (Semana 4): the
+# statement's hito breakdown (page 31, "Aspectos a incluir") only requires
+# Carátula through Capítulo IV plus an "avance" of Conclusiones, Bibliografía
+# and Anexos for this entrega. Uncomment each chapter as its hito comes up
+# (Capítulos V-VI at TP1, Semana 7; Capítulo VII from TB2, Semana 12 onward).
+#
+# Bounded contexts aren't known yet (they come out of Chapter IV's Domain-
+# Driven Design work), so even once Capítulo V is back in scope, its content
+# stays commented out rather than instantiated with a placeholder. When a
+# context is identified, copy this block per context: the "alias" IS the
+# context's short name (that's what names the folder, so the child files
+# below don't need to repeat "Bounded Context" in either their title or
+# their own alias), and the "<bc>" prefix in each custom_id just keeps
+# anchors unique once multiple contexts coexist.
+# - title: "Capítulo V: Tactical-Level Software Design"
+  # alias: "tactical-design"
+  # children:
+#    - title: "Bounded Context: <bc>"
+#      alias: "<bc>"
+#      children:
+#        - title: "Domain Layer"
+#          custom_id: "<bc>-domain-layer"
+#        - title: "Interface Layer"
+#          custom_id: "<bc>-interface-layer"
+#        - title: "Application Layer"
+#          custom_id: "<bc>-application-layer"
+#        - title: "Infrastructure Layer"
+#          custom_id: "<bc>-infrastructure-layer"
+#        - title: "Bounded Context Software Architecture Component Level Diagrams"
+#          custom_id: "<bc>-component-level"
+#          alias: "component-level"
+#        - title: "Bounded Context Software Architecture Code Level Diagrams"
+#          custom_id: "<bc>-code-level"
+#          alias: "code-level"
+#          children:
+#            - title: "Bounded Context Domain Layer Class Diagrams"
+#              custom_id: "<bc>-class-diagram"
+#              alias: "class-diagram"
+#            - title: "Bounded Context Database Design Diagram"
+#              custom_id: "<bc>-db-diagram"
+#              alias: "db-diagram"
+
+# - title: "Capítulo VI: Solution UX Design"
+  # alias: "ux-design"
+  # children:
+    # - title: "Style Guidelines"
+      # alias: "style"
+      # children:
+        # - title: "General Style Guidelines"
+          # alias: "general"
+        # - title: "Web, Mobile & Devices Style Guidelines"
+          # alias: "web-mobile"
+    # - title: "Information Architecture"
+      # alias: "ia"
+      # children:
+        # - title: "Organization Systems"
+          # alias: "organization"
+        # - title: "Labeling Systems"
+          # alias: "labeling"
+        # - title: "Searching Systems"
+          # alias: "searching"
+        # - title: "SEO Tags and Meta Tags"
+          # alias: "seo"
+        # - title: "Navigation Systems"
+          # alias: "navigation"
+    # - title: "Landing Page UI Design"
+      # alias: "landing-page"
+      # children:
+        # - title: "Landing Page Wireframe"
+          # alias: "wireframe"
+        # - title: "Landing Page Mock-up"
+          # alias: "mockup"
+    # - title: "Applications UX/UI Design"
+      # alias: "apps-ui"
+      # children:
+        # - title: "Applications Wireframes"
+          # alias: "wireframes"
+        # - title: "Applications Wireflow Diagrams"
+          # alias: "wireflows"
+        # - title: "Applications Mock-ups"
+          # alias: "mockups"
+        # - title: "Applications User Flow Diagrams"
+          # alias: "user-flows"
+    # - title: "Applications Prototyping"
+      # alias: "prototyping"
+
+# - title: "Capítulo VII: Product Implementation, Validation & Deployment"
+  # alias: "product-impl"
+  # children:
+    # - title: "Software Configuration Management"
+      # alias: "configuration"
+      # children:
+        # - title: "Software Development Environment Configuration"
+          # alias: "dev environment"
+        # - title: "Source Code Management"
+          # alias: "code management"
+        # - title: "Source Code Style Guide & Conventions"
+          # alias: "style-guide"
+        # - title: "Software Deployment Configuration"
+          # alias: "deploy-config"
+    # - title: "Solution Implementation"
+      # alias: "implementation"
+      # children:
+        # One section per Sprint (7.2.X). Duplicate this block per sprint,
+        # bumping the title numbers and the "sprint-1-*" custom_id prefix.
+        # - title: "Sprint 1"
+          # children:
+            # - title: "Sprint Planning 1"
+              # custom_id: "sprint-1-planning"
+              # alias: "planning"
+            # - title: "Sprint Backlog 1"
+              # custom_id: "sprint-1-backlog"
+              # alias: "backlog"
+            # - title: "Development Evidence for Sprint Review"
+              # custom_id: "sprint-1-dev-evidence"
+              # alias: "dev-evidence"
+            # - title: "Testing Suite Evidence for Sprint Review"
+              # custom_id: "sprint-1-test-evidence"
+              # alias: "test-evidence"
+            # - title: "Execution Evidence for Sprint Review"
+              # custom_id: "sprint-1-exec-evidence"
+              # alias: "exec-evidence"
+            # - title: "Services Documentation Evidence for Sprint Review"
+              # custom_id: "sprint-1-docs-evidence"
+              # alias: "docs-evidence"
+            # - title: "Software Deployment Evidence for Sprint Review"
+              # custom_id: "sprint-1-deploy-evidence"
+              # alias: "deploy-evidence"
+            # - title: "Team Collaboration Insights during Sprint"
+              # custom_id: "sprint-1-collaboration"
+              # alias: "collaboration"
+    # - title: "Validation Interviews"
+      # alias: "validation"
+      # children:
+        # - title: "Diseño de Entrevistas"
+          # custom_id: "validation-diseno"
+          # alias: "diseno"
+        # - title: "Registro de Entrevistas"
+          # custom_id: "validation-registro"
+          # alias: "registro"
+        # - title: "Evaluaciones según heurísticas"
+          # alias: "heuristicas"
+    # - title: "Video About-the-Product"
+      # alias: "about-product"
+
+- title: "Conclusiones"
+  children:
+    - title: "Conclusiones y recomendaciones"
+      alias: "conclusiones"
+    - title: "Video About-The-Team"
+      alias: "about-the-team"
+
+- title: "Bibliografía"
+
+# Beyond "Videos de Exposiciones" below (explicitly required by page 3:
+# "el enlace privado del video debe incluirse en el Document Report, dentro
+# de un anexo titulado (Videos de Exposiciones)"), further annex content is
+# open-ended (statement page 8): "tablas, documentos, gráficos, u otros
+# elementos que por su extensión o grado de importancia ameriten aparecer en
+# esta sección", each starting on a new page and titled with a letter
+# ("Ejemplo: Anexo A, Anexo B, etc."). Add a child per extra annex as the
+# team identifies material for it, e.g.:
+#    - title: "Anexo B: <what it is>"
+#      alias: "Anexo B"
+- title: "Anexos"
+  children:
+    - title: "Videos de Exposiciones"
+      alias: "Anexo A"
