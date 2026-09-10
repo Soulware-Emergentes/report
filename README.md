@@ -1,6 +1,6 @@
 <div style="font-family: Arial, sans-serif; padding: 40px; width: 600px; margin: auto; text-align: center;">
     <div style="margin-bottom: 20px;">
-        <img src="../img/cover/upc_logo.png" alt="UPC Logo" style="width: 80px;">
+        <img src="assets/caratula/upc_logo.png" alt="UPC Logo" style="width: 80px;">
     </div>
     <p style="margin: 5px;">Universidad Peruana de Ciencias Aplicadas</p>
     <p style="margin: 5px;">Carrera de Ingeniería de Software</p>
