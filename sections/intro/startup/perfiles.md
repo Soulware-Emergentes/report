@@ -6,8 +6,8 @@
         </colgroup>
         <thead>
             <tr>
-                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; background-color: #f2f2f2;">Foto</th>
-                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; background-color: #f2f2f2;">Perfil</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Foto</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Perfil</th>
             </tr>
         </thead>
         <tbody>
