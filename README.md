@@ -239,9 +239,19 @@ Una entidad pública de nuestro país gestiona un programa de apoyo agrícola me
 
 La OCDE señala que, aunque la mayoría de sus países miembro ya cuentan con algún sistema de interoperabilidad de datos para el sector público, en promedio solo el 56% de las instituciones públicas que disponen de dicho sistema lo utilizan efectivamente para compartir información entre sí, y que la infraestructura digital de gobierno suele quedar subutilizada porque las inversiones no llegan a funcionar como un sistema integrado (OECD, 2026). En la misma línea, la falta de interoperabilidad entre plataformas de gobierno se traduce en procesos manuales y dependientes de papel que reducen la productividad del personal, generan brechas en los reportes y multiplican el trabajo de conciliar registros entre áreas (The Canton Group, 2025).
 
-Ese patrón se repite en el programa que da origen a este proyecto, en tres frentes distintos. Primero, cuando un productor o una entidad externa presenta un documento en formato PDF, un funcionario administrativo debe leerlo y transcribir manualmente su contenido a la plataforma interna, en lugar de que el dato ingrese de forma automática. Segundo, cuando un agente de campo registra la ubicación de las parcelas de los productores con un dispositivo GNSS para construir la geomalla del programa, esa información de georreferenciación no siempre queda enlazada de forma directa con el registro administrativo del productor y su parcela. Tercero, los productores beneficiarios envían periódicamente un reporte en PDF sobre la producción obtenida en su parcela registrada, reporte que hoy también depende de una revisión y un traslado manual de datos para quedar asociado al historial de esa parcela.
+En las administraciones públicas locales del Perú persisten prácticas de gestión documental basadas en papel y registros fragmentados pese a los esfuerzos de digitalización, lo que mantiene a la gestión documental como la función de gobernanza que respalda la trazabilidad y la confiabilidad de los actos administrativos (Aguado-Riveros et al., 2026). En esta institución, esa misma lógica condiciona los flujos operativos y administrativos. Los archivos físicos en la práctica funcionan como fuente de verdad, pero los sistemas digitalizados operan con copias digitalizadas. A diferencia de los archivos físicos, las alteraciones o manipulaciones sobre una copia digitalizada no dejan un rastro visible ni verificable, por lo que el personal no puede confiar en que dicha copia siga siendo idéntica al documento físico que le dio origen.
 
-Enunciado del problema: la ausencia de un mecanismo que integre automáticamente la información proveniente de documentos PDF y de los registros de georreferenciación de campo con la plataforma administrativa del programa obliga al personal a transcribir y conciliar datos de forma manual, lo que ralentiza el proceso, consume tiempo del personal y del productor, e introduce riesgo de error humano en el registro de la información.
+El proyecto se propone mejorar un flujo operacional concreto, correspondiente a un servicio de apoyo brindado a los ciudadanos para la producción de productos alternativos. El flujo actualmente se puede describir de la siguiente manera:
+1. Una persona natural accede como beneficiaria de la organización tras un proceso de evaluación a cargo de un área funcional específica con su propio sistema.
+2. Esta persona decide registrar una o varias parcelas en las que realizará actividades agrícolas para la producción de productos alternativos.
+3. Un agente de campo es enviado a constatar la posición geográfica exacta de la parcela que se pretende registrar a su nombre.
+4. Posteriormente, este mismo agente tiene que registrar las coordenadas y registrarlas a nombre del beneficiario mediante un sistema de geolocalización.
+5. De forma periódica, agentes de campo realizarán evaluaciones presencialmente al beneficiario para constatar las actividades realizadas y la producción obtenida, elaborando un reporte en físico con un formato establecido.
+6. Este documento se hace llegar a la sede central de la institución, en donde es digitalizado y posteriormente almacenado.
+7. Un administrativo adquiere acceso a la copia digitalizada y constata los datos registrados sobre la evaluación en dicho sistema.
+8. Tras haber constatado, los datos son subidos manualmente a otro sistema que agrega los datos para visualizar el avance del Plan Estratégico Institucional (PEI) y del Plan Operativo Institucional (POI).
+
+Enunciado del problema: la ausencia de un mecanismo que integre automáticamente la georreferenciación capturada en campo, los reportes de evaluación de producción una vez digitalizados y el traslado de esa información a los sistemas que consolidan el avance del PEI y del POI, sumada a la falta de una garantía sobre la integridad de los documentos digitalizados frente a su versión física original, obliga al personal a verificar y trasladar datos de forma manual, lo que ralentiza el proceso, consume tiempo del personal y del beneficiario, e introduce riesgo de error humano en el registro de la información.
 
 <div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
     <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; table-layout: fixed;">
@@ -258,31 +268,31 @@ Enunciado del problema: la ausencia de un mecanismo que integre automáticamente
         <tbody>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>Who</strong><br>¿Quién?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Las personas que proporcionan el documento PDF con su información, y los funcionarios administrativos encargados de leer dicho documento y registrar sus datos en la plataforma destino.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Los agentes de campo que capturan la georreferenciación y las evaluaciones de producción, los beneficiarios evaluados, y el asistente de gerencia general que digitaliza, verifica y traslada esa información entre sistemas.</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>What</strong><br>¿Qué?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">La lentitud de los procesos administrativos que se origina cuando un funcionario debe leer manualmente un documento PDF para trasladar su información a otra plataforma.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">La dependencia de procesos manuales para trasladar y conciliar la georreferenciación, los reportes de evaluación de producción y los documentos digitalizados entre los sistemas que la organización utiliza.</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>Where</strong><br>¿Dónde?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">En organizaciones cuyos procesos administrativos reciben documentación en formato PDF como insumo de entrada para el registro de información en un sistema propio.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">En el flujo operativo del programa de apoyo agrícola, desde el registro de la parcela y la evaluación en campo hasta la consolidación de esa información en los sistemas que reportan el avance del PEI y del POI.</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>When</strong><br>¿Cuándo?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Cada vez que se recibe un documento PDF que debe registrarse en la plataforma destino, lo que ocurre de forma recurrente dentro del flujo diario de trabajo administrativo.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">En cada ciclo de registro de parcelas y de evaluación periódica en campo, lo que ocurre de forma recurrente durante la ejecución del programa.</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>Why</strong><br>¿Por qué?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Porque no existe un mecanismo que extraiga automáticamente los datos del documento PDF hacia la plataforma destino, por lo que el funcionario debe leer el documento e identificar la información relevante antes de registrarla.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Porque no existe un mecanismo que integre automáticamente la georreferenciación capturada en campo con el registro del beneficiario, ni que traslade los reportes de evaluación digitalizados hacia los sistemas de consolidación, ni que garantice que el documento digitalizado sigue siendo idéntico al documento físico original.</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>How</strong><br>¿Cómo?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">El funcionario abre el documento PDF, ubica los campos de información requeridos y los transcribe manualmente, uno por uno, en la plataforma destino.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">El agente de campo registra las coordenadas de la parcela en un sistema de geolocalización aparte y elabora el reporte de evaluación en físico; ese reporte se digitaliza en la sede central, y el asistente de gerencia general verifica los datos y los traslada manualmente al sistema que agrega la información del PEI y del POI.</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top;"><strong>How Much</strong><br>¿Cuánto?</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">El impacto se refleja en el tiempo que cada funcionario dedica a la lectura y transcripción manual de cada documento, tiempo que se multiplica por el volumen de documentos procesados y que además introduce riesgo de error humano en el registro de los datos.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">El impacto se refleja en el tiempo que el personal dedica a verificar y trasladar manualmente los datos entre sistemas, en el riesgo de error humano en cada traslado, y en la falta de garantía sobre la integridad de los documentos digitalizados frente a su versión física.</td>
             </tr>
         </tbody>
     </table>
@@ -297,7 +307,7 @@ Enunciado del problema: la ausencia de un mecanismo que integre automáticamente
 
 El estado actual de la gestión administrativa de programas públicos de apoyo agrícola se ha enfocado principalmente en el funcionamiento individual de flujos de usuario, sin generar una integración completa.
 
-Lo que las plataformas administrativas existentes no resuelven es la integración automática entre estos tres puntos de captura de información, lo que obliga al personal a transcribir y conciliar datos manualmente entre sistemas aislados.
+Lo que las plataformas administrativas existentes no resuelven es la integración automática entre estos puntos de captura de información y los sistemas externos que los reciben, ni la posibilidad de verificar que un registro digitalizado sigue siendo idéntico al dato entregado originalmente, lo que obliga al personal a transcribir y conciliar datos manualmente entre sistemas aislados y a operar sin certeza sobre la integridad de esos registros.
 
 
 <div style="page-break-after: always;"></div>
@@ -305,40 +315,41 @@ Lo que las plataformas administrativas existentes no resuelven es la integració
 #### Lean UX Assumptions
 
 Business outcomes:
-- Reducción del personal administrativo en un 20%.
+- Reducción del asistente de gerencia general en un 20%.
 - Reducción de inconsistencias de datos en un 90%.
 - Reducción de accesos y modificaciones no autorizadas a los datos en un 95%.
-- Reducción de pérdida de datos en un 95%.
 
 Users:
-- Personal administrativo.
-- Productor beneficiario.
-- Agente de campo georreferenciador.
+- Asistente de gerencia general.
+- Agente de campo.
 
 Solutions / features:
+- Integración con el sistema que registra a los beneficiarios.
+- Integración directa de mediciones de terreno al sistema.
 - Extracción de datos automática con IA.
-- Subida y almacenamiento  de archivos en la nube.
-- Integración directa de mediciones al sistema.
+- Integración con plataforma analítica de Plan Operativo Institucional (POI).
 - Integridad de datos blockchain.
 
 User outcomes:
+- Trabajar con datos actualizados que provee el área que registra a los beneficiarios.
+- Reportar la georreferenciación directamente durante la visita a campo.
 - Reducir el tiempo de registro por documento.
-- Confiar de forma inequívoca que su reporte fue recibido.
-- Reportar los resultados directamente al tomar las mediciones.
-- Confíar plenamente en que el documento es el mismo proveído por el beneficiario.
-
+- Dejar de trasladar manualmente los resultados de evaluación de producción al sistema que consolida el avance del POI.
+- Confiar en que el documento digitalizado sigue siendo idéntico al que proveyó el beneficiario.
 
 <div style="page-break-after: always;"></div>
 
 #### Lean UX Hypothesis Statements
 
-- Reducción del personal administrativo en un 20% si el personal administrativo logra reducir el tiempo de registro por documento mediante la extracción de datos automática con IA.
+- Reducción de inconsistencias de datos en un 90% si el asistente de gerencia general logra trabajar con datos actualizados que provee el área que registra a los beneficiarios mediante la integración con el sistema que registra a los productores.
 
-- Reducción de pérdida de datos en un 95% si el productor beneficiario logra confiar de forma inequívoca que su reporte fue recibido mediante la subida y almacenamiento de archivos en la nube.
+- Reducción de inconsistencias de datos en un 90% si el agente de campo logra reportar la georreferenciación directamente durante la visita a campo mediante la integración directa de mediciones de terreno al sistema.
 
-- Reducción de inconsistencias de datos en un 90% si el agente de campo georreferenciador logra reportar los resultados directamente al tomar las mediciones mediante la integración directa de mediciones al sistema.
+- Reducción del asistente de gerencia general en un 20% si el asistente de gerencia general logra reducir el tiempo de registro por documento mediante la extracción de datos automática con IA.
 
-- Reducción de accesos y modificaciones no autorizadas a los datos en un 95% si el personal administrativo logra confiar plenamente en que el documento es el mismo proveído por el beneficiario mediante la integridad de datos blockchain.
+- Reducción de inconsistencias de datos en un 90% si el asistente de gerencia general logra dejar de trasladar manualmente los resultados de evaluación de producción al sistema que consolida el avance del POI mediante la integración con plataforma analítica de Plan Operativo Institucional (POI).
+
+- Reducción de accesos y modificaciones no autorizadas a los datos en un 95% si el asistente de gerencia general logra confiar en que el documento digitalizado sigue siendo idéntico al que proveyó el beneficiario mediante la integridad de datos blockchain.
 
 
 <div style="page-break-after: always;"></div>
@@ -591,6 +602,8 @@ Recibe insumos del programa y reporta periódicamente en PDF la producción obte
 <div style="page-break-after: always;"></div>
 
 # Bibliografía
+
+Aguado-Riveros, U. I., Espinoza-Quispe, L. E., Santillán-Enciso, C. L., Silva-Infantes, M., Barrionuevo-Inca-Roca, Y. A., Astuñaupa-Flores, S. N., Poma-Lagos, L. A., Navarro-Véliz, J. A., & González-Prida, V. (2026). *Reducing administrative burden through simplification and document management in local governments: Evidence from a district-level public organization*. Societies, 16(3), 91. https://doi.org/10.3390/soc16030091
 
 Burch, T. (2016, January 6). *Data is the crop: GNSS used by surveyors and farmers*. GPS World. https://www.gpsworld.com/data-is-the-crop-gnss-used-by-surveyors-and-farmers/
 
