@@ -1,3 +1,5 @@
+Aguado-Riveros, U. I., Espinoza-Quispe, L. E., Santillán-Enciso, C. L., Silva-Infantes, M., Barrionuevo-Inca-Roca, Y. A., Astuñaupa-Flores, S. N., Poma-Lagos, L. A., Navarro-Véliz, J. A., & González-Prida, V. (2026). *Reducing administrative burden through simplification and document management in local governments: Evidence from a district-level public organization*. Societies, 16(3), 91. https://doi.org/10.3390/soc16030091
+
 Burch, T. (2016, January 6). *Data is the crop: GNSS used by surveyors and farmers*. GPS World. https://www.gpsworld.com/data-is-the-crop-gnss-used-by-surveyors-and-farmers/
 
 International Food Policy Research Institute. (2025, December 2). *Beyond the algorithm: The need for farmer participation and data justice in digital agricultural technology*. IFPRI Blog. https://www.ifpri.org/blog/beyond-the-algorithm-the-need-for-farmer-participation-and-data-justice-in-digital-agricultural-technology/

@@ -1,3 +1,3 @@
 El estado actual de la gestión administrativa de programas públicos de apoyo agrícola se ha enfocado principalmente en el funcionamiento individual de flujos de usuario, sin generar una integración completa.
 
-Lo que las plataformas administrativas existentes no resuelven es la integración automática entre estos tres puntos de captura de información, lo que obliga al personal a transcribir y conciliar datos manualmente entre sistemas aislados.
+Lo que las plataformas administrativas existentes no resuelven es la integración automática entre estos puntos de captura de información y los sistemas externos que los reciben, ni la posibilidad de verificar que un registro digitalizado sigue siendo idéntico al dato entregado originalmente, lo que obliga al personal a transcribir y conciliar datos manualmente entre sistemas aislados y a operar sin certeza sobre la integridad de esos registros.
