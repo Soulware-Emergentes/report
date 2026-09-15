@@ -200,7 +200,6 @@ Representa a quien recibe, digitaliza, aprueba y consolida la información que l
 
 ### User Task Matrix
 
-
 En esta sección se presenta el User Task Matrix, que consolida las tareas que realizan los dos User Persona construidos a partir del Needfinding: Marco Quispe Huamán (Agente de Campo) y Rocío Fernández Salas (Personal Administrativo y de Gabinete).Las tareas listadas corresponden a actividades que ambos segmentos realizan independientemente de la existencia de una solución de software, no se incluyen funcionalidades ni características de ningún sistema.
 
 <div style="width: 100%; overflow-x: auto;">
