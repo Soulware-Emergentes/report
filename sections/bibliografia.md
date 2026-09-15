@@ -2,9 +2,15 @@ Aguado-Riveros, U. I., Espinoza-Quispe, L. E., Santillán-Enciso, C. L., Silva-I
 
 Burch, T. (2016, January 6). *Data is the crop: GNSS used by surveyors and farmers*. GPS World. https://www.gpsworld.com/data-is-the-crop-gnss-used-by-surveyors-and-farmers/
 
+Hyperscience. (n.d.). *US public sector intelligent automation solutions*. Retrieved September 15, 2026, from https://www.hyperscience.ai/solutions/public-sector/
+
 International Food Policy Research Institute. (2025, December 2). *Beyond the algorithm: The need for farmer participation and data justice in digital agricultural technology*. IFPRI Blog. https://www.ifpri.org/blog/beyond-the-algorithm-the-need-for-farmer-participation-and-data-justice-in-digital-agricultural-technology/
 
 OECD. (2026). *Digital governments at a turning point*. In *Digital Government Outlook 2026*. OECD Publishing. https://www.oecd.org/en/publications/digital-government-outlook_0496b2bc-en/full-report/digital-governments-at-a-turning-point_0491aad4.html
+
+OpenG2P. (n.d.). *OpenG2P*. Retrieved September 15, 2026, from https://www.openg2p.org/
+
+OpenSPP. (n.d.). *Farmer registry*. OpenSPP Documentation. Retrieved September 15, 2026, from https://docs.openspp.org/explanation/farmer_registry
 
 The Canton Group. (2025, June 9). *Breaking down silos: Why government IT systems need interoperability for digital transformation*. https://cantongroup.com/insights/breaking-down-silos-why-government-it-systems-need-interoperability-digital-transformation
 
