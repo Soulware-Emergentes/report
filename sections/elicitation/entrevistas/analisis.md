@@ -6,7 +6,7 @@ Total entrevistados: 3
 Edades: 25, 26 y 26 años
 Distritos: Ate y Santiago de Surco
 Experiencia en el puesto: 8 meses, 3 años y 7 años
-Fechas: pendientes de completar
+Fechas: 15/09/2026
 
 Características objetivas:
 - Registran la evaluación de producción en el formato en papel establecido: 3/3 (100%)
@@ -42,7 +42,7 @@ Edades: 23, 23 y 28 años
 Distritos: Ate y San Borja
 Cargos: asistente administrativa de gerencia general, coordinador de área y analista de planeamiento
 Experiencia en el puesto: 2, 5 y 9 años
-Fechas: pendientes de completar
+Fechas: 15/09/2026
 
 Características objetivas:
 - Trabajan con más de un sistema institucional para una misma información: 3/3 (100%)

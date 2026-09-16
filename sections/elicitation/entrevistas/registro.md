@@ -7,7 +7,7 @@
 | Sexo | Masculino |
 | Distrito | Ate |
 | Ocupación | Agente de campo georreferenciador, 7 años en el puesto |
-| Fecha de entrevista | Pendiente de completar |
+| Fecha de entrevista | 15/09/2026 |
 | Timing | 00:00 - 04:31 |
 | Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
 | Captura | ![Captura entrevista Osvalo Rosado](registro.assets/entrevista1-segmento1.png) |
@@ -22,7 +22,7 @@
 | Sexo | Masculino |
 | Distrito | Santiago de Surco |
 | Ocupación | Agente de campo georreferenciador, 3 años en el puesto |
-| Fecha de entrevista | Pendiente de completar |
+| Fecha de entrevista | 15/09/2026 |
 | Timing | 04:31 - 09:10 |
 | Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
 | Captura | ![Captura entrevista Mauricio Canchis](registro.assets/entrevista2-segmento1.png) |
@@ -37,7 +37,7 @@
 | Sexo | Masculino |
 | Distrito | Ate |
 | Ocupación | Agente de campo georreferenciador, 8 meses en el puesto |
-| Fecha de entrevista | Pendiente de completar |
+| Fecha de entrevista | 15/09/2026 |
 | Timing | 09:10 - 13:45 |
 | Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
 | Captura | ![Captura entrevista Kerry Baquerrizo](registro.assets/entrevista3-segmento1.png) |
@@ -52,7 +52,7 @@
 | Sexo | Femenino |
 | Distrito | Ate |
 | Ocupación | Asistente administrativa de gerencia general, 5 años en el puesto |
-| Fecha de entrevista | Pendiente de completar |
+| Fecha de entrevista | 15/09/2026 |
 | Timing | 13:45 - 18:51 |
 | Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
 | Captura | ![Captura entrevista María Fernanda Esteban](registro.assets/entrevista1-segmento2.png) |
@@ -67,7 +67,7 @@
 | Sexo | Masculino |
 | Distrito | San Borja |
 | Ocupación | Coordinador del área, 9 años en la institución |
-| Fecha de entrevista | Pendiente de completar |
+| Fecha de entrevista | 15/09/2026 |
 | Timing | 18:51 - 23:58 |
 | Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
 | Captura | ![Captura entrevista Bruno Núñez](registro.assets/entrevista2-segmento2.png) |
@@ -82,7 +82,7 @@
 | Sexo | Masculino |
 | Distrito | Ate |
 | Ocupación | Analista de planeamiento, 2 años en el puesto |
-| Fecha de entrevista | Pendiente de completar |
+| Fecha de entrevista | 15/09/2026 |
 | Timing | 23:58 - 28:13 |
 | Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
 | Captura | ![Captura entrevista Iván Reyes](registro.assets/entrevista3-segmento2.png) |
