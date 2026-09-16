@@ -3,8 +3,8 @@ Las entrevistas se realizaron a un total de seis participantes, tres agentes de 
 **Segmento: Agentes de campo georreferenciadores**
 
 Total entrevistados: 3
-Edades: 26, 34 y 46 años
-Distritos: Kimbiri, Río Tambo y Tocache
+Edades: 25, 26 y 26 años
+Distritos: Ate y Santiago de Surco
 Experiencia en el puesto: 8 meses, 3 años y 7 años
 Fechas: pendientes de completar
 
