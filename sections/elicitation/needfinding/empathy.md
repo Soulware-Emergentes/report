@@ -5,7 +5,7 @@ El empathy map evidencia la tensión central de Marco entre confiar en un format
 
 ![Empathy Map: Agente de Campo](assets/elicitation/needfinding/empathy/empathy-map-agente-de-campo.png)
 
-**Personal Administrativo y de Gabinete**  
+**Asistente de Gerencia General**  
 El empathy map recoge la tensión central de Rocío entre aprobar y consolidar información que no captura ella misma, y la falta de un mecanismo que le permita verificar el origen de cada dato antes de responsabilizarse por él.
 
-![Empathy Map: Personal Administrativo y de Gabinete](assets/elicitation/needfinding/empathy/empathy-map-administrativo.png)
+![Empathy Map: Asistente de Gerencia General](assets/elicitation/needfinding/empathy/empathy-map-administrativo.png)

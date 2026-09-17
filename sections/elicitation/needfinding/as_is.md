@@ -8,7 +8,7 @@ El As-Is Scenario Mapping se elaboró en Miro, con una preparación previa revis
 
 Blank areas identificadas: qué tan seguido se cuestiona un dato antiguo y qué pasa cuando ocurre, qué tanta resistencia real hay entre agentes antiguos frente a uno más digital, y si existe una tabla oficial de conversión saco-kilo.
 
-**Personal Administrativo y de Gabinete**
+**Asistente de Gerencia General**
 
 ![As-Is: Personal Administrativo, parte 1](assets/elicitation/needfinding/as_is/as-is-administrativo-01.png)
 

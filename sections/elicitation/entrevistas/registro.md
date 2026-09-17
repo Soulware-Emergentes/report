@@ -1,3 +1,5 @@
+Los seis entrevistados son user proxies (Cohn, 2004): personas que conocen y representan el trabajo del agente de campo y del funcionario administrativo, pero no son ellas mismas el beneficiario del programa, el usuario final de la solución.
+
 **Segmento Agentes de Campo: Entrevistado 1**
 
 | Atributo | Detalle |

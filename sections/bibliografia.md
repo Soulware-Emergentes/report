@@ -2,6 +2,8 @@ Aguado-Riveros, U. I., Espinoza-Quispe, L. E., Santillán-Enciso, C. L., Silva-I
 
 Burch, T. (2016, January 6). *Data is the crop: GNSS used by surveyors and farmers*. GPS World. https://www.gpsworld.com/data-is-the-crop-gnss-used-by-surveyors-and-farmers/
 
+Cohn, M. (2004). *User stories applied: For agile software development*. Addison-Wesley.
+
 Hyperscience. (n.d.). *US public sector intelligent automation solutions*. Retrieved September 15, 2026, from https://www.hyperscience.ai/solutions/public-sector/
 
 International Food Policy Research Institute. (2025, December 2). *Beyond the algorithm: The need for farmer participation and data justice in digital agricultural technology*. IFPRI Blog. https://www.ifpri.org/blog/beyond-the-algorithm-the-need-for-farmer-participation-and-data-justice-in-digital-agricultural-technology/
