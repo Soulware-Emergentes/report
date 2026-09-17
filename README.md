@@ -315,7 +315,7 @@ Lo que las plataformas administrativas existentes no resuelven es la integració
 #### Lean UX Assumptions
 
 Business outcomes:
-- Reducción del asistente de gerencia general en un 20%.
+- Reducción de la carga operativa del personal administrativo en un 20%.
 - Reducción de inconsistencias de datos en un 90%.
 - Reducción de accesos y modificaciones no autorizadas a los datos en un 95%.
 
@@ -345,7 +345,7 @@ User outcomes:
 
 - Reducción de inconsistencias de datos en un 90% si el agente de campo logra reportar la georreferenciación directamente durante la visita a campo mediante la integración directa de mediciones de terreno al sistema.
 
-- Reducción del asistente de gerencia general en un 20% si el asistente de gerencia general logra reducir el tiempo de registro por documento mediante la extracción de datos automática con IA.
+- Reducción de la carga operativa del personal administrativo en un 20% si el asistente de gerencia general logra reducir el tiempo de registro por documento mediante la extracción de datos automática con IA.
 
 - Reducción de inconsistencias de datos en un 90% si el asistente de gerencia general logra dejar de trasladar manualmente los resultados de evaluación de producción al sistema que consolida el avance del POI mediante la integración con plataforma analítica de Plan Operativo Institucional (POI).
 
