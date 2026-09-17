@@ -72,7 +72,7 @@
         - title: "As-is Scenario Mapping"
           alias: "as-is"
     - title: "Ubiquitous Language"
-      alias: "glossary"
+      alias: "ubiquitous_language"
 
 - title: "Capítulo III: Requirements Specification"
   alias: "specification"
