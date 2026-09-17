@@ -1,5 +1,5 @@
 Business outcomes:
-- Reducción del asistente de gerencia general en un 20%.
+- Reducción de la carga operativa del personal administrativo en un 20%.
 - Reducción de inconsistencias de datos en un 90%.
 - Reducción de accesos y modificaciones no autorizadas a los datos en un 95%.
 
