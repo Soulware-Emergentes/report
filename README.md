@@ -955,9 +955,6 @@ Acto por el cual un responsable autorizado da conformidad a un expediente ya ver
 **Beneficiary (Beneficiario)**  
 Productor registrado en el programa que recibe insumos agrícolas y reporta periódicamente la producción obtenida de su terreno.
 
-**Case File (Expediente)**  
-Conjunto de documentos y datos referidos a un registro o reporte de un beneficiario, que debe quedar completo y verificado antes de ser aprobado.
-
 **Chain of Custody (Cadena de responsabilidad)**  
 Identificación clara de la persona responsable de un dato en cada etapa del proceso, desde su captura en campo hasta su aprobación.
 
