@@ -1,0 +1,1 @@
+El fin del diseño actual tiene como propósito plantear una arquitectura adecuada a las necesidades del usuario y su contexto. Por ello, se observaran patrones y tecnologías legadas en ciertas capas de la arquitectura, lo cual corresponde a componentes necesarios y que son core de la entidad.
