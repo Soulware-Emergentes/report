@@ -13,30 +13,17 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
     <tbody>
         <tr>
             <td>US-01</td>
-            <td>Delimitar el perímetro del terreno con el dispositivo durante la visita</td>
-            <td>Como agente de campo georreferenciador, quiero delimitar el perímetro del terreno con el dispositivo durante la visita para anexarlo al sistema sin depender de un equipo de geolocalización aparte.</td>
+            <td>Visualizar con antelación los puntos capturados por la estación total durante la visita</td>
+            <td>Como agente de campo georreferenciador, quiero visualizar en el dispositivo los puntos que ya fueron capturados por la estación total mientras recorro el terreno, para detectar y corregir errores de medición antes de finalizar la visita.</td>
             <td>
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
-                        <strong>Scenario:</strong> Delimitación del perímetro completo<br>
+                        <strong>Scenario:</strong> Visualización de puntos capturados sin anomalías<br>
                         <strong>Given</strong> el agente de campo se encuentra en el terreno del beneficiario<br>
-                        <strong>And</strong> el perímetro del terreno es completamente accesible a pie<br>
-                        <strong>When</strong> el agente recorre el perímetro marcando cada vértice con el dispositivo<br>
-                        <strong>Then</strong> el sistema registra el polígono delimitado por esos vértices<br>
-                        <strong>And</strong> lo asocia al terreno del beneficiario visitado<br>
+                        <strong>When</strong> la estación total envía la totalidad de los puntos del terreno<br>
+                        <strong>Then</strong> el sistema muestra la posición de cada punto capturado en el mapa<br>
                     </li>
-                    <!-- Criterio BDD -->
-                    <li>
-                        <strong>Scenario:</strong> Delimitación del perímetro parcialmente accesible<br>
-                        <strong>Given</strong> el agente de campo se encuentra en el terreno del beneficiario<br>
-                        <strong>And</strong> parte del perímetro no es accesible a pie por vegetación o pendiente<br>
-                        <strong>When</strong> el agente marca con el dispositivo los vértices que alcanza y estima el resto junto con el beneficiario<br>
-                        <strong>Then</strong> el sistema registra el polígono resultante señalando qué vértices fueron medidos y cuáles estimados<br>
-                        <strong>And</strong> lo asocia al terreno del beneficiario visitado<br>
-                    </li>
-                    <!-- Criterio NON-BDD -->
-                    <li>El sistema advierte al agente si el terreno delimitado se superpone con uno ya anexado a otro beneficiario, antes de guardarlo.</li>
                 </ul>
             </td>
             <td>EP-01</td>
