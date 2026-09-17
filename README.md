@@ -1105,19 +1105,26 @@ Finalmente, la comunicación entre el contexto SGP con el contexto de IA es a tr
 
 ### Software Architecture System Landscape Diagram
 
+Representa el panorama global de la solución con respecto a los usuarios y la organización que lo utiliza. En esta vista se identifican todas las personas y el entorno de su contexto de trabajo tomando en cuenta la solución.
 
+![Landscape](assets/strategic_design/architecture/landscape/landscape.png)
 
 ### Software Architecture Context Level Diagrams
 
-
+Este diagrama representa la situación a gran escala de la arquitectura de la solución planteada. En este caso, tenemos el sistema SGP en el centro del diagrama, es utilizado por ambos usuarios y se comunica con los sistemas de beneficiarios y POI.
+![Diagrama de Contexto](assets/strategic_design/architecture/context_level/contexto.png)
 
 ### Software Architecture Container Level Diagrams
 
-
+Ahondamos al diagrama de contenedores, dentro del sistema SGP contamos con dos interfaces: aplicación móvil y aplicación web, ambos se comunican con el servicio SGP que contiene toda la lógica de negocio del sistema. 
+Este servicio se comunica con un modelo de IA que extrae información de las fichas que llegan al servicio SGP. Todos los archivos se guardan en el File Server Institucional.
+Los servicios externos de Beneficiarios y POI se comunican por llamadas REST con el Servicio SGP, y todos los servicios guardan su información en una única base de datos institucional en distintos esquemas.
+![Diagrama de contenedores](assets/strategic_design/architecture/container_level/contenedores.png)
 
 ### Software Architecture Deployment Diagrams
 
-
+Finalmente, el diagrama de despliegue contempla la infraestructura actual de la institución y como manejan las aplicaciones empresariales. El servicio SGP sera desplegado en un .war dentro de un Apache Tomcat 9 dentro del Servidor de Aplicaciones. Al igual que el Modelo de IA.
+![Diagrama de despliegues](assets/strategic_design/architecture/deployment/despliegue.png)
 
 # Conclusiones
 
