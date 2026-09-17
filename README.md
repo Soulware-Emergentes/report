@@ -1025,31 +1025,31 @@ Se identifica las funcionalidades prioritarias para el usuario, con las cuales s
 A continuación se detalla el proceso de EventStorming seguido por el equipo para la identificación de contextos.
 
 En primer lugar, se identificaron los eventos correspondientes al dominio. 
-![EventStorming step 1](eventstorming.assets/eventstorming-1.png)
+![EventStorming step 1](assets/strategic_design/ddd/eventstorming/eventstorming-1.png)
 
 Posteriormente esos eventos se ordenaron secuencialmente de izquierda a derecha.
-![EventStorming step 2](eventstorming.assets/eventstorming-2.png)
+![EventStorming step 2](assets/strategic_design/ddd/eventstorming/eventstorming-2.png)
 
 Como siguiente paso se procedió a identificar los comandos que desencadenan los eventos identificados. En nuestro caso, solo un evento era desencadenado por otro, luego todos eran desencadenados por comandos.
-![EventStorming step 3](eventstorming.assets/eventstorming-3.png)
+![EventStorming step 3](assets/strategic_design/ddd/eventstorming/eventstorming-3.png)
 
 Continuando con los pasos, identificamos los roles asociados a los comandos, es decir, sus ejecutantes. En este paso aparecieron, obviamente, el agente de campo y los asesores de Gerencia General. También apareció el sistema como un rol, ya que es el que ejecuta algunos comandos dentro del flujo.
-![EventStorming step 4](eventstorming.assets/eventstorming-4.png)
+![EventStorming step 4](assets/strategic_design/ddd/eventstorming/eventstorming-4.png)
 
 En consecuencia, habiendo identificado los roles, identificamos las politicas del dominio. En este caso, siendo la coherencia que existe entre un terreno y su dueño, y el beneficiario al que se le hace seguimiento.
-![EventStorming step 5](eventstorming.assets/eventstorming-5.png)
+![EventStorming step 5](assets/strategic_design/ddd/eventstorming/eventstorming-5.png)
 
 Luego, identificamos los sistemas externos con los cuales se comunica SGP, en este caso siendo el sistema de beneficiarios (sistema que permitirá conocer la información de los beneficiarios de la entidad), sistema POI (sistema al cual se hara un envío de información por cada ficha validada) y el modelo de IA (que se representa como un sistema externo debido a su naturaleza).
-![EventStorming step 6](eventstorming.assets/eventstorming-6.png)
+![EventStorming step 6](assets/strategic_design/ddd/eventstorming/eventstorming-6.png)
 
 Habiendo identificado ello, analizamos y detallamos las vistas que influirian en el sistema. En este paso ya detallamos el uso de la web y la aplicación móvil.
-![EventStorming step 7](eventstorming.assets/eventstorming-7.png)
+![EventStorming step 7](assets/strategic_design/ddd/eventstorming/eventstorming-7.png)
 
 Como uno de los últimos pasos, identificamos los agregados en base a lo planteado hasta el momento. En este caso, Terreno y Ficha vendrían a ser los agregados del dominio.
-![EventStorming step 8](eventstorming.assets/eventstorming-8.png)
+![EventStorming step 8](assets/strategic_design/ddd/eventstorming/eventstorming-8.png)
 
 Para concluir el proceso de EventStorming, identificamos los contextos vinculados al planteo del equipo. En primer lugar, y más importantes (ya que serán los que vamos a desarrollar nosotros) se encuentran el contexto de SGP y el contexto de IA. Mientras que los contextos de Beneficiarios y POI representan contextos con los cuales SGP se va a comunicar, más no se mapea a detalle esos contextos, ya que no estan dentro del alcance.
-![EventStorming step 9](eventstorming.assets/eventstorming-9.png)
+![EventStorming step 9](assets/strategic_design/ddd/eventstorming/eventstorming-9.png)
 
 
 ### Candidate Context Discovery
@@ -1063,29 +1063,29 @@ Sin embargo, debido a la naturaleza del SGP y su alcance acotado, los contextos 
 Para ejemplificar como cada contexto se vincula y comunica uno con otro detallamos los 3 flujos más representativos de SGP.
 
 En primer lugar, mapeamos el flujo que tiene un asistente de campo para el mapeo de un terreno dentro del sistema web. Lo que hace aquí es crear un espacio virtual con las coordenadas reales del terreno del beneficiario. Obviamente este proceso se realiza dentro del contexto del SGP, sin embargo, tiene una comunicación con el contexto de beneficiarios para hacer el match entre el DNI de beneficiario que llega para el mapeo del terreno con el beneficiario que ya se encuentra dentro del sistema de beneficiarios. El terreno solo se crea si el beneficiario se encuentra en el sistema de beneficiarios.
-![Mapear terreno](message_flows.assets/mapear-terreno.jpg)
+![Mapear terreno](assets/strategic_design/ddd/message_flows/mapear-terreno.jpg)
 
 En segundo lugar, se mapeo el flujo de mandar la ficha. El proceso empieza con el asistente de campo tomando foto con la aplicación móvil a la ficha realizada en campo, esta ficha viaja al contexto del SGP y este la traslada al contexto de la IA, donde se analiza y extrae la información de la foto. Al procesar ello, el contexto SGP guarda la información y ya esta disponible para validación de asesores de Gerencia General.
-![Mandar ficha](message_flows.assets/mandar-ficha.jpg)
+![Mandar ficha](assets/strategic_design/ddd/message_flows/mandar-ficha.jpg)
 
 Finalmente, se mapeo el flujo de validar una ficha, en el cual se involucra los asesores de Gerencia General, quienes a través de la web observan la información extraída por el modelo de IA y la imagen real. En caso se valide exitosamente la ficha, se envia esa información al contexto POI para contribuir al avance de una actividad.
-![Validar ficha](message_flows.assets/validar-ficha.jpg)
+![Validar ficha](assets/strategic_design/ddd/message_flows/validar-ficha.jpg)
 
 ### Bounded Context Canvases
 
 Como parte del analisis de los contextos identificados se desarrollo su canvas respectivo.
 
 En primer lugar se analizo el contexto SGP. Este contexto es el CORE del sistema, interactua directamente con el Frontend del usuario proporcionando todos los endpoints del sistema. Además se comunica con los contextos de Beneficiarios, POI y el modelo de IA.
-![Contexto SGP](bc_canvases.assets/sgp.jpg)
+![Contexto SGP](assets/strategic_design/ddd/bc_canvases/sgp.jpg)
 
 Luego se analizo el contexto de Beneficiarios, que se trata de un contexto externo. Este contexto, tiene como único propósito dentro del sistema, proporcionar información de los beneficiarios. Se comunica con el contexto SGP.
-![Contexto Beneficiarios](bc_canvases.assets/beneficiarios.jpg)
+![Contexto Beneficiarios](assets/strategic_design/ddd/bc_canvases/beneficiarios.jpg)
 
 A su vez se analizo el contexto de POI, este contexto, al igual que el anterior, es un contexto externo. Tiene como único propósito recibir información sobre las fichas validadas por asesoria de Gerencia General. 
-![Contexto POI](bc_canvases.assets/poi.jpg)
+![Contexto POI](assets/strategic_design/ddd/bc_canvases/poi.jpg)
 
 Finalmente, el contexto de IA es una mejora al proceso actual. Es meramente tecnologico y busca reducir la carga operativa de Gerencia General. Tiene como propósito analizar las fichas a través de fotos, extraer su información relevante y permitir su validación con Gerencia General.
-![Contexto IA](bc_canvases.assets/ia.jpg)
+![Contexto IA](assets/strategic_design/ddd/bc_canvases/ia.jpg)
 
 ### Context Mapping
 
@@ -1099,7 +1099,7 @@ La relación del contexto de SGP con el contexto de Beneficiarios es sencilla. S
 La relación del contexto SGP con el contexto de POI sigue el mismo patrón, sin embargo, SGP no pide información, sino que la envía. En este caso, el contexto de SGP prepara un recurso con los lineamientos del POST (OHS) del sistema POI y envía un avance para una actividad.
 
 Finalmente, la comunicación entre el contexto SGP con el contexto de IA es a través de un endpoint (OHS), el modelo de IA recibe la imagen, extrae los datos y los manda en un formato que SGP ya conoce. Por tanto, SGP no necesita modificar lo que llega al contexto (CNF).
-![Context Mapping](mapping.assets/context-mapping.png)
+![Context Mapping](assets/strategic_design/ddd/mapping/context-mapping.png)
 
 ## Software Architecture
 
