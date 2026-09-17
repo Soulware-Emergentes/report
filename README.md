@@ -950,7 +950,7 @@ Conjunto de tareas del Plan Operativo Institucional agrupadas bajo una misma lí
 Recurso o material que el programa entrega a un beneficiario registrado para el cultivo de su terreno.
 
 **Approval (Aprobación)**  
-Acto por el cual un responsable autorizado da conformidad a un expediente ya verificado, habilitándolo para ser consolidado en el reporte institucional.
+Acto por el cual un responsable autorizado da conformidad a una ficha ya verificada, habilitándolo para ser tomado en cuenta como terminado dentro del POI.
 
 **Beneficiary (Beneficiario)**  
 Productor registrado en el programa que recibe insumos agrícolas y reporta periódicamente la producción obtenida de su terreno.
