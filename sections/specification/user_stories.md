@@ -1,51 +1,39 @@
 Se presenta a continuación el conjunto de User Stories planificadas para el alcance del proyecto.
 
-<table>
+<div style="width: 100%; overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px;">
     <thead>
         <tr>
-            <th>Epic / Story ID</th>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Criterios de Aceptación</th>
-            <th>Relacionado con (Epic ID)</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Epic / Story ID</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Título</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Descripción</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Criterios de Aceptación</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Relacionado con (Epic ID)</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>US-01</td>
-            <td>Delimitar el perímetro del terreno con el dispositivo durante la visita</td>
-            <td>Como agente de campo georreferenciador, quiero delimitar el perímetro del terreno con el dispositivo durante la visita para anexarlo al sistema sin depender de un equipo de geolocalización aparte.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-2</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Visualizar con antelación los puntos capturados por la estación total durante la visita</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo georreferenciador, quiero visualizar en el dispositivo los puntos que ya fueron capturados por la estación total mientras recorro el terreno, para detectar y corregir errores de medición antes de finalizar la visita.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
-                        <strong>Scenario:</strong> Delimitación del perímetro completo<br>
+                        <strong>Scenario:</strong> Visualización de puntos capturados sin anomalías<br>
                         <strong>Given</strong> el agente de campo se encuentra en el terreno del beneficiario<br>
-                        <strong>And</strong> el perímetro del terreno es completamente accesible a pie<br>
-                        <strong>When</strong> el agente recorre el perímetro marcando cada vértice con el dispositivo<br>
-                        <strong>Then</strong> el sistema registra el polígono delimitado por esos vértices<br>
-                        <strong>And</strong> lo asocia al terreno del beneficiario visitado<br>
+                        <strong>When</strong> la estación total envía la totalidad de los puntos del terreno<br>
+                        <strong>Then</strong> el sistema muestra la posición de cada punto capturado en el mapa<br>
                     </li>
-                    <!-- Criterio BDD -->
-                    <li>
-                        <strong>Scenario:</strong> Delimitación del perímetro parcialmente accesible<br>
-                        <strong>Given</strong> el agente de campo se encuentra en el terreno del beneficiario<br>
-                        <strong>And</strong> parte del perímetro no es accesible a pie por vegetación o pendiente<br>
-                        <strong>When</strong> el agente marca con el dispositivo los vértices que alcanza y estima el resto junto con el beneficiario<br>
-                        <strong>Then</strong> el sistema registra el polígono resultante señalando qué vértices fueron medidos y cuáles estimados<br>
-                        <strong>And</strong> lo asocia al terreno del beneficiario visitado<br>
-                    </li>
-                    <!-- Criterio NON-BDD -->
-                    <li>El sistema advierte al agente si el terreno delimitado se superpone con uno ya anexado a otro beneficiario, antes de guardarlo.</li>
                 </ul>
             </td>
-            <td>EP-01</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-01</td>
         </tr>
         <tr>
-            <td>US-02</td>
-            <td>Subir la ficha diligenciada para su almacenamiento y verificación de integridad</td>
-            <td>Como agente de campo, quiero subir la ficha en formato PDF una vez finalizada la visita, para contar con un respaldo verificable de que quedó registrada tal como la firmé.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-3</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Subir la ficha diligenciada para su almacenamiento y verificación de integridad</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo, quiero subir la ficha en formato PDF una vez finalizada la visita, para contar con un respaldo verificable de que quedó registrada tal como la firmé.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -59,13 +47,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>El agente puede consultar en cualquier momento el estado de la ficha subida, sin depender de que otra persona se lo confirme.</li>
                 </ul>
             </td>
-            <td>EP-02</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-02</td>
         </tr>
         <tr>
-            <td>US-03</td>
-            <td>Buscar y filtrar las fichas registradas</td>
-            <td>Como asistente de gerencia general, quiero buscar y filtrar las fichas registradas por código de tarea, agente de campo, fecha o estado de aprobación, para ubicar rápido las que quedaron con alguna observación pendiente.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-4</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Buscar y filtrar las fichas registradas</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como asistente de gerencia general, quiero buscar y filtrar las fichas registradas por código de tarea, agente de campo, fecha o estado de aprobación, para ubicar rápido las que quedaron con alguna observación pendiente.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -78,13 +66,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>Los filtros por código de tarea, agente de campo y fecha pueden combinarse entre sí en una misma búsqueda.</li>
                 </ul>
             </td>
-            <td>EP-03</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-03</td>
         </tr>
         <tr>
-            <td>US-04</td>
-            <td>Revisar los campos críticos extraídos al validar una ficha</td>
-            <td>Como asistente de gerencia general, quiero revisar los campos que el sistema extrajo automáticamente de la ficha antes de aprobarla, para confirmar que coinciden con lo que el documento realmente dice.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-5</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Revisar los campos críticos extraídos al validar una ficha</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como asistente de gerencia general, quiero revisar los campos que el sistema extrajo automáticamente de la ficha antes de aprobarla, para confirmar que coinciden con lo que el documento realmente dice.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -106,13 +94,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>Un campo se considera corregido manualmente si el usuario ingresa un valor diferente del propuesto por la IA.</li>
                 </ul>
             </td>
-            <td>EP-03</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-03</td>
         </tr>
         <tr>
-            <td>US-05</td>
-            <td>Verificar la integridad del documento digitalizado al validar una ficha</td>
-            <td>Como asistente de gerencia general, quiero saber si el documento presentado como evidencia de una tarea sigue siendo el mismo que se subió, para no aprobar uno que fue alterado después.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-6</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Verificar la integridad del documento digitalizado al validar una ficha</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como asistente de gerencia general, quiero saber si el documento presentado como evidencia de una tarea sigue siendo el mismo que se subió, para no aprobar uno que fue alterado después.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -133,13 +121,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     </li>
                 </ul>
             </td>
-            <td>EP-03</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-03</td>
         </tr>
         <tr>
-            <td>US-06</td>
-            <td>Consultar los datos del beneficiario durante la validación de una ficha</td>
-            <td>Como asistente de gerencia general, quiero consultar los datos del beneficiario asociado a una ficha mientras la reviso, para tenerlos disponibles sin salir a otro sistema.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-7</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Consultar los datos del beneficiario durante la validación de una ficha</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como asistente de gerencia general, quiero consultar los datos del beneficiario asociado a una ficha mientras la reviso, para tenerlos disponibles sin salir a otro sistema.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -152,13 +140,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>Los datos mostrados se mantienen sincronizados con el registro de beneficiarios, sin traslado manual del dato.</li>
                 </ul>
             </td>
-            <td>EP-03</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-03</td>
         </tr>
         <tr>
-            <td>US-07</td>
-            <td>Buscar y filtrar las tareas registradas</td>
-            <td>Como asistente de gerencia general, quiero buscar y filtrar las tareas registradas por código de tarea, actividad, zona, estado de avance o el estado de su entrega, para ver todas las tareas planificadas según el POI y su estado.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-8</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Buscar y filtrar las tareas registradas</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como asistente de gerencia general, quiero buscar y filtrar las tareas registradas por código de tarea, actividad, zona, estado de avance o el estado de su entrega, para ver todas las tareas planificadas según el POI y su estado.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -185,13 +173,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>Los filtros por código de tarea, actividad y zona pueden combinarse entre sí y con los anteriores en una misma búsqueda.</li>
                 </ul>
             </td>
-            <td>EP-04</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-04</td>
         </tr>
         <tr>
-            <td>US-08</td>
-            <td>Consultar el avance del PEI y del POI según las tareas registradas</td>
-            <td>Como asistente de gerencia general, quiero consultar el avance del POI y del PEI calculado a partir de las actividades y tareas registradas, para tener esa información disponible sin depender de armar el reporte manualmente cada quincena.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-9</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Consultar el avance del PEI y del POI según las tareas registradas</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como asistente de gerencia general, quiero consultar el avance del POI y del PEI calculado a partir de las actividades y tareas registradas, para tener esa información disponible sin depender de armar el reporte manualmente cada quincena.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -220,13 +208,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>El avance se recalcula automáticamente a medida que se aprueban tareas, sin depender de un cierre quincenal manual.</li>
                 </ul>
             </td>
-            <td>EP-04</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-04</td>
         </tr>
         <tr>
-            <td>US-09</td>
-            <td>Iniciar sesión con credenciales institucionales</td>
-            <td>Como usuario del sistema, quiero iniciar sesión con mi usuario y contraseña, para acceder solo a las funciones correspondientes a mi rol.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-10</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Iniciar sesión con credenciales institucionales</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como usuario del sistema, quiero iniciar sesión con mi usuario y contraseña, para acceder solo a las funciones correspondientes a mi rol.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -247,13 +235,13 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     <li>El sistema no distingue si el error corresponde al usuario o a la contraseña, para no dar pistas ante intentos de acceso no autorizados.</li>
                 </ul>
             </td>
-            <td>EP-05</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-05</td>
         </tr>
         <tr>
-            <td>US-10</td>
-            <td>Cerrar sesión</td>
-            <td>Como usuario del sistema, quiero cerrar mi sesión, para que nadie más pueda usar el sistema con mis credenciales si dejo el dispositivo desatendido.</td>
-            <td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-11</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cerrar sesión</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como usuario del sistema, quiero cerrar mi sesión, para que nadie más pueda usar el sistema con mis credenciales si dejo el dispositivo desatendido.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
@@ -265,7 +253,8 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
                     </li>
                 </ul>
             </td>
-            <td>EP-05</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-05</td>
         </tr>
     </tbody>
 </table>
+</div>
