@@ -4,24 +4,24 @@ Para elaborar los mapas, el equipo inició con una etapa de preparación en la q
 
 **Agente de Campo**
 
-El escenario de Marco Quispe Huamán comprende la preparación de la visita, la identificación del terreno y la selección de uno existente o el registro de uno nuevo. Después de realizar la evaluación y completar la ficha, el agente la fotografía, la vincula con el beneficiario y el terreno correspondientes, y confirma su recepción en SGP.
+El escenario de Marco Quispe Huamán comprende la preparación de la visita, la identificación del terreno y la selección de uno existente o la delimitación de uno nuevo con el dispositivo. Después de evaluar la producción y completar la ficha física, el agente la digitaliza en formato PDF, la asocia con la tarea, el beneficiario y el terreno correspondientes, y confirma que quedó registrada en SGP.
 
 ![To-Be Scenario Mapping: Agente de Campo, parte 1](assets/specification/to_be/to-be-agente-de-campo-01.png)
 
 ![To-Be Scenario Mapping: Agente de Campo, parte 2](assets/specification/to_be/to-be-agente-de-campo-02.png)
 
-En comparación con el As-Is, el agente puede consultar los terrenos registrados antes de la visita y enviar la ficha directamente desde campo. Esto reduce el riesgo de duplicar terrenos y evita que el procesamiento de la información dependa únicamente del traslado del documento físico.
+En comparación con el As-Is, el agente puede consultar los terrenos registrados antes de la visita, delimitar uno nuevo con el dispositivo y subir la ficha en formato PDF. Esto reduce los registros duplicados y permite respaldar el documento sin depender únicamente de su traslado físico.
 
 <div style="page-break-after: always;"></div>
 
 **Asistente de Gerencia General**
 
-El escenario de Rocío Fernández Salas comienza con la recepción de la ficha procesada. La asistente verifica su asociación con el beneficiario y el terreno, compara la fotografía con los datos extraídos, corrige las diferencias y aprueba la ficha. Finalmente, supervisa el envío al POI y comprueba que el avance de la tarea haya sido actualizado.
+El escenario de Rocío Fernández Salas comienza con la búsqueda de una ficha pendiente de revisión. La asistente comprueba la integridad del documento, consulta el beneficiario y el terreno asociados, compara el PDF con los datos extraídos y corrige cualquier diferencia antes de aprobar la ficha. Finalmente, consulta en SGP la actualización de la tarea y su contribución al avance del POI y del PEI.
 
 ![To-Be Scenario Mapping: Asistente de Gerencia General, parte 1](assets/specification/to_be/to-be-asistente-gerencia-general-01.png)
 
 ![To-Be Scenario Mapping: Asistente de Gerencia General, parte 2](assets/specification/to_be/to-be-asistente-gerencia-general-02.png)
 
-Frente al As-Is, la asistente deja de transcribir toda la información y concentra su trabajo en verificarla y aprobarla. Después de la aprobación, SGP traslada los datos al POI y permite comprobar el resultado del envío.
+Frente al As-Is, la asistente puede localizar las fichas pendientes y deja de transcribir toda la información para concentrarse en verificar su integridad y sus datos. Después de la aprobación, puede consultar el avance institucional actualizado sin elaborar manualmente el reporte quincenal.
 
-En conjunto, los escenarios conectan la captura de información en campo con su utilización en el POI. El Agente de Campo conserva la responsabilidad sobre la visita y la ficha, mientras que la Asistente de Gerencia General mantiene la responsabilidad de verificar y aprobar sus datos.
+En conjunto, los escenarios conectan el registro realizado en campo con el seguimiento del POI y del PEI. El Agente de Campo conserva la responsabilidad sobre la visita, el terreno y la ficha, mientras que la Asistente de Gerencia General verifica el documento y sus datos antes de aprobarlos.
