@@ -8,3 +8,5 @@ Los objetivos definidos fueron reducir en un 20 % el tiempo activo promedio dedi
 
 ![Impact Mapping de SGP, parte 2](assets/specification/impact_mapping/impact-mapping-02.png)
 
+
+ 
