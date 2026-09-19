@@ -15,7 +15,7 @@ Continuando con los pasos, identificamos los roles asociados a los comandos, es 
 En consecuencia, habiendo identificado los roles, identificamos las politicas del dominio. En este caso, siendo la coherencia que existe entre un terreno y su dueño, y el beneficiario al que se le hace seguimiento.
 ![EventStorming step 5](assets/strategic_design/ddd/eventstorming/eventstorming-5.png)
 
-Luego, identificamos los sistemas externos con los cuales se comunica SGP, en este caso siendo el sistema de beneficiarios (sistema que permitirá conocer la información de los beneficiarios de la entidad), sistema POI (sistema al cual se hara un envío de información por cada ficha validada) y el modelo de IA (que se representa como un sistema externo debido a su naturaleza).
+Luego, identificamos los sistemas externos con los cuales se comunica SGT, en este caso siendo el sistema de beneficiarios (sistema que permitirá conocer la información de los beneficiarios de la entidad), sistema POI (sistema al cual se hara un envío de información por cada ficha validada) y el modelo de IA (que se representa como un sistema externo debido a su naturaleza).
 ![EventStorming step 6](assets/strategic_design/ddd/eventstorming/eventstorming-6.png)
 
 Habiendo identificado ello, analizamos y detallamos las vistas que influirian en el sistema. En este paso ya detallamos el uso de la web y la aplicación móvil.
@@ -24,5 +24,5 @@ Habiendo identificado ello, analizamos y detallamos las vistas que influirian en
 Como uno de los últimos pasos, identificamos los agregados en base a lo planteado hasta el momento. En este caso, Terreno y Ficha vendrían a ser los agregados del dominio.
 ![EventStorming step 8](assets/strategic_design/ddd/eventstorming/eventstorming-8.png)
 
-Para concluir el proceso de EventStorming, identificamos los contextos vinculados al planteo del equipo. En primer lugar, y más importantes (ya que serán los que vamos a desarrollar nosotros) se encuentran el contexto de SGP y el contexto de IA. Mientras que los contextos de Beneficiarios y POI representan contextos con los cuales SGP se va a comunicar, más no se mapea a detalle esos contextos, ya que no estan dentro del alcance.
+Para concluir el proceso de EventStorming, identificamos los contextos vinculados al planteo del equipo. En primer lugar, y más importantes (ya que serán los que vamos a desarrollar nosotros) se encuentran el contexto de SGT y el contexto de IA. Mientras que los contextos de Beneficiarios y POI representan contextos con los cuales SGT se va a comunicar, más no se mapea a detalle esos contextos, ya que no estan dentro del alcance.
 ![EventStorming step 9](assets/strategic_design/ddd/eventstorming/eventstorming-9.png)
