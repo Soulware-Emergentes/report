@@ -4,9 +4,11 @@ El equipo partió de los resultados de negocio planteados durante Lean UX y los 
 
 Los objetivos definidos fueron reducir en un 20 % el tiempo activo promedio dedicado a procesar cada ficha, disminuir en un 90 % las fichas observadas por inconsistencias y reducir en un 95 % los incidentes de acceso o modificación no autorizados. En los tres casos, el resultado se compara con la línea base levantada antes del piloto y debe alcanzarse al finalizar los primeros seis meses de operación de SGP.
 
-![Impact Mapping de SGP, parte 1](assets/specification/impact_mapping/impact-mapping-01.png)
+![Impact Mapping de SGP, parte 1](assets/specification/impact_mapping/impact-map-1.png)
 
-![Impact Mapping de SGP, parte 2](assets/specification/impact_mapping/impact-mapping-02.png)
+![Impact Mapping de SGP, parte 2](assets/specification/impact_mapping/impact-map-2.png)
+
+![Impact Mapping de SGP, parte 3](assets/specification/impact_mapping/impact-map-3.png)
 
 
  
