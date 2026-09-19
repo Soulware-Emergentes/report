@@ -6,6 +6,6 @@ Representa a quien registra en campo la georreferenciación de las parcelas y la
 ![User Persona: Agente de Campo](./assets/elicitation/needfinding/personas/user-persona-agente-de-campo.png)
 
 **Asistente de Gerencia General**  
-Representa a quien recibe, digitaliza, aprueba y consolida la información que llega desde campo, agrupando los roles de asistente administrativa, coordinador de aprobación y analista de consolidación identificados en las entrevistas. Su necesidad principal es poder confiar en un dato que no digitó personalmente y demostrar en cualquier momento de dónde proviene cada cifra que aprueba o reporta.
+Representa a quien recibe, aprueba y consolida la información que llega desde campo, agrupando los roles de asistente administrativa, coordinador de aprobación y analista de consolidación identificados en las entrevistas. Su necesidad principal es poder confiar en un dato que no digitó personalmente y demostrar en cualquier momento de dónde proviene cada cifra que aprueba o reporta.
 
 ![User Persona: Asistente de Gerencia General](./assets/elicitation/needfinding/personas/user-persona-administrativo.png)
