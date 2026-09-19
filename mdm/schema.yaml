@@ -94,6 +94,7 @@
           alias: "purpose"
         - title: "Attribute-Driven Design Inputs"
           alias: "inputs"
+          has_intro: true
           children:
             - title: "Primary Functionality (Primary User Stories)"
               alias: "functionality"
