@@ -13,6 +13,41 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
     </thead>
     <tbody>
         <tr>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-01</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Anexamiento de terrenos</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Registro de los terrenos de los beneficiarios a partir de los puntos capturados durante la visita de campo.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-02</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Seguimiento de beneficiarios</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Seguimiento de los beneficiarios a partir de las fichas de evaluación que el agente de campo sube al finalizar cada visita.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-03</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Validación y aprobación de fichas</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Validación y aprobación de las fichas registradas por el asistente de gerencia general.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-04</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Seguimiento de objetivos estratégicos institucionales</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Seguimiento del avance del POI y del PEI a partir de las tareas registradas.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">EP-05</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Autenticación</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Acceso al sistema según el rol de cada usuario.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;"></td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-2</td>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Visualizar con antelación los puntos capturados por la estación total durante la visita</td>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo georreferenciador, quiero visualizar en el dispositivo los puntos que ya fueron capturados por la estación total mientras recorro el terreno, para detectar y corregir errores de medición antes de finalizar la visita.</td>
