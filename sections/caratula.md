@@ -14,7 +14,7 @@
     <p style="margin: 10px 0 5px 0;">Equipo</p>
     <h2 style="font-size: 18px; margin: 0px 0 40px 0;">Soulware</h2>
     <p style="margin: 5px;">Proyecto</p>
-    <h2 style="font-size: 18px; margin: 0px 0 30px 0;">SGP</h2>
+    <h2 style="font-size: 18px; margin: 0px 0 30px 0;">SGT</h2>
     <p style="margin: 5px;"><strong>Integrantes:</strong></p>
     <table style="width: max-content; border-collapse: collapse; margin: 0 auto 50px auto;">
         <thead>
