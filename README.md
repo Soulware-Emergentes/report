@@ -128,6 +128,8 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
     </table>
 </div>
 
+<div style="page-break-after: always;"></div>
+
 **TB1**
 
 Tareas asignadas
@@ -167,21 +169,25 @@ Para el desarrollo del TB1, cada participante del equipo realizó las siguientes
     </table>
 </div>
 
+<div style="page-break-after: always;"></div>
+
 GitHub Collaboration Insights
 
 Para el TB1 el equipo trabajó en la organización [https://github.com/Soulware-Emergentes](https://github.com/Soulware-Emergentes), que contiene el repositorio report con el informe del proyecto, gestionado con el flujo GitFlow y ramas de trabajo por sección para cada integrante.
 
 Gráfico de commits por integrante durante TB1:
 
-![Gráfico de commits del repositorio durante TB1](assets/insights/commits-tb1.png)
+![Gráfico de commits del repositorio durante TB1](assets/insights/tb1/commits.png)
 
 Gráfico de red (network graph) de ramas en el repositorio durante TB1:
 
-![Network graph de las ramas del repositorio durante TB1](assets/insights/network-graph-tb1.png)
+![Network graph de las ramas del repositorio durante TB1](assets/insights/tb1/network.png)
+
+<div style="page-break-after: always;"></div>
 
 Contribuciones de los integrantes durante TB1:
 
-![Contribuciones por integrante durante TB1](assets/insights/contributors-tb1.png)
+![Contribuciones por integrante durante TB1](assets/insights/tb1/contributors.png)
 
 
 <div style="page-break-after: always;"></div>
