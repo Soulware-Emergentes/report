@@ -15,10 +15,10 @@ Dado que la startup se orienta a un programa de una entidad pública (interopera
         <!-- Companies header -->
         <tr>
             <th scope="row" colspan="2"></th>
-            <td style="width: 25%; vertical-align: top;">Soulware</td>
-            <td style="width: 25%; vertical-align: top;">OpenG2P</td>
+            <td style="width: 25%; vertical-align: top;">Soulware<img src="analisis.assets/soulware.png" alt="Logo de Soulware" style="max-width: 120px; max-height: 55px; width: auto; height: auto; display: block; margin: 8px auto 0;"></td>
+            <td style="width: 25%; vertical-align: top;">OpenG2P<img src="analisis.assets/openg2p.png" alt="Logo de OpenG2P" style="max-width: 120px; max-height: 55px; width: auto; height: auto; display: block; margin: 8px auto 0;"></td>
             <td style="width: 25%; vertical-align: top;">OpenSPP (Farmer Registry)</td>
-            <td style="width: 25%; vertical-align: top;">Hyperscience</td>
+            <td style="width: 25%; vertical-align: top;">Hyperscience<img src="analisis.assets/hyperscience.png" alt="Logo de Hyperscience" style="max-width: 120px; max-height: 55px; width: auto; height: auto; display: block; margin: 8px auto 0;"></td>
         </tr>
         <!-- Profile -->
         <!-- Profile: Overview -->
