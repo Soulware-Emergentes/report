@@ -56,7 +56,6 @@
     - [Software Architecture Deployment Diagrams](#software-architecture-deployment-diagrams)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
-  - [Video About-The-Team](#video-about-the-team)
 - [Bibliografía](#bibliografía)
 - [Anexos](#anexos)
   - [Videos de Exposiciones](#videos-de-exposiciones)

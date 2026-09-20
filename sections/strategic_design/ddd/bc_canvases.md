@@ -1,10 +1,12 @@
 Como parte del analisis de los contextos identificados se desarrollo su canvas respectivo.
 
 En primer lugar se analizo el contexto SGT. Este contexto es el CORE del sistema, interactua directamente con el Frontend del usuario proporcionando todos los endpoints del sistema. Además se comunica con los contextos de Beneficiarios, POI y el modelo de IA.
-![Contexto SGT](assets/strategic_design/ddd/bc_canvases/sgp.jpg)
+<img src="assets/strategic_design/ddd/bc_canvases/sgp.jpg" alt="Contexto SGT" style="display: block; width: 90%; height: auto; margin: 0 auto;">
 
 Luego se analizo el contexto de Beneficiarios, que se trata de un contexto externo. Este contexto, tiene como único propósito dentro del sistema, proporcionar información de los beneficiarios. Se comunica con el contexto SGT.
-![Contexto Beneficiarios](assets/strategic_design/ddd/bc_canvases/beneficiarios.jpg)
+<img src="assets/strategic_design/ddd/bc_canvases/beneficiarios.jpg" alt="Contexto Beneficiarios" style="display: block; width: 90%; height: auto; margin: 0 auto;">
+
+{{page_break}}
 
 A su vez se analizo el contexto de POI, este contexto, al igual que el anterior, es un contexto externo. Tiene como único propósito recibir información sobre las fichas validadas por asesoria de Gerencia General. 
 ![Contexto POI](assets/strategic_design/ddd/bc_canvases/poi.jpg)

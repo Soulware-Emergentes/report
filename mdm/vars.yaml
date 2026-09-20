@@ -1,2 +1,3 @@
 author: My Team's Name
 repository_url: github.com/mygithub/project-documentation
+page_break: '<div style="page-break-after: always;"></div>'
