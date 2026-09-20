@@ -35,6 +35,8 @@ Características subjetivas:
 
 El hallazgo más consistente de este segmento es que la cantidad producida no se mide, se declara, y que la conversión de sacos a kilogramos queda a criterio de cada agente. Los tres entrevistados aplican factores distintos, de cuarenta, de cincuenta y de un rango entre cuarenta y cinco y cincuenta kilos por saco, y ninguno ha recibido una tabla oficial. El error, por lo tanto, se origina antes de cualquier digitalización. El segundo hallazgo es que ningún agente conserva evidencia institucional de lo que registró: dos resolvieron esa carencia por cuenta propia, con un cuaderno y con un formulario en Google Forms, y el tercero simplemente responde de memoria.
 
+{{page_break}}
+
 **Segmento: Funcionarios administrativos**
 
 Total entrevistados: 3

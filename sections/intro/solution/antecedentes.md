@@ -14,6 +14,8 @@ El proyecto se propone mejorar un flujo operacional concreto, correspondiente a 
 7. Un administrativo adquiere acceso a la copia digitalizada y constata los datos registrados sobre la evaluación en dicho sistema.
 8. Tras haber constatado, los datos son subidos manualmente a otro sistema que agrega los datos para visualizar el avance del Plan Estratégico Institucional (PEI) y del Plan Operativo Institucional (POI).
 
+{{page_break}}
+
 Enunciado del problema: la ausencia de un mecanismo que integre automáticamente la georreferenciación capturada en campo, los reportes de evaluación de producción una vez digitalizados y el traslado de esa información a los sistemas que consolidan el avance del PEI y del POI, sumada a la falta de una garantía sobre la integridad de los documentos digitalizados frente a su versión física original, obliga al personal a verificar y trasladar datos de forma manual, lo que ralentiza el proceso, consume tiempo del personal y del beneficiario, e introduce riesgo de error humano en el registro de la información.
 
 <div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">

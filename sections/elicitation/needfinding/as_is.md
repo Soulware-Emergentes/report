@@ -2,11 +2,13 @@ El As-Is Scenario Mapping se elaboró en Miro, con una preparación previa revis
 
 **Agente de Campo**
 
-![As-Is: Agente de Campo, parte 1](assets/elicitation/needfinding/as_is/as-is-agente-de-campo-01.png)
+<img src="assets/elicitation/needfinding/as_is/as-is-agente-de-campo-01.png" alt="As-Is: Agente de Campo, parte 1" style="display: block; width: 90%; height: auto; margin: 0 auto;">
 
-![As-Is: Agente de Campo, parte 2](assets/elicitation/needfinding/as_is/as-is-agente-de-campo-02.png)
+<img src="assets/elicitation/needfinding/as_is/as-is-agente-de-campo-02.png" alt="As-Is: Agente de Campo, parte 2" style="display: block; width: 90%; height: auto; margin: 0 auto;">
 
 Blank areas identificadas: qué tan seguido se cuestiona un dato antiguo y qué pasa cuando ocurre, qué tanta resistencia real hay entre agentes antiguos frente a uno más digital, y si existe una tabla oficial de conversión saco-kilo.
+
+{{page_break}}
 
 **Asistente de Gerencia General**
 

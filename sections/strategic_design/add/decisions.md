@@ -1,10 +1,10 @@
-Se documenta la primera iteración de ADD, que aborda los drivers de importancia e impacto altos: DRV-01, DRV-02 y DRV-03. Los criterios de evaluación de cada patrón fueron el cumplimiento del driver, el cumplimiento de los Constraints y el esfuerzo de implementación.
+Primera iteración de ADD, sobre los drivers de importancia e impacto altos: DRV-01, DRV-02 y DRV-03. Cada patrón se evaluó por cumplimiento del driver, cumplimiento de los Constraints y esfuerzo de implementación.
 
-Para DRV-01 se evaluó una táctica de detección de alteraciones. El sistema calcula el hash del PDF al subirlo y lo compara al validar la ficha, tal como lo describen SGT-3 y SGT-6. Se selecciona el hash almacenado junto al registro de la ficha, porque cumple la medida de cero modificaciones no detectadas con el menor esfuerzo.
+DRV-01: se selecciona el hash del PDF almacenado con el registro de la ficha (SGT-3 y SGT-6), porque cumple la medida de cero modificaciones no detectadas con el menor esfuerzo.
 
-Para DRV-02 se evaluó dónde se ejecutan los componentes que tratan datos de beneficiarios. Se selecciona el despliegue on-premise, porque es el único que cumple TS-01 sin condiciones adicionales.
+DRV-02: se selecciona el despliegue on-premise, porque es el único que cumple TS-01 sin condiciones adicionales.
 
-Para DRV-03 se evaluó cómo se integra el sistema con otros sistemas institucionales. Se selecciona un adaptador por sistema externo detrás de la API de integración, porque aísla los cambios de cada sistema y permite integrar más de uno.
+DRV-03: se selecciona un adaptador por sistema externo detrás de la API de integración, porque aísla los cambios de cada sistema.
 
 Candidate Pattern Evaluation Matrix:
 
