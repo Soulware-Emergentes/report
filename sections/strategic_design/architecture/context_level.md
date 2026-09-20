@@ -1,2 +1,2 @@
-Este diagrama representa la situación a gran escala de la arquitectura de la solución planteada. En este caso, tenemos el sistema SGP en el centro del diagrama, es utilizado por ambos usuarios y se comunica con los sistemas de beneficiarios y POI.
+Este diagrama representa la situación a gran escala de la arquitectura de la solución planteada. En este caso, tenemos el sistema SGT en el centro del diagrama, es utilizado por ambos usuarios y se comunica con los sistemas de beneficiarios y POI.
 ![Diagrama de Contexto](assets/strategic_design/architecture/context_level/contexto.png)

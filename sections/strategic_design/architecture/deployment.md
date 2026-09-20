@@ -1,2 +1,2 @@
-Finalmente, el diagrama de despliegue contempla la infraestructura actual de la institución y como manejan las aplicaciones empresariales. El servicio SGP sera desplegado en un .war dentro de un Apache Tomcat 9 dentro del Servidor de Aplicaciones. Al igual que el Modelo de IA.
+Finalmente, el diagrama de despliegue contempla la infraestructura actual de la institución y como manejan las aplicaciones empresariales. El servicio SGT sera desplegado en un .war dentro de un Apache Tomcat 9 dentro del Servidor de Aplicaciones. Al igual que el Modelo de IA.
 ![Diagrama de despliegues](assets/strategic_design/architecture/deployment/despliegue.png)
