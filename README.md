@@ -14,7 +14,7 @@
     <p style="margin: 10px 0 5px 0;">Equipo</p>
     <h2 style="font-size: 18px; margin: 0px 0 40px 0;">Soulware</h2>
     <p style="margin: 5px;">Proyecto</p>
-    <h2 style="font-size: 18px; margin: 0px 0 30px 0;">SGP</h2>
+    <h2 style="font-size: 18px; margin: 0px 0 30px 0;">SGT</h2>
     <p style="margin: 5px;"><strong>Integrantes:</strong></p>
     <table style="width: max-content; border-collapse: collapse; margin: 0 auto 50px auto;">
         <thead>
@@ -55,12 +55,76 @@
 
 # Registro de Versiones del Informe
 
+Esta sección resume las modificaciones relevantes realizadas al informe durante el ciclo de vida del proyecto. Cada versión corresponde a la incorporación, corrección o mejora de una o más secciones, y todas las registradas a la fecha forman parte del avance hacia la entrega TB1.
+
+| Versión | Fecha | Autor | Descripción de modificación |
+| --- | --- | --- | --- |
+| 1.0.0 | 2026-09-07 | Orozco Torres, Álvaro Joaquín | Creación de la estructura base del repositorio, configuración de mdm y definición del schema de secciones del informe. |
+| 1.1.0 | 2026-09-09 | Orozco Torres, Álvaro Joaquín | Carátula, perfiles de los integrantes del equipo y descripción de la startup. Configuración del workflow de construcción del documento en CI. |
+| 1.2.0 | 2026-09-10 | Orozco Torres, Álvaro Joaquín | Capítulo I: Solution Profile con antecedentes y problemática bajo 5W+2H, Lean UX Process y Segmentos objetivo. |
+| 1.2.1 | 2026-09-11 | Orozco Torres, Álvaro Joaquín | Capítulo I: ajuste del alcance del proyecto y corrección del Lean UX Canvas para diferenciar los business outcomes. |
+| 1.3.0 | 2026-09-12 | Esteban Román, Henry Kalet | Capítulo II: diseño de entrevistas, registro de entrevistas y análisis de entrevistas para ambos segmentos objetivo. |
+| 1.4.0 | 2026-09-14 | Vilca Saboya, Diego Alejandro | Capítulo II: Needfinding completo con User Personas, User Task Matrix, Empathy Mapping y As-Is Scenario Mapping, más el Ubiquitous Language. |
+| 1.5.0 | 2026-09-15 | Orozco Torres, Álvaro Joaquín | Capítulo II: Competidores, con el análisis competitivo y las estrategias y tácticas frente a competidores. |
+| 1.5.1 | 2026-09-16 | Esteban Román, Henry Kalet | Capítulo II: incorporación de los datos reales de los seis entrevistados, enlaces de video, timing y capturas en el registro de entrevistas. |
+| 1.6.0 | 2026-09-16 | Reaño Delgadillo, Henry Paolo | Capítulo IV: primera versión del Attribute-Driven Design, del Strategic-Level Domain-Driven Design y de la Software Architecture. |
+| 1.6.1 | 2026-09-16 | Orozco Torres, Álvaro Joaquín | Capítulo II: corrección de los términos del Ubiquitous Language y ajuste de la ficha de User Persona del asistente de gerencia general. |
+| 1.7.0 | 2026-09-17 | Orozco Torres, Álvaro Joaquín | Capítulo III: tabla de User Stories con criterios de aceptación redactados en formato Gherkin. |
+| 1.8.0 | 2026-09-18 | Crispin Ramos, Daniel Franco | Capítulo III: To-Be Scenario Mapping e Impact Mapping, con sus respectivos assets. |
+| 1.8.1 | 2026-09-18 | Orozco Torres, Álvaro Joaquín | Capítulo III: Product Backlog priorizado y captura de la instancia de YouTrack donde se gestiona. |
+| 1.9.0 | 2026-09-19 | Orozco Torres, Álvaro Joaquín | Capítulo IV: Architectural Drivers Backlog, Architectural Design Decisions y Quality Attribute Scenario Refinements. |
+| 1.9.1 | 2026-09-19 | Crispin Ramos, Daniel Franco | Capítulo III: actualización de los identificadores de User Story referenciados en el Impact Mapping. |
+| 2.0.0 | 2026-09-19 | Orozco Torres, Álvaro Joaquín | Conclusiones y bibliografía. Consolidación del informe para la entrega TB1. |
+| 2.1.0 | 2026-09-19 | Esteban Román, Henry Kalet | Registro de Versiones del Informe, Project Report Collaboration Insights y Student Outcome. Corrección del nombre del producto a SGT en todo el documento. |
 
 
 <div style="page-break-after: always;"></div>
 
 # Project Report Collaboration Insights
 
+URL del repositorio para el Project Report: [https://github.com/Soulware-Emergentes/report](https://github.com/Soulware-Emergentes/report)
+
+Se utilizó GitHub como plataforma de control de versiones y colaboración en equipo, dentro de la organización pública Soulware-Emergentes. Se siguió el flujo de trabajo GitFlow con las ramas principales main y develop, y ramas de trabajo por capítulo y por sección para cada contribución individual, que se integran a develop mediante pull request. El documento combinado se genera automáticamente desde las secciones en Markdown, de modo que ningún integrante lo edita a mano y los conflictos se reducen a la sección que cada uno está redactando.
+
+Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes:
+
+| Integrante | Código | Nombre en GitHub |
+| --- | --- | --- |
+| Crispin Ramos, Daniel Franco | 20221g120 | danielcr04 |
+| Esteban Román, Henry Kalet | 202310210 | kalet123-commit |
+| Orozco Torres, Álvaro Joaquín | 202220783 | overGDev |
+| Reaño Delgadillo, Henry Paolo | 20221e247 | PaoloHRRR |
+| Vilca Saboya, Diego Alejandro | 20231a778 | diesoks |
+
+**TB1**
+
+Tareas asignadas
+
+Para el desarrollo del TB1, cada participante del equipo realizó las siguientes tareas:
+
+| Integrante | Tareas asignadas |
+| --- | --- |
+| Crispin Ramos, Daniel Franco | Capítulo III: To-Be Scenario Mapping para ambos User Persona, con la elaboración de los mapas y su redacción comparativa frente al As-Is. Impact Mapping, incluyendo la formulación de los objetivos SMART y la vinculación de cada rama con sus User Stories. Actualización de los identificadores de User Story referenciados en el Impact Mapping. |
+| Esteban Román, Henry Kalet | Capítulo II: diseño de entrevistas para ambos segmentos, registro de las seis entrevistas con sus fichas completas y análisis de entrevistas con el sustento estadístico por segmento. Incorporación de los datos reales de los entrevistados, enlaces de video, timing y capturas. Registro de Versiones del Informe, Project Report Collaboration Insights y Student Outcome. |
+| Orozco Torres, Álvaro Joaquín | Estructura base del repositorio, configuración de mdm y del workflow de CI. Carátula, perfiles del equipo y descripción de la startup. Capítulo I: Solution Profile y Segmentos objetivo. Capítulo II: análisis competitivo y estrategias frente a competidores. Capítulo III: User Stories y Product Backlog. Capítulo IV: Architectural Drivers Backlog, Architectural Design Decisions y Quality Attribute Scenario Refinements. Conclusiones y bibliografía. |
+| Reaño Delgadillo, Henry Paolo | Capítulo IV: primera versión del Attribute-Driven Design con el Design Purpose y sus inputs. Strategic-Level Domain-Driven Design completo, incluyendo EventStorming, Candidate Context Discovery, Domain Message Flows Modeling, Bounded Context Canvases y Context Mapping. Software Architecture con los diagramas de System Landscape, Context, Container y Deployment. |
+| Vilca Saboya, Diego Alejandro | Capítulo II: Needfinding completo, con la elaboración de las fichas de User Persona, el User Task Matrix, los Empathy Maps y los As-Is Scenario Mapping para ambos segmentos. Ubiquitous Language con los términos del dominio del programa de apoyo agrícola. |
+
+GitHub Collaboration Insights
+
+Para el TB1 el equipo trabajó en la organización [https://github.com/Soulware-Emergentes](https://github.com/Soulware-Emergentes), que contiene el repositorio report con el informe del proyecto, gestionado con el flujo GitFlow y ramas de trabajo por sección para cada integrante.
+
+Gráfico de commits por integrante durante TB1:
+
+![Gráfico de commits del repositorio durante TB1](assets/insights/commits-tb1.png)
+
+Gráfico de red (network graph) de ramas en el repositorio durante TB1:
+
+![Network graph de las ramas del repositorio durante TB1](assets/insights/network-graph-tb1.png)
+
+Contribuciones de los integrantes durante TB1:
+
+![Contribuciones por integrante durante TB1](assets/insights/contributors-tb1.png)
 
 
 <div style="page-break-after: always;"></div>
@@ -135,6 +199,61 @@
 
 # Student Outcome
 
+El curso contribuye al cumplimiento del Student Outcome ABET: ABET – EAC - Student Outcome 3
+
+Criterio: Capacidad de comunicarse efectivamente con un rango de audiencias.
+
+En el siguiente cuadro se describe las acciones realizadas y enunciados de conclusiones por parte del grupo, que permiten sustentar el haber alcanzado el logro del ABET – EAC - Student Outcome 3.
+
+<div style="width: 100%; overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 18%;">Criterio específico</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 52%;">Acciones realizadas</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 30%;">Conclusiones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">3.c1. Comunica oralmente sus ideas y/o resultados con objetividad a público de diferentes especialidades y niveles jerárquicos, en el marco del desarrollo de un proyecto en ingeniería.</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
+                <p><strong>Crispin Ramos, Daniel Franco</strong><br>
+                TB1: Condujo la sesión de trabajo en la que el equipo revisó el As-Is de cada User Persona y acordó las fases del To-Be, explicando ante integrantes con distinto grado de conocimiento del dominio por qué cada cambio respondía a una frustración concreta levantada en campo. Expuso el Impact Mapping al equipo y sustentó oralmente la formulación de los objetivos SMART y su trazabilidad hasta las User Stories.</p>
+                <p><strong>Esteban Román, Henry Kalet</strong><br>
+                TB1: Condujo las seis entrevistas de Needfinding ante representantes de dos segmentos sin formación técnica en sistemas, adaptando el lenguaje para evitar terminología de ingeniería y apoyándose en el relato de casos concretos en lugar de preguntas abstractas. Presentó al equipo el análisis de entrevistas y comunicó los dos hallazgos que modificaban el alcance del proyecto.</p>
+                <p><strong>Orozco Torres, Álvaro Joaquín</strong><br>
+                TB1: Explicó al equipo el flujo de trabajo GitFlow y el funcionamiento del generador del documento, dirigiéndose a integrantes con distinto nivel de familiaridad con control de versiones. Sustentó oralmente las decisiones de diseño arquitectónico frente a los drivers de mayor impacto, contrastando ante el equipo los patrones alternativos evaluados y los criterios que llevaron a descartarlos.</p>
+                <p><strong>Reaño Delgadillo, Henry Paolo</strong><br>
+                TB1: Facilitó la sesión de EventStorming, guiando al equipo por los nueve pasos desde la identificación de eventos hasta la delimitación de los bounded contexts, y traduciendo conceptos de Domain-Driven Design a un lenguaje comprensible para integrantes con distinto grado de experiencia. Explicó los diagramas C4 relacionando el despliegue on-premise con la restricción institucional levantada en las entrevistas.</p>
+                <p><strong>Vilca Saboya, Diego Alejandro</strong><br>
+                TB1: Condujo las sesiones de elaboración de Empathy Maps y As-Is Scenario Mapping, moderando los aportes individuales y consolidando las observaciones del equipo en un solo lienzo por User Persona. Presentó el User Task Matrix explicando la distinción entre las tareas que el segmento realiza con o sin software y las funcionalidades del producto.</p>
+            </td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
+                <p><strong>Conclusiones TB1:</strong> Durante el TB1 el equipo comprobó que la comunicación oral fue determinante en dos momentos distintos: la recolección de información con usuarios ajenos al dominio técnico y la construcción colectiva de los artefactos de diseño. Las entrevistas obligaron a adaptar el lenguaje al del entrevistado, quien describe su trabajo en términos de fichas, sacos y visitas y no de sistemas o integraciones. Las sesiones de EventStorming y de mapeo de escenarios exigieron lo contrario, que cada integrante explicara su razonamiento técnico ante compañeros con distinto grado de conocimiento del dominio. El resultado fue que decisiones como la delimitación de los bounded contexts o la priorización del Product Backlog se tomaron con acuerdo explícito del equipo y no por imposición de quien redactaba la sección.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">3.c2. Comunica en forma escrita ideas y/o resultados con objetividad a público de diferentes especialidades y niveles jerárquicos, en el marco del desarrollo de un proyecto en ingeniería.</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
+                <p><strong>Crispin Ramos, Daniel Franco</strong><br>
+                TB1: Redactó las secciones de To-Be Scenario Mapping e Impact Mapping, describiendo por escrito el contraste entre el escenario actual y el propuesto para cada User Persona. Documentó los objetivos SMART indicando la mejora medible, la línea base y el plazo, de modo que un lector externo pueda verificar cómo se evaluará el resultado.</p>
+                <p><strong>Esteban Román, Henry Kalet</strong><br>
+                TB1: Redactó el diseño, el registro y el análisis de entrevistas del Capítulo II, incluyendo las seis fichas de entrevistado con su resumen descriptivo y el análisis con sustento estadístico por segmento. Elaboró el Registro de Versiones del Informe, el Project Report Collaboration Insights y la presente sección de Student Outcome.</p>
+                <p><strong>Orozco Torres, Álvaro Joaquín</strong><br>
+                TB1: Redactó el Solution Profile con la problemática estructurada bajo 5W+2H, el análisis competitivo, las User Stories con criterios de aceptación en formato Gherkin, el Architectural Drivers Backlog, las Architectural Design Decisions y las conclusiones. Documentó además las convenciones de trabajo del repositorio para que el equipo pudiera seguirlas sin asistencia.</p>
+                <p><strong>Reaño Delgadillo, Henry Paolo</strong><br>
+                TB1: Redactó el Capítulo IV en sus componentes de Domain-Driven Design y Software Architecture, explicando por escrito el proceso de EventStorming paso a paso, los flujos de mensajes entre contextos, los patrones de Context Mapping aplicados y la lectura de cada diagrama C4 para un lector que no participó en su elaboración.</p>
+                <p><strong>Vilca Saboya, Diego Alejandro</strong><br>
+                TB1: Redactó las secciones de Needfinding, describiendo el proceso seguido para elaborar cada artefacto y el análisis de las tareas de mayor frecuencia e importancia. Elaboró el Ubiquitous Language definiendo los términos del dominio en inglés con su equivalente en español, de modo que el vocabulario sea común entre el equipo y los stakeholders del programa.</p>
+            </td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
+                <p><strong>Conclusiones TB1:</strong> La redacción del informe se realizó de forma distribuida sobre un mismo documento, lo que obligó al equipo a acordar convenciones comunes de estilo y estructura desde el inicio en lugar de uniformizar al final. El trabajo por secciones independientes bajo control de versiones permitió que cinco personas escribieran en paralelo manteniendo un registro auditable de quién redactó cada parte y cuándo. El equipo también constató que escribir para un lector externo exige un nivel de precisión distinto al de la conversación interna: afirmaciones que en una reunión se daban por entendidas tuvieron que sustentarse en una cita bibliográfica, en una respuesta concreta de entrevista o en una decisión de diseño documentada con sus alternativas.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -410,10 +529,10 @@ Dado que la startup se orienta a un programa de una entidad pública (interopera
         <!-- Companies header -->
         <tr>
             <th scope="row" colspan="2"></th>
-            <td style="width: 25%; vertical-align: top;">Soulware</td>
-            <td style="width: 25%; vertical-align: top;">OpenG2P</td>
+            <td style="width: 25%; vertical-align: top;">Soulware<img src="assets/elicitation/competidores/analisis/soulware.png" alt="Logo de Soulware" style="max-width: 120px; max-height: 55px; width: auto; height: auto; display: block; margin: 8px auto 0;"></td>
+            <td style="width: 25%; vertical-align: top;">OpenG2P<img src="assets/elicitation/competidores/analisis/openg2p.png" alt="Logo de OpenG2P" style="max-width: 120px; max-height: 55px; width: auto; height: auto; display: block; margin: 8px auto 0;"></td>
             <td style="width: 25%; vertical-align: top;">OpenSPP (Farmer Registry)</td>
-            <td style="width: 25%; vertical-align: top;">Hyperscience</td>
+            <td style="width: 25%; vertical-align: top;">Hyperscience<img src="assets/elicitation/competidores/analisis/hyperscience.png" alt="Logo de Hyperscience" style="max-width: 120px; max-height: 55px; width: auto; height: auto; display: block; margin: 8px auto 0;"></td>
         </tr>
         <!-- Profile -->
         <!-- Profile: Overview -->
@@ -1000,13 +1119,13 @@ Unidad administrativa intermedia entre el trabajo de campo y la sede central del
 
 ## To-Be Scenario Mapping
 
-Los To-Be Scenario Mapping presentan el proceso esperado para los dos User Persona con la incorporación de SGP. Cada mapa organiza la experiencia futura en las filas Phases, Doing, Thinking y Feeling, y permite observar cómo cambian sus actividades, percepciones y emociones respecto del escenario actual.
+Los To-Be Scenario Mapping presentan el proceso esperado para los dos User Persona con la incorporación de SGT. Cada mapa organiza la experiencia futura en las filas Phases, Doing, Thinking y Feeling, y permite observar cómo cambian sus actividades, percepciones y emociones respecto del escenario actual.
 
 Para elaborar los mapas, el equipo inició con una etapa de preparación en la que revisó el escenario actual de cada User Persona y delimitó el proceso que debía representar. Luego, cada integrante realizó una lluvia de ideas individual sobre las acciones, pensamientos y emociones esperados. En la revisión conjunta se agruparon los aportes, se identificaron las fases como columnas y se acordó el nombre de cada una. Finalmente, los resultados se compararon con los As-Is Scenario Mapping para reconocer los cambios que podría ofrecer el proceso propuesto.
 
 **Agente de Campo**
 
-El escenario de Marco Quispe Huamán comprende la preparación de la visita, la identificación del terreno y la selección de uno existente o la delimitación de uno nuevo con el dispositivo. Después de evaluar la producción y completar la ficha física, el agente la digitaliza en formato PDF, la asocia con la tarea, el beneficiario y el terreno correspondientes, y confirma que quedó registrada en SGP.
+El escenario de Marco Quispe Huamán comprende la preparación de la visita, la identificación del terreno y la selección de uno existente o la delimitación de uno nuevo con el dispositivo. Después de evaluar la producción y completar la ficha física, el agente la digitaliza en formato PDF, la asocia con la tarea, el beneficiario y el terreno correspondientes, y confirma que quedó registrada en SGT.
 
 ![To-Be Scenario Mapping: Agente de Campo, parte 1](assets/specification/to_be/to-be-agente-de-campo-01.png)
 
@@ -1018,7 +1137,7 @@ En comparación con el As-Is, el agente puede consultar los terrenos registrados
 
 **Asistente de Gerencia General**
 
-El escenario de Rocío Fernández Salas comienza con la búsqueda de una ficha pendiente de revisión. La asistente comprueba la integridad del documento, consulta el beneficiario y el terreno asociados, compara el PDF con los datos extraídos y corrige cualquier diferencia antes de aprobar la ficha. Finalmente, consulta en SGP la actualización de la tarea y su contribución al avance del POI y del PEI.
+El escenario de Rocío Fernández Salas comienza con la búsqueda de una ficha pendiente de revisión. La asistente comprueba la integridad del documento, consulta el beneficiario y el terreno asociados, compara el PDF con los datos extraídos y corrige cualquier diferencia antes de aprobar la ficha. Finalmente, consulta en SGT la actualización de la tarea y su contribución al avance del POI y del PEI.
 
 ![To-Be Scenario Mapping: Asistente de Gerencia General, parte 1](assets/specification/to_be/to-be-asistente-gerencia-general-01.png)
 
@@ -1334,17 +1453,17 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
 
 ## Impact Mapping
 
-El Impact Mapping relaciona los objetivos del negocio con los cambios de comportamiento esperados en los User Persona y con las funcionalidades que SGP debe ofrecer para favorecerlos. Para su elaboración se utilizaron las fichas de Marco Quispe Huamán, Agente de Campo, y Rocío Fernández Salas, Asistente de Gerencia General, junto con las User Stories definidas para el producto.
+El Impact Mapping relaciona los objetivos del negocio con los cambios de comportamiento esperados en los User Persona y con las funcionalidades que SGT debe ofrecer para favorecerlos. Para su elaboración se utilizaron las fichas de Marco Quispe Huamán, Agente de Campo, y Rocío Fernández Salas, Asistente de Gerencia General, junto con las User Stories definidas para el producto.
 
 El equipo partió de los resultados de negocio planteados durante Lean UX y los formuló como objetivos SMART, indicando una mejora medible, una línea base y un plazo de seis meses. Luego identificó qué User Persona puede contribuir a cada objetivo, describió el comportamiento necesario como impacto y propuso los entregables del producto que lo hacen posible. Por último, cada rama se vinculó con las User Stories correspondientes, conservando su redacción en el formato «Como..., quiero..., para...».
 
-Los objetivos definidos fueron reducir en un 20 % el tiempo activo promedio dedicado a procesar cada ficha, disminuir en un 90 % las fichas observadas por inconsistencias y reducir en un 95 % los incidentes de acceso o modificación no autorizados. En los tres casos, el resultado se compara con la línea base levantada antes del piloto y debe alcanzarse al finalizar los primeros seis meses de operación de SGP.
+Los objetivos definidos fueron reducir en un 20 % el tiempo activo promedio dedicado a procesar cada ficha, disminuir en un 90 % las fichas observadas por inconsistencias y reducir en un 95 % los incidentes de acceso o modificación no autorizados. En los tres casos, el resultado se compara con la línea base levantada antes del piloto y debe alcanzarse al finalizar los primeros seis meses de operación de SGT.
 
-![Impact Mapping de SGP, parte 1](assets/specification/impact_mapping/impact-map-1.png)
+![Impact Mapping de SGT, parte 1](assets/specification/impact_mapping/impact-map-1.png)
 
-![Impact Mapping de SGP, parte 2](assets/specification/impact_mapping/impact-map-2.png)
+![Impact Mapping de SGT, parte 2](assets/specification/impact_mapping/impact-map-2.png)
 
-![Impact Mapping de SGP, parte 3](assets/specification/impact_mapping/impact-map-3.png)
+![Impact Mapping de SGT, parte 3](assets/specification/impact_mapping/impact-map-3.png)
 
 
  
@@ -1765,7 +1884,7 @@ Continuando con los pasos, identificamos los roles asociados a los comandos, es 
 En consecuencia, habiendo identificado los roles, identificamos las politicas del dominio. En este caso, siendo la coherencia que existe entre un terreno y su dueño, y el beneficiario al que se le hace seguimiento.
 ![EventStorming step 5](assets/strategic_design/ddd/eventstorming/eventstorming-5.png)
 
-Luego, identificamos los sistemas externos con los cuales se comunica SGP, en este caso siendo el sistema de beneficiarios (sistema que permitirá conocer la información de los beneficiarios de la entidad), sistema POI (sistema al cual se hara un envío de información por cada ficha validada) y el modelo de IA (que se representa como un sistema externo debido a su naturaleza).
+Luego, identificamos los sistemas externos con los cuales se comunica SGT, en este caso siendo el sistema de beneficiarios (sistema que permitirá conocer la información de los beneficiarios de la entidad), sistema POI (sistema al cual se hara un envío de información por cada ficha validada) y el modelo de IA (que se representa como un sistema externo debido a su naturaleza).
 ![EventStorming step 6](assets/strategic_design/ddd/eventstorming/eventstorming-6.png)
 
 Habiendo identificado ello, analizamos y detallamos las vistas que influirian en el sistema. En este paso ya detallamos el uso de la web y la aplicación móvil.
@@ -1774,7 +1893,7 @@ Habiendo identificado ello, analizamos y detallamos las vistas que influirian en
 Como uno de los últimos pasos, identificamos los agregados en base a lo planteado hasta el momento. En este caso, Terreno y Ficha vendrían a ser los agregados del dominio.
 ![EventStorming step 8](assets/strategic_design/ddd/eventstorming/eventstorming-8.png)
 
-Para concluir el proceso de EventStorming, identificamos los contextos vinculados al planteo del equipo. En primer lugar, y más importantes (ya que serán los que vamos a desarrollar nosotros) se encuentran el contexto de SGP y el contexto de IA. Mientras que los contextos de Beneficiarios y POI representan contextos con los cuales SGP se va a comunicar, más no se mapea a detalle esos contextos, ya que no estan dentro del alcance.
+Para concluir el proceso de EventStorming, identificamos los contextos vinculados al planteo del equipo. En primer lugar, y más importantes (ya que serán los que vamos a desarrollar nosotros) se encuentran el contexto de SGT y el contexto de IA. Mientras que los contextos de Beneficiarios y POI representan contextos con los cuales SGT se va a comunicar, más no se mapea a detalle esos contextos, ya que no estan dentro del alcance.
 ![EventStorming step 9](assets/strategic_design/ddd/eventstorming/eventstorming-9.png)
 
 
@@ -1784,18 +1903,18 @@ Para concluir el proceso de EventStorming, identificamos los contextos vinculado
 
 Como parte del proceso de EventStorming, paralelamente se fue barajando los posibles contextos a desarrollar. 
 
-Sin embargo, debido a la naturaleza del SGP y su alcance acotado, los contextos identificados (y finales) fueron determinados rapidamente.
+Sin embargo, debido a la naturaleza del SGT y su alcance acotado, los contextos identificados (y finales) fueron determinados rapidamente.
 
 <div style="page-break-after: always;"></div>
 
 ### Domain Message Flows Modeling
 
-Para ejemplificar como cada contexto se vincula y comunica uno con otro detallamos los 3 flujos más representativos de SGP.
+Para ejemplificar como cada contexto se vincula y comunica uno con otro detallamos los 3 flujos más representativos de SGT.
 
-En primer lugar, mapeamos el flujo que tiene un asistente de campo para el mapeo de un terreno dentro del sistema web. Lo que hace aquí es crear un espacio virtual con las coordenadas reales del terreno del beneficiario. Obviamente este proceso se realiza dentro del contexto del SGP, sin embargo, tiene una comunicación con el contexto de beneficiarios para hacer el match entre el DNI de beneficiario que llega para el mapeo del terreno con el beneficiario que ya se encuentra dentro del sistema de beneficiarios. El terreno solo se crea si el beneficiario se encuentra en el sistema de beneficiarios.
+En primer lugar, mapeamos el flujo que tiene un asistente de campo para el mapeo de un terreno dentro del sistema web. Lo que hace aquí es crear un espacio virtual con las coordenadas reales del terreno del beneficiario. Obviamente este proceso se realiza dentro del contexto del SGT, sin embargo, tiene una comunicación con el contexto de beneficiarios para hacer el match entre el DNI de beneficiario que llega para el mapeo del terreno con el beneficiario que ya se encuentra dentro del sistema de beneficiarios. El terreno solo se crea si el beneficiario se encuentra en el sistema de beneficiarios.
 ![Mapear terreno](assets/strategic_design/ddd/message_flows/mapear-terreno.jpg)
 
-En segundo lugar, se mapeo el flujo de mandar la ficha. El proceso empieza con el asistente de campo tomando foto con la aplicación móvil a la ficha realizada en campo, esta ficha viaja al contexto del SGP y este la traslada al contexto de la IA, donde se analiza y extrae la información de la foto. Al procesar ello, el contexto SGP guarda la información y ya esta disponible para validación de asesores de Gerencia General.
+En segundo lugar, se mapeo el flujo de mandar la ficha. El proceso empieza con el asistente de campo tomando foto con la aplicación móvil a la ficha realizada en campo, esta ficha viaja al contexto del SGT y este la traslada al contexto de la IA, donde se analiza y extrae la información de la foto. Al procesar ello, el contexto SGT guarda la información y ya esta disponible para validación de asesores de Gerencia General.
 ![Mandar ficha](assets/strategic_design/ddd/message_flows/mandar-ficha.jpg)
 
 Finalmente, se mapeo el flujo de validar una ficha, en el cual se involucra los asesores de Gerencia General, quienes a través de la web observan la información extraída por el modelo de IA y la imagen real. En caso se valide exitosamente la ficha, se envia esa información al contexto POI para contribuir al avance de una actividad.
@@ -1807,10 +1926,10 @@ Finalmente, se mapeo el flujo de validar una ficha, en el cual se involucra los 
 
 Como parte del analisis de los contextos identificados se desarrollo su canvas respectivo.
 
-En primer lugar se analizo el contexto SGP. Este contexto es el CORE del sistema, interactua directamente con el Frontend del usuario proporcionando todos los endpoints del sistema. Además se comunica con los contextos de Beneficiarios, POI y el modelo de IA.
-![Contexto SGP](assets/strategic_design/ddd/bc_canvases/sgp.jpg)
+En primer lugar se analizo el contexto SGT. Este contexto es el CORE del sistema, interactua directamente con el Frontend del usuario proporcionando todos los endpoints del sistema. Además se comunica con los contextos de Beneficiarios, POI y el modelo de IA.
+![Contexto SGT](assets/strategic_design/ddd/bc_canvases/sgp.jpg)
 
-Luego se analizo el contexto de Beneficiarios, que se trata de un contexto externo. Este contexto, tiene como único propósito dentro del sistema, proporcionar información de los beneficiarios. Se comunica con el contexto SGP.
+Luego se analizo el contexto de Beneficiarios, que se trata de un contexto externo. Este contexto, tiene como único propósito dentro del sistema, proporcionar información de los beneficiarios. Se comunica con el contexto SGT.
 ![Contexto Beneficiarios](assets/strategic_design/ddd/bc_canvases/beneficiarios.jpg)
 
 A su vez se analizo el contexto de POI, este contexto, al igual que el anterior, es un contexto externo. Tiene como único propósito recibir información sobre las fichas validadas por asesoria de Gerencia General. 
@@ -1823,16 +1942,16 @@ Finalmente, el contexto de IA es una mejora al proceso actual. Es meramente tecn
 
 ### Context Mapping
 
-Habiendo mapeado los contextos involucrados en SGP, se definió su comunicación. 
+Habiendo mapeado los contextos involucrados en SGT, se definió su comunicación. 
 
-El contexto SGP se comunica tanto con Beneficiarios, POI y el modelo de IA.
-Todas las comunicaciones siguen el patrón Customer/Supplier. Siendo, en todos los casos SGP el Customer.
+El contexto SGT se comunica tanto con Beneficiarios, POI y el modelo de IA.
+Todas las comunicaciones siguen el patrón Customer/Supplier. Siendo, en todos los casos SGT el Customer.
 
-La relación del contexto de SGP con el contexto de Beneficiarios es sencilla. SGP consume un endpoint (OHS) del contexto de Beneficiarios y mediante un ACL rescata lo estrictamente necesario para el sistema.
+La relación del contexto de SGT con el contexto de Beneficiarios es sencilla. SGT consume un endpoint (OHS) del contexto de Beneficiarios y mediante un ACL rescata lo estrictamente necesario para el sistema.
 
-La relación del contexto SGP con el contexto de POI sigue el mismo patrón, sin embargo, SGP no pide información, sino que la envía. En este caso, el contexto de SGP prepara un recurso con los lineamientos del POST (OHS) del sistema POI y envía un avance para una actividad.
+La relación del contexto SGT con el contexto de POI sigue el mismo patrón, sin embargo, SGT no pide información, sino que la envía. En este caso, el contexto de SGT prepara un recurso con los lineamientos del POST (OHS) del sistema POI y envía un avance para una actividad.
 
-Finalmente, la comunicación entre el contexto SGP con el contexto de IA es a través de un endpoint (OHS), el modelo de IA recibe la imagen, extrae los datos y los manda en un formato que SGP ya conoce. Por tanto, SGP no necesita modificar lo que llega al contexto (CNF).
+Finalmente, la comunicación entre el contexto SGT con el contexto de IA es a través de un endpoint (OHS), el modelo de IA recibe la imagen, extrae los datos y los manda en un formato que SGT ya conoce. Por tanto, SGT no necesita modificar lo que llega al contexto (CNF).
 ![Context Mapping](assets/strategic_design/ddd/mapping/context-mapping.png)
 
 <div style="page-break-after: always;"></div>
@@ -1849,23 +1968,23 @@ Representa el panorama global de la solución con respecto a los usuarios y la o
 
 ### Software Architecture Context Level Diagrams
 
-Este diagrama representa la situación a gran escala de la arquitectura de la solución planteada. En este caso, tenemos el sistema SGP en el centro del diagrama, es utilizado por ambos usuarios y se comunica con los sistemas de beneficiarios y POI.
+Este diagrama representa la situación a gran escala de la arquitectura de la solución planteada. En este caso, tenemos el sistema SGT en el centro del diagrama, es utilizado por ambos usuarios y se comunica con los sistemas de beneficiarios y POI.
 ![Diagrama de Contexto](assets/strategic_design/architecture/context_level/contexto.png)
 
 <div style="page-break-after: always;"></div>
 
 ### Software Architecture Container Level Diagrams
 
-Ahondamos al diagrama de contenedores, dentro del sistema SGP contamos con dos interfaces: aplicación móvil y aplicación web, ambos se comunican con el servicio SGP que contiene toda la lógica de negocio del sistema. 
-Este servicio se comunica con un modelo de IA que extrae información de las fichas que llegan al servicio SGP. Todos los archivos se guardan en el File Server Institucional.
-Los servicios externos de Beneficiarios y POI se comunican por llamadas REST con el Servicio SGP, y todos los servicios guardan su información en una única base de datos institucional en distintos esquemas.
+Ahondamos al diagrama de contenedores, dentro del sistema SGT contamos con dos interfaces: aplicación móvil y aplicación web, ambos se comunican con el servicio SGT que contiene toda la lógica de negocio del sistema. 
+Este servicio se comunica con un modelo de IA que extrae información de las fichas que llegan al servicio SGT. Todos los archivos se guardan en el File Server Institucional.
+Los servicios externos de Beneficiarios y POI se comunican por llamadas REST con el Servicio SGT, y todos los servicios guardan su información en una única base de datos institucional en distintos esquemas.
 ![Diagrama de contenedores](assets/strategic_design/architecture/container_level/contenedores.png)
 
 <div style="page-break-after: always;"></div>
 
 ### Software Architecture Deployment Diagrams
 
-Finalmente, el diagrama de despliegue contempla la infraestructura actual de la institución y como manejan las aplicaciones empresariales. El servicio SGP sera desplegado en un .war dentro de un Apache Tomcat 9 dentro del Servidor de Aplicaciones. Al igual que el Modelo de IA.
+Finalmente, el diagrama de despliegue contempla la infraestructura actual de la institución y como manejan las aplicaciones empresariales. El servicio SGT sera desplegado en un .war dentro de un Apache Tomcat 9 dentro del Servidor de Aplicaciones. Al igual que el Modelo de IA.
 ![Diagrama de despliegues](assets/strategic_design/architecture/deployment/despliegue.png)
 
 <div style="page-break-after: always;"></div>
