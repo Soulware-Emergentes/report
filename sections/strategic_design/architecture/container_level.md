@@ -1,0 +1,4 @@
+Ahondamos al diagrama de contenedores, dentro del sistema SGT contamos con dos interfaces: aplicación móvil y aplicación web, ambos se comunican con el servicio SGT que contiene toda la lógica de negocio del sistema. 
+Este servicio se comunica con un modelo de IA que extrae información de las fichas que llegan al servicio SGT. Todos los archivos se guardan en el File Server Institucional.
+Los servicios externos de Beneficiarios y POI se comunican por llamadas REST con el Servicio SGT, y todos los servicios guardan su información en una única base de datos institucional en distintos esquemas.
+![Diagrama de contenedores](assets/strategic_design/architecture/container_level/contenedores.png)

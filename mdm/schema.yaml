@@ -33,10 +33,12 @@
           children:
             - title: "Lean UX Problem Statements"
               alias: "problems"
+              skip_after: false
             - title: "Lean UX Assumptions"
               alias: "assumptions"
             - title: "Lean UX Hypothesis Statements"
               alias: "hypothesis"
+              skip_after: false
             - title: "Lean UX Canvas"
               alias: "canvas"
     - title: "Segmentos objetivo"
@@ -72,7 +74,7 @@
         - title: "As-is Scenario Mapping"
           alias: "as-is"
     - title: "Ubiquitous Language"
-      alias: "glossary"
+      alias: "ubiquitous_language"
 
 - title: "Capítulo III: Requirements Specification"
   alias: "specification"
@@ -94,6 +96,8 @@
           alias: "purpose"
         - title: "Attribute-Driven Design Inputs"
           alias: "inputs"
+          has_intro: true
+          skip_after: false
           children:
             - title: "Primary Functionality (Primary User Stories)"
               alias: "functionality"
@@ -112,6 +116,7 @@
         - title: "EventStorming"
         - title: "Candidate Context Discovery"
           alias: "discovery"
+          skip_after: false
         - title: "Domain Message Flows Modeling"
           alias: "message-flows"
         - title: "Bounded Context Canvases"
@@ -279,8 +284,8 @@
   children:
     - title: "Conclusiones y recomendaciones"
       alias: "conclusiones"
-    - title: "Video About-The-Team"
-      alias: "about-the-team"
+#    - title: "Video About-The-Team"
+#      alias: "about-the-team"
 
 - title: "Bibliografía"
 
