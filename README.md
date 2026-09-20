@@ -57,25 +57,26 @@
 
 Esta sección resume las modificaciones relevantes realizadas al informe durante el ciclo de vida del proyecto. Cada versión corresponde a la incorporación, corrección o mejora de una o más secciones, y todas las registradas a la fecha forman parte del avance hacia la entrega TB1.
 
-| Versión | Fecha | Autor | Descripción de modificación |
-| --- | --- | --- | --- |
-| 1.0.0 | 2026-09-07 | Orozco Torres, Álvaro Joaquín | Creación de la estructura base del repositorio, configuración de mdm y definición del schema de secciones del informe. |
-| 1.1.0 | 2026-09-09 | Orozco Torres, Álvaro Joaquín | Carátula, perfiles de los integrantes del equipo y descripción de la startup. Configuración del workflow de construcción del documento en CI. |
-| 1.2.0 | 2026-09-10 | Orozco Torres, Álvaro Joaquín | Capítulo I: Solution Profile con antecedentes y problemática bajo 5W+2H, Lean UX Process y Segmentos objetivo. |
-| 1.2.1 | 2026-09-11 | Orozco Torres, Álvaro Joaquín | Capítulo I: ajuste del alcance del proyecto y corrección del Lean UX Canvas para diferenciar los business outcomes. |
-| 1.3.0 | 2026-09-12 | Esteban Román, Henry Kalet | Capítulo II: diseño de entrevistas, registro de entrevistas y análisis de entrevistas para ambos segmentos objetivo. |
-| 1.4.0 | 2026-09-14 | Vilca Saboya, Diego Alejandro | Capítulo II: Needfinding completo con User Personas, User Task Matrix, Empathy Mapping y As-Is Scenario Mapping, más el Ubiquitous Language. |
-| 1.5.0 | 2026-09-15 | Orozco Torres, Álvaro Joaquín | Capítulo II: Competidores, con el análisis competitivo y las estrategias y tácticas frente a competidores. |
-| 1.5.1 | 2026-09-16 | Esteban Román, Henry Kalet | Capítulo II: incorporación de los datos reales de los seis entrevistados, enlaces de video, timing y capturas en el registro de entrevistas. |
-| 1.6.0 | 2026-09-16 | Reaño Delgadillo, Henry Paolo | Capítulo IV: primera versión del Attribute-Driven Design, del Strategic-Level Domain-Driven Design y de la Software Architecture. |
-| 1.6.1 | 2026-09-16 | Orozco Torres, Álvaro Joaquín | Capítulo II: corrección de los términos del Ubiquitous Language y ajuste de la ficha de User Persona del asistente de gerencia general. |
-| 1.7.0 | 2026-09-17 | Orozco Torres, Álvaro Joaquín | Capítulo III: tabla de User Stories con criterios de aceptación redactados en formato Gherkin. |
-| 1.8.0 | 2026-09-18 | Crispin Ramos, Daniel Franco | Capítulo III: To-Be Scenario Mapping e Impact Mapping, con sus respectivos assets. |
-| 1.8.1 | 2026-09-18 | Orozco Torres, Álvaro Joaquín | Capítulo III: Product Backlog priorizado y captura de la instancia de YouTrack donde se gestiona. |
-| 1.9.0 | 2026-09-19 | Orozco Torres, Álvaro Joaquín | Capítulo IV: Architectural Drivers Backlog, Architectural Design Decisions y Quality Attribute Scenario Refinements. |
-| 1.9.1 | 2026-09-19 | Crispin Ramos, Daniel Franco | Capítulo III: actualización de los identificadores de User Story referenciados en el Impact Mapping. |
-| 2.0.0 | 2026-09-19 | Orozco Torres, Álvaro Joaquín | Conclusiones y bibliografía. Consolidación del informe para la entrega TB1. |
-| 2.1.0 | 2026-09-19 | Esteban Román, Henry Kalet | Registro de Versiones del Informe, Project Report Collaboration Insights y Student Outcome. Corrección del nombre del producto a SGT en todo el documento. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Versión</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Fecha</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Autor</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Descripción de modificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">1.0.0</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-09-20</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco<br>Esteban Román, Henry Kalet<br>Orozco Torres, Álvaro Joaquín<br>Reaño Delgadillo, Henry Paolo<br>Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Versión inicial del informe para la entrega TB1.<br>Estructura base del repositorio, configuración de mdm y del workflow de CI.<br>Carátula<br>Registro de Versiones del Informe<br>Project Report Collaboration Insights<br>Student Outcome<br>Capítulo I: Introducción<br>- Startup Profile<br>- Solution Profile: antecedentes y problemática bajo 5W+2H, Lean UX Process<br>- Segmentos objetivo<br>Capítulo II: Requirements Elicitation & Analysis<br>- Competidores<br>- Entrevistas: diseño, registro y análisis<br>- Needfinding: User Personas, User Task Matrix, Empathy Mapping y As-Is Scenario Mapping<br>- Ubiquitous Language<br>Capítulo III: Requirements Specification<br>- To-Be Scenario Mapping<br>- User Stories<br>- Impact Mapping<br>- Product Backlog<br>Capítulo IV: Strategic-Level Software Design<br>- Attribute-Driven Design<br>- Strategic-Level Domain-Driven Design<br>- Software Architecture<br>Conclusiones<br>Bibliografía</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -88,13 +89,46 @@ Se utilizó GitHub como plataforma de control de versiones y colaboración en eq
 
 Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes:
 
-| Integrante | Código | Nombre en GitHub |
-| --- | --- | --- |
-| Crispin Ramos, Daniel Franco | 20221g120 | danielcr04 |
-| Esteban Román, Henry Kalet | 202310210 | kalet123-commit |
-| Orozco Torres, Álvaro Joaquín | 202220783 | overGDev |
-| Reaño Delgadillo, Henry Paolo | 20221e247 | PaoloHRRR |
-| Vilca Saboya, Diego Alejandro | 20231a778 | diesoks |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Integrante</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Código</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Nombre en GitHub</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">20221g120</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">danielcr04</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Esteban Román, Henry Kalet</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">202310210</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">kalet123-commit</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">202220783</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">overGDev</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reaño Delgadillo, Henry Paolo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">20221e247</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">PaoloHRRR</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">20231a778</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">diesoks</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-after: always;"></div>
 
 **TB1**
 
@@ -102,13 +136,40 @@ Tareas asignadas
 
 Para el desarrollo del TB1, cada participante del equipo realizó las siguientes tareas:
 
-| Integrante | Tareas asignadas |
-| --- | --- |
-| Crispin Ramos, Daniel Franco | Capítulo III: To-Be Scenario Mapping para ambos User Persona, con la elaboración de los mapas y su redacción comparativa frente al As-Is. Impact Mapping, incluyendo la formulación de los objetivos SMART y la vinculación de cada rama con sus User Stories. Actualización de los identificadores de User Story referenciados en el Impact Mapping. |
-| Esteban Román, Henry Kalet | Capítulo II: diseño de entrevistas para ambos segmentos, registro de las seis entrevistas con sus fichas completas y análisis de entrevistas con el sustento estadístico por segmento. Incorporación de los datos reales de los entrevistados, enlaces de video, timing y capturas. Registro de Versiones del Informe, Project Report Collaboration Insights y Student Outcome. |
-| Orozco Torres, Álvaro Joaquín | Estructura base del repositorio, configuración de mdm y del workflow de CI. Carátula, perfiles del equipo y descripción de la startup. Capítulo I: Solution Profile y Segmentos objetivo. Capítulo II: análisis competitivo y estrategias frente a competidores. Capítulo III: User Stories y Product Backlog. Capítulo IV: Architectural Drivers Backlog, Architectural Design Decisions y Quality Attribute Scenario Refinements. Conclusiones y bibliografía. |
-| Reaño Delgadillo, Henry Paolo | Capítulo IV: primera versión del Attribute-Driven Design con el Design Purpose y sus inputs. Strategic-Level Domain-Driven Design completo, incluyendo EventStorming, Candidate Context Discovery, Domain Message Flows Modeling, Bounded Context Canvases y Context Mapping. Software Architecture con los diagramas de System Landscape, Context, Container y Deployment. |
-| Vilca Saboya, Diego Alejandro | Capítulo II: Needfinding completo, con la elaboración de las fichas de User Persona, el User Task Matrix, los Empathy Maps y los As-Is Scenario Mapping para ambos segmentos. Ubiquitous Language con los términos del dominio del programa de apoyo agrícola. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Integrante</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Tareas asignadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo III: To-Be Scenario Mapping para ambos User Persona, con la elaboración de los mapas y su redacción comparativa frente al As-Is. Impact Mapping, incluyendo la formulación de los objetivos SMART y la vinculación de cada rama con sus User Stories. Actualización de los identificadores de User Story referenciados en el Impact Mapping.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Esteban Román, Henry Kalet</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo II: diseño de entrevistas para ambos segmentos, registro de las seis entrevistas con sus fichas completas y análisis de entrevistas con el sustento estadístico por segmento. Incorporación de los datos reales de los entrevistados, enlaces de video, timing y capturas. Registro de Versiones del Informe, Project Report Collaboration Insights y Student Outcome.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Estructura base del repositorio, configuración de mdm y del workflow de CI. Carátula, perfiles del equipo y descripción de la startup. Capítulo I: Solution Profile y Segmentos objetivo. Capítulo II: análisis competitivo y estrategias frente a competidores. Capítulo III: User Stories y Product Backlog. Capítulo IV: Architectural Drivers Backlog, Architectural Design Decisions y Quality Attribute Scenario Refinements. Conclusiones y bibliografía.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reaño Delgadillo, Henry Paolo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo IV: primera versión del Attribute-Driven Design con el Design Purpose y sus inputs. Strategic-Level Domain-Driven Design completo, incluyendo EventStorming, Candidate Context Discovery, Domain Message Flows Modeling, Bounded Context Canvases y Context Mapping. Software Architecture con los diagramas de System Landscape, Context, Container y Deployment.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo II: Needfinding completo, con la elaboración de las fichas de User Persona, el User Task Matrix, los Empathy Maps y los As-Is Scenario Mapping para ambos segmentos. Ubiquitous Language con los términos del dominio del programa de apoyo agrícola.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-after: always;"></div>
 
 GitHub Collaboration Insights
 
@@ -116,15 +177,17 @@ Para el TB1 el equipo trabajó en la organización [https://github.com/Soulware-
 
 Gráfico de commits por integrante durante TB1:
 
-![Gráfico de commits del repositorio durante TB1](assets/insights/commits-tb1.png)
+![Gráfico de commits del repositorio durante TB1](assets/insights/tb1/commits.png)
 
 Gráfico de red (network graph) de ramas en el repositorio durante TB1:
 
-![Network graph de las ramas del repositorio durante TB1](assets/insights/network-graph-tb1.png)
+![Network graph de las ramas del repositorio durante TB1](assets/insights/tb1/network.png)
+
+<div style="page-break-after: always;"></div>
 
 Contribuciones de los integrantes durante TB1:
 
-![Contribuciones por integrante durante TB1](assets/insights/contributors-tb1.png)
+![Contribuciones por integrante durante TB1](assets/insights/tb1/contributors.png)
 
 
 <div style="page-break-after: always;"></div>
@@ -779,93 +842,333 @@ Los seis entrevistados son user proxies (Cohn, 2004): personas que conocen y rep
 
 **Segmento Agentes de Campo: Entrevistado 1**
 
-| Atributo | Detalle |
-| --- | --- |
-| Nombre | Osvalo Eliott Rosado |
-| Edad | 26 |
-| Sexo | Masculino |
-| Distrito | Ate |
-| Ocupación | Agente de campo georreferenciador, 7 años en el puesto |
-| Fecha de entrevista | 15/09/2026 |
-| Timing | 00:00 - 04:31 |
-| Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
-| Captura | ![Captura entrevista Osvalo Rosado](assets/elicitation/entrevistas/registro/entrevista1-segmento1.png) |
-| Resumen | Osvalo trabaja en zona alta y define su rol como el de los ojos del programa, ya que sin la verificación presencial se estarían entregando insumos sin respaldo. Considera que el conocimiento de las personas y del terreno es lo que no puede hacerse desde la sede, porque en un mapa se ve un cuadrado y él sabe que ese cuadrado tiene una quebrada al medio y que la mitad no es cultivable. Del formato en papel rescata la firma y la huella del beneficiario, porque acredita que ambos estuvieron presentes y lo respalda a él si aparece un problema. En su última visita coordinó por teléfono el día anterior, viajó en camioneta y caminó cuarenta minutos hasta la parcela. Delimita recorriendo el perímetro y marcando vértices cuando el terreno lo permite; cuando hay monte o pendiente fuerte toma los vértices que alcanza y estima el resto con el beneficiario, criterio que aprendió de un compañero antiguo y que no figura en ningún instructivo. Además de la coordenada llena el formato, toma fotografías con su celular personal y recoge la firma y la huella, y envía las fotos por WhatsApp cuando encuentra señal, lo que le genera acumulación y pérdida de referencia sobre a qué parcela corresponde cada imagen. En la evaluación de producción la cantidad se la declara el beneficiario y él verifica lo que puede: si la cosecha está presente estima por sacos y si ya fue vendida no tiene forma de contrastarla. Convierte a kilogramos usando entre cuarenta y cinco y cincuenta kilos por saco según el producto, y advierte que no todos los agentes aplican el mismo factor. Como no le queda copia del formato, sustenta cualquier consulta posterior con un cuaderno propio que lleva por iniciativa personal. Tuvo un caso en que una cantidad apareció distinta en el sistema y se corrigió contrastando con ese cuaderno, aunque quedó la incomodidad de parecer responsable del error, y reconoce que se resolvió porque lo conocen y no porque existiera forma de comprobarlo. Sobre la propuesta pone tres condiciones para firmar con la misma tranquilidad que el papel: que la información no se pierda, que pueda ver lo que registró y que la firma del beneficiario tenga validez. Advierte que si tuviera que seguir llevando el papel además de la herramienta, la usaría al inicio por obligación y la abandonaría en unos dos meses, como ha ocurrido con otras cosas que les han dado. Valora el sello de integridad como respaldo personal, ya que la responsabilidad de lo registrado recae sobre su firma, pero señala que si se presenta como fiscalización va a generar resistencia. Lo que no debería fallar nunca, según él, es que se pierda la información registrada, porque no puede volver a subir cuatro horas a pedir una firma otra vez. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nombre</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Osvalo Eliott Rosado</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">26</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sexo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Masculino</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Distrito</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ate</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ocupación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Agente de campo georreferenciador, 7 años en el puesto</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Fecha de entrevista</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">15/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Timing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">00:00 - 04:31</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Video</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue">Ver video</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Captura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><img src="assets/elicitation/entrevistas/registro/entrevista1-segmento1.png" alt="Captura entrevista Osvalo Rosado" style="display: block; max-width: 100%; height: auto;"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resumen</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Osvalo trabaja en zona alta y define su rol como el de los ojos del programa, ya que sin la verificación presencial se estarían entregando insumos sin respaldo. Considera que el conocimiento de las personas y del terreno es lo que no puede hacerse desde la sede, porque en un mapa se ve un cuadrado y él sabe que ese cuadrado tiene una quebrada al medio y que la mitad no es cultivable. Del formato en papel rescata la firma y la huella del beneficiario, porque acredita que ambos estuvieron presentes y lo respalda a él si aparece un problema. En su última visita coordinó por teléfono el día anterior, viajó en camioneta y caminó cuarenta minutos hasta la parcela. Delimita recorriendo el perímetro y marcando vértices cuando el terreno lo permite; cuando hay monte o pendiente fuerte toma los vértices que alcanza y estima el resto con el beneficiario, criterio que aprendió de un compañero antiguo y que no figura en ningún instructivo. Además de la coordenada llena el formato, toma fotografías con su celular personal y recoge la firma y la huella, y envía las fotos por WhatsApp cuando encuentra señal, lo que le genera acumulación y pérdida de referencia sobre a qué parcela corresponde cada imagen. En la evaluación de producción la cantidad se la declara el beneficiario y él verifica lo que puede: si la cosecha está presente estima por sacos y si ya fue vendida no tiene forma de contrastarla. Convierte a kilogramos usando entre cuarenta y cinco y cincuenta kilos por saco según el producto, y advierte que no todos los agentes aplican el mismo factor. Como no le queda copia del formato, sustenta cualquier consulta posterior con un cuaderno propio que lleva por iniciativa personal. Tuvo un caso en que una cantidad apareció distinta en el sistema y se corrigió contrastando con ese cuaderno, aunque quedó la incomodidad de parecer responsable del error, y reconoce que se resolvió porque lo conocen y no porque existiera forma de comprobarlo. Sobre la propuesta pone tres condiciones para firmar con la misma tranquilidad que el papel: que la información no se pierda, que pueda ver lo que registró y que la firma del beneficiario tenga validez. Advierte que si tuviera que seguir llevando el papel además de la herramienta, la usaría al inicio por obligación y la abandonaría en unos dos meses, como ha ocurrido con otras cosas que les han dado. Valora el sello de integridad como respaldo personal, ya que la responsabilidad de lo registrado recae sobre su firma, pero señala que si se presenta como fiscalización va a generar resistencia. Lo que no debería fallar nunca, según él, es que se pierda la información registrada, porque no puede volver a subir cuatro horas a pedir una firma otra vez.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 **Segmento Agentes de Campo: Entrevistado 2**
 
-| Atributo | Detalle |
-| --- | --- |
-| Nombre | Mauricio Andrés Canchis Fernández |
-| Edad | 25 |
-| Sexo | Masculino |
-| Distrito | Santiago de Surco |
-| Ocupación | Agente de campo georreferenciador, 3 años en el puesto |
-| Fecha de entrevista | 15/09/2026 |
-| Timing | 04:31 - 09:10 |
-| Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
-| Captura | ![Captura entrevista Mauricio Canchis](assets/elicitation/entrevistas/registro/entrevista2-segmento1.png) |
-| Resumen | Mauricio atiende parcelas que están a dos días de viaje, con tramos donde no entra vehículo, de modo que una salida suya no dura un día sino una semana. Se describe como la única presencia del programa que esa población ve en meses. Sostiene que casi todo su trabajo depende de su criterio, porque es él quien decide si una parcela se puede medir completa, si el terreno da y si vale la pena volver, y nadie en la sede puede tomar esa decisión porque nadie ha estado ahí. Del formato en papel valora que funciona siempre, no se apaga ni se descarga, y advierte que eso debe tenerse muy en cuenta antes de proponer otra cosa. Mide con el GPS de la oficina zonal cuando hay equipo disponible, pero como son varios agentes y hay pocos equipos, aproximadamente una de cada tres salidas la realiza sin equipo institucional y mide con una aplicación que descargó en su celular personal, situación que no se reporta. En su zona casi nunca puede recorrer el perímetro por el monte cerrado, así que toma un punto referencial al centro y los vértices que alcanza, y conversa el resto con el beneficiario, por lo que el área que consigna en el formato es una estimación. Cuando el beneficiario está presente le muestra la pantalla con el punto y le explica que esa es su parcela y que ese punto queda registrado a su nombre, práctica que le enseñaron para reducir la desconfianza inicial de la gente, que suele pensar que se mide para quitarles algo. La cantidad producida se la declaran y él calcula a partir del número de sacos, usando cuarenta kilos por saco porque así se lo enseñaron en su oficina zonal; sabe que en otras zonas se usa otro número, lo ha conversado con compañeros sin llegar a un acuerdo, y señala que nadie les ha entregado una tabla oficial. Deja el formato en la oficina zonal y de ahí va en valija, sin enterarse de nada más salvo que lo llamen para corregir, lo que suele ocurrir cuando ya está en otra zona y debe hacer memoria de algo de un mes atrás. No lleva cuaderno aparte porque no le alcanza el tiempo, de modo que si le preguntan por un dato antiguo responde de memoria y, si no recuerda, lo dice. Para confiar en un registro cerrado en la parcela pide que el equipo dure varios días y que, si el celular se malogra, no pierda la semana entera de trabajo. Añade un punto que según él nadie pregunta: recibir un equipo caro para llevar a campo lo pone en riesgo personal, porque en algunas zonas uno no quiere andar mostrando aparatos. Le gustaría tener cargadas de antemano las parcelas que el beneficiario ya tiene registradas, porque le ha ocurrido llegar y encontrar una parcela adicional sin saber si otro agente ya la registró el año anterior, lo que luego aparece duplicado en la sede y se le consulta a él. Lo que no debería fallar nunca es que el registro aguante, ya que no necesita que sea bonito sino que después de seis días en campo conserve todo lo levantado. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nombre</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mauricio Andrés Canchis Fernández</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">25</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sexo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Masculino</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Distrito</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Santiago de Surco</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ocupación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Agente de campo georreferenciador, 3 años en el puesto</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Fecha de entrevista</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">15/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Timing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">04:31 - 09:10</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Video</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue">Ver video</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Captura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><img src="assets/elicitation/entrevistas/registro/entrevista2-segmento1.png" alt="Captura entrevista Mauricio Canchis" style="display: block; max-width: 100%; height: auto;"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resumen</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mauricio atiende parcelas que están a dos días de viaje, con tramos donde no entra vehículo, de modo que una salida suya no dura un día sino una semana. Se describe como la única presencia del programa que esa población ve en meses. Sostiene que casi todo su trabajo depende de su criterio, porque es él quien decide si una parcela se puede medir completa, si el terreno da y si vale la pena volver, y nadie en la sede puede tomar esa decisión porque nadie ha estado ahí. Del formato en papel valora que funciona siempre, no se apaga ni se descarga, y advierte que eso debe tenerse muy en cuenta antes de proponer otra cosa. Mide con el GPS de la oficina zonal cuando hay equipo disponible, pero como son varios agentes y hay pocos equipos, aproximadamente una de cada tres salidas la realiza sin equipo institucional y mide con una aplicación que descargó en su celular personal, situación que no se reporta. En su zona casi nunca puede recorrer el perímetro por el monte cerrado, así que toma un punto referencial al centro y los vértices que alcanza, y conversa el resto con el beneficiario, por lo que el área que consigna en el formato es una estimación. Cuando el beneficiario está presente le muestra la pantalla con el punto y le explica que esa es su parcela y que ese punto queda registrado a su nombre, práctica que le enseñaron para reducir la desconfianza inicial de la gente, que suele pensar que se mide para quitarles algo. La cantidad producida se la declaran y él calcula a partir del número de sacos, usando cuarenta kilos por saco porque así se lo enseñaron en su oficina zonal; sabe que en otras zonas se usa otro número, lo ha conversado con compañeros sin llegar a un acuerdo, y señala que nadie les ha entregado una tabla oficial. Deja el formato en la oficina zonal y de ahí va en valija, sin enterarse de nada más salvo que lo llamen para corregir, lo que suele ocurrir cuando ya está en otra zona y debe hacer memoria de algo de un mes atrás. No lleva cuaderno aparte porque no le alcanza el tiempo, de modo que si le preguntan por un dato antiguo responde de memoria y, si no recuerda, lo dice. Para confiar en un registro cerrado en la parcela pide que el equipo dure varios días y que, si el celular se malogra, no pierda la semana entera de trabajo. Añade un punto que según él nadie pregunta: recibir un equipo caro para llevar a campo lo pone en riesgo personal, porque en algunas zonas uno no quiere andar mostrando aparatos. Le gustaría tener cargadas de antemano las parcelas que el beneficiario ya tiene registradas, porque le ha ocurrido llegar y encontrar una parcela adicional sin saber si otro agente ya la registró el año anterior, lo que luego aparece duplicado en la sede y se le consulta a él. Lo que no debería fallar nunca es que el registro aguante, ya que no necesita que sea bonito sino que después de seis días en campo conserve todo lo levantado.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 **Segmento Agentes de Campo: Entrevistado 3**
 
-| Atributo | Detalle |
-| --- | --- |
-| Nombre | Kerry Baquerrizo |
-| Edad | 26 |
-| Sexo | Masculino |
-| Distrito | Ate |
-| Ocupación | Agente de campo georreferenciador, 8 meses en el puesto |
-| Fecha de entrevista | 15/09/2026 |
-| Timing | 09:10 - 13:45 |
-| Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
-| Captura | ![Captura entrevista Kerry Baquerrizo](assets/elicitation/entrevistas/registro/entrevista3-segmento1.png) |
-| Resumen | Kerry es el agente con menos tiempo en el puesto y señala que lo que más le costó aprender fue el criterio, porque nadie le explicó cómo delimitar una parcela: salió dos veces con un compañero, observó cómo lo hacía y de ahí lo enviaron solo, de modo que reproduce lo que vio sin saber si es lo correcto o si es la costumbre de esa persona. Al conversarlo con otros agentes confirmó que cada uno lo hace distinto, uno recorre todo el perímetro y otro toma cuatro puntos, y él toma el perímetro cuando se puede porque le parece más serio, aunque se demora el doble que los demás. Reconoce que el papel le complica, pero entiende que la firma del beneficiario es necesaria y considera que el resto de los datos y las casillas podrían estar en otro lado. Por iniciativa propia se creó un formulario en Google Forms que llena desde el celular en la parcela para no perder información, y luego copia los datos al sistema y al formato en papel. Lo hizo porque al inicio se le mojó un formato en la mochila y tuvo que volver a subir a la parcela. En ese formulario registra nombre, DNI, coordenadas, cultivo, área, cantidad, observaciones y una fotografía, prácticamente lo mismo que el formato oficial pero con guardado automático. Tres o cuatro compañeros ya le pidieron el enlace, sin que se trate de una herramienta oficial. La cantidad producida se la declara el beneficiario en sacos y él multiplica por cincuenta kilos, factor que le indicó un compañero y del que no tiene certeza. Tuvo un caso en que un área que él registró apareció más pequeña en el sistema y, al preguntar, le respondieron que había sido ajustada en la sede sin precisar quién ni por qué; no reclamó por ser nuevo, pero le habría gustado saberlo porque el nombre que figura en ese registro es el suyo. Considera que cerrar el registro en la parcela sería un avance enorme porque es lo que ya hace de forma artesanal con su formulario, y su única condición es que la firma digital tenga validez, en cuyo caso dejaría el papel de inmediato. Aun si tuviera que llevar ambos lo usaría, porque ya lo hace, aunque advierte que los compañeros con más antigüedad lo verán como trabajo adicional. Lo que no debería fallar nunca, para él, es poder consultar lo que ya registró antes, ya que hoy entrega el formato y no le queda nada, mientras que con su formulario al menos conserva su historial. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nombre</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Kerry Baquerrizo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">26</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sexo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Masculino</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Distrito</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ate</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ocupación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Agente de campo georreferenciador, 8 meses en el puesto</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Fecha de entrevista</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">15/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Timing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">09:10 - 13:45</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Video</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue">Ver video</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Captura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><img src="assets/elicitation/entrevistas/registro/entrevista3-segmento1.png" alt="Captura entrevista Kerry Baquerrizo" style="display: block; max-width: 100%; height: auto;"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resumen</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Kerry es el agente con menos tiempo en el puesto y señala que lo que más le costó aprender fue el criterio, porque nadie le explicó cómo delimitar una parcela: salió dos veces con un compañero, observó cómo lo hacía y de ahí lo enviaron solo, de modo que reproduce lo que vio sin saber si es lo correcto o si es la costumbre de esa persona. Al conversarlo con otros agentes confirmó que cada uno lo hace distinto, uno recorre todo el perímetro y otro toma cuatro puntos, y él toma el perímetro cuando se puede porque le parece más serio, aunque se demora el doble que los demás. Reconoce que el papel le complica, pero entiende que la firma del beneficiario es necesaria y considera que el resto de los datos y las casillas podrían estar en otro lado. Por iniciativa propia se creó un formulario en Google Forms que llena desde el celular en la parcela para no perder información, y luego copia los datos al sistema y al formato en papel. Lo hizo porque al inicio se le mojó un formato en la mochila y tuvo que volver a subir a la parcela. En ese formulario registra nombre, DNI, coordenadas, cultivo, área, cantidad, observaciones y una fotografía, prácticamente lo mismo que el formato oficial pero con guardado automático. Tres o cuatro compañeros ya le pidieron el enlace, sin que se trate de una herramienta oficial. La cantidad producida se la declara el beneficiario en sacos y él multiplica por cincuenta kilos, factor que le indicó un compañero y del que no tiene certeza. Tuvo un caso en que un área que él registró apareció más pequeña en el sistema y, al preguntar, le respondieron que había sido ajustada en la sede sin precisar quién ni por qué; no reclamó por ser nuevo, pero le habría gustado saberlo porque el nombre que figura en ese registro es el suyo. Considera que cerrar el registro en la parcela sería un avance enorme porque es lo que ya hace de forma artesanal con su formulario, y su única condición es que la firma digital tenga validez, en cuyo caso dejaría el papel de inmediato. Aun si tuviera que llevar ambos lo usaría, porque ya lo hace, aunque advierte que los compañeros con más antigüedad lo verán como trabajo adicional. Lo que no debería fallar nunca, para él, es poder consultar lo que ya registró antes, ya que hoy entrega el formato y no le queda nada, mientras que con su formulario al menos conserva su historial.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 **Segmento Funcionarios Administrativos: Entrevistado 1**
 
-| Atributo | Detalle |
-| --- | --- |
-| Nombre | María Fernanda Esteban Román |
-| Edad | 23 |
-| Sexo | Femenino |
-| Distrito | Ate |
-| Ocupación | Asistente administrativa de gerencia general, 5 años en el puesto |
-| Fecha de entrevista | 15/09/2026 |
-| Timing | 13:45 - 18:51 |
-| Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
-| Captura | ![Captura entrevista María Fernanda Esteban](assets/elicitation/entrevistas/registro/entrevista1-segmento2.png) |
-| Resumen | María Fernanda recibe las actas que llegan de las oficinas zonales, las escanea, las verifica contra el sistema de beneficiarios y registra los datos, de modo que todo lo que llega de campo pasa por ella antes de existir en el sistema. Antes de este puesto estuvo dos años en archivo, por lo que conoce cómo se maneja la documentación física. Maneja entre treinta y cuarenta expedientes por semana, según cómo llegue la valija, y trabaja con tres sistemas: el de registro de beneficiarios, el de consolidación donde se reporta el avance y un Excel propio que usa como paso intermedio. Se describe como el puente del proceso, porque si ella no registra un documento, para la institución ese trabajo no ocurrió. Ubica su criterio en detectar cuando algo no cuadra, ya que un formato puede estar completo y bien llenado y aun así advertir que el nombre no corresponde al código o que la cantidad es desproporcionada para el área, algo que solo distingue quien ya ha visto miles de expedientes. Del procedimiento actual conservaría que todo queda con su acta física archivada, porque ante una auditoría ahí está el papel firmado. Al describir el último expediente que cerró detalla que la valija llegó el lunes con treinta y dos actas, que las separa por oficina zonal, las escanea en la multifuncional y las guarda nombrando el archivo con el DNI y la fecha; luego abre el sistema de beneficiarios, verifica que la persona exista y que el código coincida, pasa los datos a su Excel intermedio y al final de la semana lo usa para digitar en el sistema de consolidación. Utiliza el Excel intermedio porque el sistema de consolidación es lento y, si se cae a la mitad, pierde lo avanzado. Los campos que traslada de un documento a otro son catorce: código de beneficiario, DNI, apellidos y nombres, código de parcela, coordenada este, coordenada norte, fecha de evaluación, cultivo, área en hectáreas, cantidad producida, unidad de medida, nombre del agente, número de acta y observaciones. Cada expediente le toma entre veinticinco y treinta minutos contando el escaneo y la verificación, y supera la hora cuando hay observaciones. Estima que uno de cada seis expedientes presenta alguna observación, siendo lo más frecuente las unidades y los nombres mal escritos. Como último caso en que algo no calzó relata un acta que consignaba ochocientos kilos, cifra imposible para el área registrada; al llamar a la oficina zonal le informaron que el agente había anotado sacos y que alguien convirtió mal, y la corrección le tomó tres días. Sobre la fidelidad de los documentos escaneados indica que nunca se le ha cuestionado uno, pero reconoce que tampoco tendría cómo comprobarlo, ya que si alguien abriera el archivo escaneado y lo modificara ella no se daría cuenta, y señala que no lo había pensado hasta que se lo preguntaron. Si un sistema le presentara los campos ya leídos, revisaría siempre el DNI, el código de beneficiario, la cantidad con su unidad y la fecha. Al inicio revisaría todos los campos, no por desconfianza sino para observar cómo se equivoca el sistema, y después de dos o tres meses pasaría a revisar solo lo marcado como dudoso. Asume que la responsabilidad por un error sería suya porque es quien aprueba, y por eso necesita poder ver el documento al costado del dato y no solamente el dato. El tiempo que hoy dedica a digitar lo usaría en perseguir las observaciones, que hoy quedan pendientes semanas porque no alcanza a llamar zona por zona y son lo que realmente traba el proceso. Lo que no debería fallar nunca es la relación entre el dato y su acta de origen, porque mientras pueda abrir el acta y ver de dónde salió cada número, el resto lo maneja. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nombre</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">María Fernanda Esteban Román</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">23</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sexo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Femenino</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Distrito</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ate</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ocupación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Asistente administrativa de gerencia general, 5 años en el puesto</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Fecha de entrevista</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">15/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Timing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">13:45 - 18:51</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Video</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue">Ver video</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Captura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><img src="assets/elicitation/entrevistas/registro/entrevista1-segmento2.png" alt="Captura entrevista María Fernanda Esteban" style="display: block; max-width: 100%; height: auto;"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resumen</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">María Fernanda recibe las actas que llegan de las oficinas zonales, las escanea, las verifica contra el sistema de beneficiarios y registra los datos, de modo que todo lo que llega de campo pasa por ella antes de existir en el sistema. Antes de este puesto estuvo dos años en archivo, por lo que conoce cómo se maneja la documentación física. Maneja entre treinta y cuarenta expedientes por semana, según cómo llegue la valija, y trabaja con tres sistemas: el de registro de beneficiarios, el de consolidación donde se reporta el avance y un Excel propio que usa como paso intermedio. Se describe como el puente del proceso, porque si ella no registra un documento, para la institución ese trabajo no ocurrió. Ubica su criterio en detectar cuando algo no cuadra, ya que un formato puede estar completo y bien llenado y aun así advertir que el nombre no corresponde al código o que la cantidad es desproporcionada para el área, algo que solo distingue quien ya ha visto miles de expedientes. Del procedimiento actual conservaría que todo queda con su acta física archivada, porque ante una auditoría ahí está el papel firmado. Al describir el último expediente que cerró detalla que la valija llegó el lunes con treinta y dos actas, que las separa por oficina zonal, las escanea en la multifuncional y las guarda nombrando el archivo con el DNI y la fecha; luego abre el sistema de beneficiarios, verifica que la persona exista y que el código coincida, pasa los datos a su Excel intermedio y al final de la semana lo usa para digitar en el sistema de consolidación. Utiliza el Excel intermedio porque el sistema de consolidación es lento y, si se cae a la mitad, pierde lo avanzado. Los campos que traslada de un documento a otro son catorce: código de beneficiario, DNI, apellidos y nombres, código de parcela, coordenada este, coordenada norte, fecha de evaluación, cultivo, área en hectáreas, cantidad producida, unidad de medida, nombre del agente, número de acta y observaciones. Cada expediente le toma entre veinticinco y treinta minutos contando el escaneo y la verificación, y supera la hora cuando hay observaciones. Estima que uno de cada seis expedientes presenta alguna observación, siendo lo más frecuente las unidades y los nombres mal escritos. Como último caso en que algo no calzó relata un acta que consignaba ochocientos kilos, cifra imposible para el área registrada; al llamar a la oficina zonal le informaron que el agente había anotado sacos y que alguien convirtió mal, y la corrección le tomó tres días. Sobre la fidelidad de los documentos escaneados indica que nunca se le ha cuestionado uno, pero reconoce que tampoco tendría cómo comprobarlo, ya que si alguien abriera el archivo escaneado y lo modificara ella no se daría cuenta, y señala que no lo había pensado hasta que se lo preguntaron. Si un sistema le presentara los campos ya leídos, revisaría siempre el DNI, el código de beneficiario, la cantidad con su unidad y la fecha. Al inicio revisaría todos los campos, no por desconfianza sino para observar cómo se equivoca el sistema, y después de dos o tres meses pasaría a revisar solo lo marcado como dudoso. Asume que la responsabilidad por un error sería suya porque es quien aprueba, y por eso necesita poder ver el documento al costado del dato y no solamente el dato. El tiempo que hoy dedica a digitar lo usaría en perseguir las observaciones, que hoy quedan pendientes semanas porque no alcanza a llamar zona por zona y son lo que realmente traba el proceso. Lo que no debería fallar nunca es la relación entre el dato y su acta de origen, porque mientras pueda abrir el acta y ver de dónde salió cada número, el resto lo maneja.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 **Segmento Funcionarios Administrativos: Entrevistado 2**
 
-| Atributo | Detalle |
-| --- | --- |
-| Nombre | Bruno Rolando Núñez Gallegos |
-| Edad | 28 |
-| Sexo | Masculino |
-| Distrito | San Borja |
-| Ocupación | Coordinador del área, 9 años en la institución |
-| Fecha de entrevista | 15/09/2026 |
-| Timing | 18:51 - 23:58 |
-| Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
-| Captura | ![Captura entrevista Bruno Núñez](assets/elicitation/entrevistas/registro/entrevista2-segmento2.png) |
-| Resumen | Bruno empezó como analista y pasó a coordinación hace cuatro años. No digita: revisa lo que consolidan las asistentes, da la conformidad y eso es lo que sube al reporte, de modo que su firma está en lo que ve la gerencia y es quien responde si algo sale mal. Por quincena revisa entre ciento veinte y ciento cincuenta expedientes, que es lo que procesan las tres asistentes del área. Trabaja principalmente con el sistema de consolidación y con los reportes que le preparan, y ha participado en las coordinaciones con la Oficina de Tecnologías cuando se intentó la carga masiva. Ubica su criterio en decidir qué se reporta y qué se observa, porque a veces llega información incompleta y hay que definir si se reporta parcial o se espera, decisión con consecuencias porque el avance del POI se mide con eso. Del procedimiento actual conservaría la cadena de responsabilidad, ya que cada documento tiene un responsable en cada etapa, el agente que lo levanta, la asistente que lo registra y él que lo aprueba, algo que según indica no existe en muchas instituciones. Describe que la valija llega quincenalmente, que las asistentes procesan durante esa quincena y que él revisa al cierre, de modo que entre el día de la visita y el reporte que ve la gerencia pueden pasar tres semanas, o cuatro si la zona es lejana. La información entra al sistema que consolida el POI a mano, campo por campo; hubo un intento de carga masiva con una plantilla de Excel, pero la validación rechazaba la mitad de los registros por formato y se dejó de usar. Sobre integraciones indica que el tema lo maneja la Oficina de Tecnologías y que, por lo que sabe, hoy no hay nada automático, remitiendo la respuesta técnica a esa oficina. Señala que el valor oficial del expediente lo da el acta física firmada, que el escaneo es una copia de trabajo y que lo que se reporta es el registro del sistema, pero que ante una controversia el que manda es el papel. Relata un caso en que control interno observó un acta cuyos datos en el sistema no coincidían con el físico; se determinó que fue error de digitación, pero el proceso de aclaración tomó casi dos meses y hubo que rastrear el acta original en archivo. Lo que habría acelerado ese proceso, según él, es poder demostrar de entrada cuál era la versión original y quién la modificó, ya que armar esa historia tomó semanas a base de correos y de preguntar a la gente qué recordaba. Recibiría bien un mecanismo que permita demostrar que un documento no fue alterado, pero advierte que hay que cuidar cómo se presenta: si el personal entiende que es para vigilarlos habrá resistencia e incluso el sindicato podría pronunciarse, mientras que presentado como respaldo frente a observaciones de control hay apertura. Indica que él no revisa campo por campo porque para eso están las asistentes, y que lo que necesita es saber qué porcentaje del expediente fue procesado automáticamente y qué fue verificado por una persona, ya que si va a firmar necesita saber sobre qué está firmando. El tiempo liberado del equipo lo usaría en análisis, porque hoy nadie mira tendencias y solo se reporta, y en cerrar los expedientes observados, que es donde se acumula el trabajo. Lo que no debería fallar nunca es la trazabilidad, porque tiene que poder decir en cualquier momento y ante cualquiera de dónde salió cada número y quién lo aprobó, y si el sistema no le da eso, no lo firma. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nombre</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Bruno Rolando Núñez Gallegos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">28</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sexo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Masculino</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Distrito</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">San Borja</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ocupación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Coordinador del área, 9 años en la institución</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Fecha de entrevista</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">15/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Timing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">18:51 - 23:58</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Video</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue">Ver video</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Captura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><img src="assets/elicitation/entrevistas/registro/entrevista2-segmento2.png" alt="Captura entrevista Bruno Núñez" style="display: block; max-width: 100%; height: auto;"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resumen</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Bruno empezó como analista y pasó a coordinación hace cuatro años. No digita: revisa lo que consolidan las asistentes, da la conformidad y eso es lo que sube al reporte, de modo que su firma está en lo que ve la gerencia y es quien responde si algo sale mal. Por quincena revisa entre ciento veinte y ciento cincuenta expedientes, que es lo que procesan las tres asistentes del área. Trabaja principalmente con el sistema de consolidación y con los reportes que le preparan, y ha participado en las coordinaciones con la Oficina de Tecnologías cuando se intentó la carga masiva. Ubica su criterio en decidir qué se reporta y qué se observa, porque a veces llega información incompleta y hay que definir si se reporta parcial o se espera, decisión con consecuencias porque el avance del POI se mide con eso. Del procedimiento actual conservaría la cadena de responsabilidad, ya que cada documento tiene un responsable en cada etapa, el agente que lo levanta, la asistente que lo registra y él que lo aprueba, algo que según indica no existe en muchas instituciones. Describe que la valija llega quincenalmente, que las asistentes procesan durante esa quincena y que él revisa al cierre, de modo que entre el día de la visita y el reporte que ve la gerencia pueden pasar tres semanas, o cuatro si la zona es lejana. La información entra al sistema que consolida el POI a mano, campo por campo; hubo un intento de carga masiva con una plantilla de Excel, pero la validación rechazaba la mitad de los registros por formato y se dejó de usar. Sobre integraciones indica que el tema lo maneja la Oficina de Tecnologías y que, por lo que sabe, hoy no hay nada automático, remitiendo la respuesta técnica a esa oficina. Señala que el valor oficial del expediente lo da el acta física firmada, que el escaneo es una copia de trabajo y que lo que se reporta es el registro del sistema, pero que ante una controversia el que manda es el papel. Relata un caso en que control interno observó un acta cuyos datos en el sistema no coincidían con el físico; se determinó que fue error de digitación, pero el proceso de aclaración tomó casi dos meses y hubo que rastrear el acta original en archivo. Lo que habría acelerado ese proceso, según él, es poder demostrar de entrada cuál era la versión original y quién la modificó, ya que armar esa historia tomó semanas a base de correos y de preguntar a la gente qué recordaba. Recibiría bien un mecanismo que permita demostrar que un documento no fue alterado, pero advierte que hay que cuidar cómo se presenta: si el personal entiende que es para vigilarlos habrá resistencia e incluso el sindicato podría pronunciarse, mientras que presentado como respaldo frente a observaciones de control hay apertura. Indica que él no revisa campo por campo porque para eso están las asistentes, y que lo que necesita es saber qué porcentaje del expediente fue procesado automáticamente y qué fue verificado por una persona, ya que si va a firmar necesita saber sobre qué está firmando. El tiempo liberado del equipo lo usaría en análisis, porque hoy nadie mira tendencias y solo se reporta, y en cerrar los expedientes observados, que es donde se acumula el trabajo. Lo que no debería fallar nunca es la trazabilidad, porque tiene que poder decir en cualquier momento y ante cualquiera de dónde salió cada número y quién lo aprobó, y si el sistema no le da eso, no lo firma.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 **Segmento Funcionarios Administrativos: Entrevistado 3**
 
-| Atributo | Detalle |
-| --- | --- |
-| Nombre | Iván Alejandro Reyes Carrizales |
-| Edad | 23 |
-| Sexo | Masculino |
-| Distrito | Ate |
-| Ocupación | Analista de planeamiento, 2 años en el puesto |
-| Fecha de entrevista | 15/09/2026 |
-| Timing | 23:58 - 28:13 |
-| Video | [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue) |
-| Captura | ![Captura entrevista Iván Reyes](assets/elicitation/entrevistas/registro/entrevista3-segmento2.png) |
-| Resumen | Iván consolida el avance del POI. Viene de planeamiento en otra entidad, por lo que conoce el marco del PEI y del POI, aunque el proceso operativo lo aprendió en la institución. Toma lo que ya está registrado en el sistema, lo cruza con las metas y arma el reporte de avance por indicador; no toca las actas, trabaja con la data ya cargada. El trabajo es quincenal y cada reporte consolida entre doscientos cincuenta y trescientos registros, y armarlo le toma casi dos días completos. Exporta del sistema de consolidación a Excel y ahí trabaja con tablas dinámicas, armando la parte visual a mano cada quincena. Pidió usar una herramienta de análisis en línea y no se la autorizaron. De esos dos días, lo que más tiempo le consume es limpiar la data, porque llegan nombres escritos de tres maneras distintas, unidades mezcladas y fechas en formatos diferentes, de modo que antes de calcular cualquier cosa tiene que uniformizar, y eso es lo que realmente consume el tiempo y no el análisis. Del procedimiento actual conservaría que los indicadores están bien definidos, ya que se sabe qué se mide y contra qué meta, y sostiene que el problema no es la definición sino que la data llega tarde y sucia. Precisa que para cuando reporta, la información de campo tiene entre tres y cinco semanas, por lo que la gerencia toma decisiones mirando algo que ya pasó. Indica que la gerencia ha pedido un tablero que puedan consultar cuando quieran sin esperar su reporte, que se intentó con una herramienta que ya tienen pero quedó a medias porque la data no estaba consistente, y concluye que sin resolver el origen del dato el tablero no sirve. Sobre integraciones señala que existe una base de datos detrás del sistema de consolidación, pero que el acceso lo controla la Oficina de Tecnologías y que hay una restricción importante: no se permite que datos de beneficiarios salgan a servicios externos en la nube. Conoce esa restricción porque se la aplicaron cuando pidió la herramienta de análisis en línea, y estima que debe estar recogida en la directiva de seguridad de la información, documento que puede facilitar la Oficina de Tecnologías. Los campos que más problemas le dan al consolidar son la unidad de medida, el área de la parcela porque a veces viene en hectáreas y a veces en metros cuadrados, y el código de parcela porque en algunos casos llega vacío y hay que rastrearlo. Si los datos llegaran ya validados y consistentes, sostiene que cambiaría todo su trabajo, porque pasaría de limpiar a analizar y podría señalar en qué zonas el avance está cayendo y por qué, que es lo que la gerencia realmente quiere saber y hoy nadie responde. Confiaría en un reporte generado automáticamente solo si puede ver de dónde sale cada número, es decir poder hacer clic en un total y ver qué actas lo componen, y advierte que si es una caja negra no lo firma ni lo presenta. Lo que no debería fallar nunca es la consistencia de las unidades, porque si la unidad de medida no está resuelta en el origen, cualquier tablero que se arme estará mal y nadie se dará cuenta hasta que sea tarde. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nombre</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Iván Alejandro Reyes Carrizales</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">23</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sexo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Masculino</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Distrito</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ate</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ocupación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Analista de planeamiento, 2 años en el puesto</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Fecha de entrevista</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">15/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Timing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">23:58 - 28:13</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Video</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQDoW5jNib-XRo6vXxarolKhAZTR0RJpyPWy4wGtPAMX_6g?e=HMrxue">Ver video</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Captura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;"><img src="assets/elicitation/entrevistas/registro/entrevista3-segmento2.png" alt="Captura entrevista Iván Reyes" style="display: block; max-width: 100%; height: auto;"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resumen</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Iván consolida el avance del POI. Viene de planeamiento en otra entidad, por lo que conoce el marco del PEI y del POI, aunque el proceso operativo lo aprendió en la institución. Toma lo que ya está registrado en el sistema, lo cruza con las metas y arma el reporte de avance por indicador; no toca las actas, trabaja con la data ya cargada. El trabajo es quincenal y cada reporte consolida entre doscientos cincuenta y trescientos registros, y armarlo le toma casi dos días completos. Exporta del sistema de consolidación a Excel y ahí trabaja con tablas dinámicas, armando la parte visual a mano cada quincena. Pidió usar una herramienta de análisis en línea y no se la autorizaron. De esos dos días, lo que más tiempo le consume es limpiar la data, porque llegan nombres escritos de tres maneras distintas, unidades mezcladas y fechas en formatos diferentes, de modo que antes de calcular cualquier cosa tiene que uniformizar, y eso es lo que realmente consume el tiempo y no el análisis. Del procedimiento actual conservaría que los indicadores están bien definidos, ya que se sabe qué se mide y contra qué meta, y sostiene que el problema no es la definición sino que la data llega tarde y sucia. Precisa que para cuando reporta, la información de campo tiene entre tres y cinco semanas, por lo que la gerencia toma decisiones mirando algo que ya pasó. Indica que la gerencia ha pedido un tablero que puedan consultar cuando quieran sin esperar su reporte, que se intentó con una herramienta que ya tienen pero quedó a medias porque la data no estaba consistente, y concluye que sin resolver el origen del dato el tablero no sirve. Sobre integraciones señala que existe una base de datos detrás del sistema de consolidación, pero que el acceso lo controla la Oficina de Tecnologías y que hay una restricción importante: no se permite que datos de beneficiarios salgan a servicios externos en la nube. Conoce esa restricción porque se la aplicaron cuando pidió la herramienta de análisis en línea, y estima que debe estar recogida en la directiva de seguridad de la información, documento que puede facilitar la Oficina de Tecnologías. Los campos que más problemas le dan al consolidar son la unidad de medida, el área de la parcela porque a veces viene en hectáreas y a veces en metros cuadrados, y el código de parcela porque en algunos casos llega vacío y hay que rastrearlo. Si los datos llegaran ya validados y consistentes, sostiene que cambiaría todo su trabajo, porque pasaría de limpiar a analizar y podría señalar en qué zonas el avance está cayendo y por qué, que es lo que la gerencia realmente quiere saber y hoy nadie responde. Confiaría en un reporte generado automáticamente solo si puede ver de dónde sale cada número, es decir poder hacer clic en un total y ver qué actas lo componen, y advierte que si es una caja negra no lo firma ni lo presenta. Lo que no debería fallar nunca es la consistencia de las unidades, porque si la unidad de medida no está resuelta en el origen, cualquier tablero que se arme estará mal y nadie se dará cuenta hasta que sea tarde.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -1750,11 +2053,50 @@ Se identifica las funcionalidades prioritarias para el usuario, con las cuales s
 
 #### Quality attribute Scenarios
 
-| Atributo | Fuente | Estímulo | Artefacto | Entorno | Respuesta | Medida |
-| - | - | - | - | - | - | - |
-| Seguridad | Externo | Tratar de modificar informe de beneficiario | Informe protegido con Blockchain | Operatividad | Veces que el documento original se modifico sin aprobación | = 0 |
-| Usabilidad | Usuario | Consulta de terreno de beneficiarios por primera vez | Mapa interactivo | Operatividad | Tiempo para entender el flujo de consulta | <5 minutos |
-| Interoperabilidad | Sistema | Consulta de información a otros sistemas | API de integración | Operatividad | Sistemas legados que interoperan con la solución | > 1 |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Atributo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Fuente</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Estímulo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Artefacto</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Entorno</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Respuesta</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Medida</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Seguridad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Externo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Tratar de modificar informe de beneficiario</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Informe protegido con Blockchain</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Operatividad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Veces que el documento original se modifico sin aprobación</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">= 0</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Usabilidad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Usuario</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Consulta de terreno de beneficiarios por primera vez</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mapa interactivo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Operatividad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Tiempo para entender el flujo de consulta</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">&lt;5 minutos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Interoperabilidad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sistema</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Consulta de información a otros sistemas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">API de integración</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Operatividad</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sistemas legados que interoperan con la solución</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">&gt; 1</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -1763,10 +2105,35 @@ Se identifica las funcionalidades prioritarias para el usuario, con las cuales s
 
 Las restricciones provienen de las entrevistas de elicitación y limitan las decisiones de diseño.
 
-| Technical Story ID | Título | Descripción | Criterios de Aceptación | Relacionado con (Epic ID) |
-| - | - | - | - | - |
-| TS-01 | Datos de beneficiarios dentro de la institución | Los datos de los beneficiarios no pueden enviarse a servicios en la nube, por una restricción institucional. | Ningún componente que procese o almacene datos de beneficiarios se ejecuta en un servicio externo a la institución. | EP-02, EP-03 |
-| TS-02 | Ficha física firmada como documento oficial | El acta física firmada es la fuente de valor oficial del expediente, por lo que el sistema conserva su versión digitalizada en PDF como respaldo. | Toda ficha registrada conserva el PDF subido sin modificaciones y su hash de integridad. | EP-02 |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Technical Story ID</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Título</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Descripción</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Criterios de Aceptación</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Relacionado con (Epic ID)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">TS-01</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Datos de beneficiarios dentro de la institución</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Los datos de los beneficiarios no pueden enviarse a servicios en la nube, por una restricción institucional.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ningún componente que procese o almacene datos de beneficiarios se ejecuta en un servicio externo a la institución.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">EP-02, EP-03</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">TS-02</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ficha física firmada como documento oficial</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El acta física firmada es la fuente de valor oficial del expediente, por lo que el sistema conserva su versión digitalizada en PDF como respaldo.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Toda ficha registrada conserva el PDF subido sin modificaciones y su hash de integridad.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">EP-02</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -1775,15 +2142,70 @@ Las restricciones provienen de las entrevistas de elicitación y limitan las dec
 
 El backlog de drivers se construyó a partir de las User Stories de Primary Functionality, los Quality Attribute Scenarios y los Constraints. Cada driver se calificó según su importancia para los stakeholders y su impacto en la complejidad técnica de la arquitectura, y la tabla ordena primero los de importancia e impacto altos.
 
-| Driver ID | Título de Driver | Descripción | Importancia para Stakeholders | Impacto en Architecture Technical Complexity |
-| - | - | - | - | - |
-| DRV-01 | Integridad de las fichas subidas | Detectar cualquier modificación de una ficha después de su subida (SGT-3, SGT-6, escenario de Seguridad). | High | High |
-| DRV-02 | Datos de beneficiarios dentro de la institución | Procesar y almacenar los datos de beneficiarios sin usar servicios en la nube (TS-01). | High | High |
-| DRV-03 | Interoperabilidad con otros sistemas | Consultar información de más de un sistema institucional mediante una API de integración (escenario de Interoperabilidad). | High | High |
-| DRV-04 | Extracción automática de campos de la ficha | Extraer los campos críticos de la ficha para su revisión y corrección por el asistente (SGT-5). | High | High |
-| DRV-05 | Acceso según el rol del usuario | Restringir las funciones disponibles según el rol de cada usuario (SGT-10). | High | Medium |
-| DRV-06 | Visualización de puntos capturados | Mostrar en un mapa interactivo los puntos enviados por la estación total (SGT-2, escenario de Usabilidad). | Medium | Medium |
-| DRV-07 | Conservación de la ficha oficial | Conservar el PDF de la ficha firmada como respaldo del expediente (TS-02). | Medium | Low |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Driver ID</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Título de Driver</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Descripción</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Importancia para Stakeholders</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Impacto en Architecture Technical Complexity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-01</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Integridad de las fichas subidas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Detectar cualquier modificación de una ficha después de su subida (SGT-3, SGT-6, escenario de Seguridad).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-02</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Datos de beneficiarios dentro de la institución</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Procesar y almacenar los datos de beneficiarios sin usar servicios en la nube (TS-01).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-03</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Interoperabilidad con otros sistemas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Consultar información de más de un sistema institucional mediante una API de integración (escenario de Interoperabilidad).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-04</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Extracción automática de campos de la ficha</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Extraer los campos críticos de la ficha para su revisión y corrección por el asistente (SGT-5).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-05</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Acceso según el rol del usuario</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Restringir las funciones disponibles según el rol de cada usuario (SGT-10).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">High</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Medium</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-06</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Visualización de puntos capturados</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mostrar en un mapa interactivo los puntos enviados por la estación total (SGT-2, escenario de Usabilidad).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Medium</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Medium</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-07</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Conservación de la ficha oficial</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Conservar el PDF de la ficha firmada como respaldo del expediente (TS-02).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Medium</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Low</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -1800,17 +2222,84 @@ DRV-03: se selecciona un adaptador por sistema externo detrás de la API de inte
 
 Candidate Pattern Evaluation Matrix:
 
-| Driver ID | Título de Driver | Patrón | Pro | Con |
-| - | - | - | - | - |
-| DRV-01 | Integridad de las fichas subidas | Hash almacenado con el registro | Cumple SGT-3 y SGT-6 con bajo esfuerzo. | Depende de que la base de datos no sea alterada. |
-| DRV-01 | Integridad de las fichas subidas | Registro con Blockchain | Hace inalterable el registro de la ficha. | Exige infraestructura adicional y mayor esfuerzo. |
-| DRV-01 | Integridad de las fichas subidas | Almacenamiento de solo escritura | Impide sobrescribir el archivo subido. | No permite verificar que el archivo sea el original. |
-| DRV-02 | Datos de beneficiarios dentro de la institución | Despliegue on-premise | Cumple TS-01. | Requiere infraestructura y mantenimiento propios. |
-| DRV-02 | Datos de beneficiarios dentro de la institución | Despliegue híbrido | Aprovecha la nube para componentes sin datos de beneficiarios. | Requiere separar y controlar qué datos salen. |
-| DRV-02 | Datos de beneficiarios dentro de la institución | Nube con anonimización | Reduce el costo de infraestructura. | Puede incumplir TS-01. |
-| DRV-03 | Interoperabilidad con otros sistemas | Adaptador por sistema externo | Aísla los cambios de cada sistema. | Añade un componente por cada sistema integrado. |
-| DRV-03 | Interoperabilidad con otros sistemas | Integración punto a punto | Es la más simple de implementar. | El acoplamiento crece con cada sistema nuevo. |
-| DRV-03 | Interoperabilidad con otros sistemas | Bus de servicios empresariales | Centraliza la integración. | Introduce una infraestructura pesada para pocos sistemas. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Driver ID</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Título de Driver</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Patrón</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Pro</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Con</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-01</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Integridad de las fichas subidas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Hash almacenado con el registro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Cumple SGT-3 y SGT-6 con bajo esfuerzo.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Depende de que la base de datos no sea alterada.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-01</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Integridad de las fichas subidas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Registro con Blockchain</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Hace inalterable el registro de la ficha.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Exige infraestructura adicional y mayor esfuerzo.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-01</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Integridad de las fichas subidas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Almacenamiento de solo escritura</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Impide sobrescribir el archivo subido.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">No permite verificar que el archivo sea el original.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-02</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Datos de beneficiarios dentro de la institución</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Despliegue on-premise</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Cumple TS-01.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Requiere infraestructura y mantenimiento propios.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-02</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Datos de beneficiarios dentro de la institución</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Despliegue híbrido</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Aprovecha la nube para componentes sin datos de beneficiarios.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Requiere separar y controlar qué datos salen.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-02</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Datos de beneficiarios dentro de la institución</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nube con anonimización</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reduce el costo de infraestructura.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Puede incumplir TS-01.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-03</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Interoperabilidad con otros sistemas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Adaptador por sistema externo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Aísla los cambios de cada sistema.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Añade un componente por cada sistema integrado.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-03</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Interoperabilidad con otros sistemas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Integración punto a punto</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Es la más simple de implementar.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El acoplamiento crece con cada sistema nuevo.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-03</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Interoperabilidad con otros sistemas</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Bus de servicios empresariales</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Centraliza la integración.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Introduce una infraestructura pesada para pocos sistemas.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
@@ -1821,51 +2310,180 @@ Se refinan los Quality Attribute Scenarios de Primary Functionality, en orden de
 
 Refinamiento 1: Seguridad
 
-| Campo | Contenido |
-| - | - |
-| Scenario(s) | Intento de modificar una ficha ya subida. |
-| Business Goals | Que la ficha aprobada coincida con la que subió el agente de campo (SGT-3, SGT-6). |
-| Relevant Quality Attributes | Seguridad |
-| Stimulus | Se intenta modificar el PDF de una ficha después de su subida. |
-| Stimulus Source | Actor externo. |
-| Environment | Operación normal. |
-| Artifact (if known) | Repositorio de fichas y verificación de integridad. |
-| Response | El sistema detecta la diferencia con el hash registrado y marca el documento como alterado. |
-| Response Measure | 0 modificaciones no detectadas. |
-| Questions | ¿Qué mecanismo respalda el registro de integridad: hash en base de datos o Blockchain? |
-| Issues | El escenario original nombra Blockchain como artefacto, y esa decisión sigue evaluándose en DRV-01. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Campo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Contenido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Scenario(s)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Intento de modificar una ficha ya subida.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Business Goals</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Que la ficha aprobada coincida con la que subió el agente de campo (SGT-3, SGT-6).</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Relevant Quality Attributes</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Seguridad</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Stimulus</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Se intenta modificar el PDF de una ficha después de su subida.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Stimulus Source</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Actor externo.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Environment</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Operación normal.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Artifact (if known)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Repositorio de fichas y verificación de integridad.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Response</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El sistema detecta la diferencia con el hash registrado y marca el documento como alterado.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Response Measure</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">0 modificaciones no detectadas.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Questions</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">¿Qué mecanismo respalda el registro de integridad: hash en base de datos o Blockchain?</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Issues</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El escenario original nombra Blockchain como artefacto, y esa decisión sigue evaluándose en DRV-01.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 Refinamiento 2: Interoperabilidad
 
-| Campo | Contenido |
-| - | - |
-| Scenario(s) | Consulta de información a otros sistemas. |
-| Business Goals | Reducir el traslado manual de información entre sistemas aislados. |
-| Relevant Quality Attributes | Interoperabilidad |
-| Stimulus | El sistema consulta información a otro sistema institucional. |
-| Stimulus Source | Sistema. |
-| Environment | Operación normal. |
-| Artifact (if known) | API de integración. |
-| Response | El sistema obtiene la información del sistema consultado. |
-| Response Measure | Más de un sistema con el que interopera. |
-| Questions | ¿Con qué sistemas institucionales debe interoperar y con qué formato de intercambio? |
-| Issues | Las entrevistas indican que hoy no existe integración automática entre los sistemas. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Campo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Contenido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Scenario(s)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Consulta de información a otros sistemas.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Business Goals</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reducir el traslado manual de información entre sistemas aislados.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Relevant Quality Attributes</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Interoperabilidad</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Stimulus</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El sistema consulta información a otro sistema institucional.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Stimulus Source</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sistema.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Environment</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Operación normal.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Artifact (if known)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">API de integración.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Response</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El sistema obtiene la información del sistema consultado.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Response Measure</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Más de un sistema con el que interopera.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Questions</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">¿Con qué sistemas institucionales debe interoperar y con qué formato de intercambio?</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Issues</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Las entrevistas indican que hoy no existe integración automática entre los sistemas.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 Refinamiento 3: Usabilidad
 
-| Campo | Contenido |
-| - | - |
-| Scenario(s) | Primera consulta de los terrenos de los beneficiarios. |
-| Business Goals | Que el agente de campo detecte y corrija errores de medición durante la misma visita (SGT-2). |
-| Relevant Quality Attributes | Usabilidad |
-| Stimulus | Un usuario consulta los terrenos de los beneficiarios por primera vez. |
-| Stimulus Source | Usuario. |
-| Environment | Operación normal. |
-| Artifact (if known) | Mapa interactivo. |
-| Response | El usuario comprende el flujo de consulta. |
-| Response Measure | Menos de 5 minutos. |
-| Questions | ¿Cómo se determina que el usuario comprendió el flujo? |
-| Issues | Ninguna. |
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Campo</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Contenido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Scenario(s)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Primera consulta de los terrenos de los beneficiarios.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Business Goals</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Que el agente de campo detecte y corrija errores de medición durante la misma visita (SGT-2).</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Relevant Quality Attributes</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Usabilidad</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Stimulus</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Un usuario consulta los terrenos de los beneficiarios por primera vez.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Stimulus Source</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Usuario.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Environment</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Operación normal.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Artifact (if known)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mapa interactivo.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Response</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">El usuario comprende el flujo de consulta.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Response Measure</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Menos de 5 minutos.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Questions</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">¿Cómo se determina que el usuario comprendió el flujo?</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Issues</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ninguna.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
