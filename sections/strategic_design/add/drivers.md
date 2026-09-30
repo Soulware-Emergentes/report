@@ -50,7 +50,7 @@ El backlog de drivers se construyó a partir de las User Stories de Primary Func
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">DRV-06</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Visualización de puntos capturados</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mostrar en un mapa interactivo los puntos enviados por la estación total (SGT-2, escenario de Usabilidad).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mostrar en un mapa interactivo los puntos pre cargados de las parcelas por los archivos de coordenadas (SGT-2, escenario de Usabilidad).</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Medium</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Medium</td>
             </tr>
