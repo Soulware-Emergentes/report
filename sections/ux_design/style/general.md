@@ -1,9 +1,9 @@
 En esta sección se fijan las decisiones visuales y de comunicación que comparten la aplicación web y la aplicación móvil de SGT. Las guías se construyeron en Figma como un repositorio central de variables, estilos y componentes, de modo que cualquier pantalla se arme con los mismos elementos y mantenga una presentación consistente. Las particularidades de cada plataforma, como la plantilla con mapa de la web o el flujo de envío de archivos del móvil, se desarrollan en la sección siguiente.
 
-Se tomaron dos referencias externas: el Geoportal SISCOD, un portal cartográfico institucional peruano cuyo tono cromático inspiró la paleta, y el logo de DEVIDA, cuya estructura inspiró la marca. No se adaptó un design system existente completo. Se construyó uno propio y mínimo, con los tokens y componentes que necesita el alcance del proyecto.
+Como referencia externa se tomó el Geoportal SISCOD, un portal cartográfico institucional peruano cuyo tono cromático inspiró la paleta. No se adaptó un design system existente completo. Se construyó uno propio y mínimo, con los tokens y componentes que necesita el alcance del proyecto.
 
 **Branding**  
-El logotipo de SGT es una marca propia del equipo, inspirada en la estructura del logo de DEVIDA: dos formas tipo hoja que se abren en V. En SGT se resuelve con la paleta del sistema, con una hoja teal, una hoja verde y un punto navy en el centro. La hoja alude al programa agrícola y el punto al terreno georreferenciado que el agente de campo mide con la estación total. La sigla se compone en Roboto Bold con 6 % de espaciado entre letras, la misma familia que usa la interfaz.
+El logotipo de SGT es una marca propia del equipo. Representa un terreno visto desde arriba, con sus surcos, y un pin de ubicación clavado en él: la parcela registrada y georreferenciada, que es lo que el sistema gestiona. El polígono irregular alude al terreno tal como lo mide el agente de campo, y el pin al punto que se captura con la estación total y se muestra en el mapa. Se resuelve con la paleta del sistema, con el terreno en teal, el pin en verde y la sigla en navy, compuesta en Roboto Bold con 6 % de espaciado entre letras, la misma familia que usa la interfaz.
 
 El logotipo tiene una versión horizontal y una de icono, y cada una existe en tono Color, para fondos claros, y en tono En oscuro, para fondos navy.
 
@@ -11,9 +11,9 @@ El logotipo tiene una versión horizontal y una de icono, y cada una existe en t
 
 Reglas de uso del logotipo:
 - Usar la versión Color sobre blanco o gris claro, y la versión En oscuro sobre navy 900 o fondos igual de oscuros.
-- Dejar alrededor del logo un margen libre equivalente a media hoja.
+- Dejar alrededor del logo un margen libre equivalente a la mitad del ancho del pin.
 - Respetar el tamaño mínimo de 24 px para el icono y de 96 px de ancho para la versión horizontal.
-- No estirar, rotar ni deformar el logo, no cambiar los colores de las hojas o del punto, no añadir sombras, contornos o degradados, y no colocarlo sobre fotos o fondos de bajo contraste.
+- No estirar, rotar ni deformar el logo, no cambiar los colores del terreno, del pin o de la sigla, no añadir sombras, contornos o degradados, y no colocarlo sobre fotos o fondos de bajo contraste.
 
 Esta marca es una propuesta de diseño del equipo para el proyecto. Su uso institucional real requeriría la aprobación de la entidad.
 
@@ -47,7 +47,7 @@ Los siguientes ejemplos contrastan la forma de decir cada mensaje con la que se 
 <img src="./assets/ux_design/style/general/tono-ejemplos.png" alt="Ejemplos de mensajes con el tono definido" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
 **Colores**  
-La paleta parte de los verdes azulados y el azul marino del Geoportal SISCOD, y toma el azul cielo y el verde hoja del logo de DEVIDA. El teal es el color primario y se reserva para la acción principal y los elementos interactivos. El navy es el color secundario y se usa en encabezados, fondos oscuros y acciones de apoyo. El verde hoja y el azul cielo son acentos, con un uso decorativo o de foco. Los colores de marca se muestran junto con su contraste sobre texto.
+La paleta parte de los verdes azulados y el azul marino del Geoportal SISCOD, con un azul cielo y un verde hoja como acentos. El teal es el color primario y se reserva para la acción principal y los elementos interactivos. El navy es el color secundario y se usa en encabezados, fondos oscuros y acciones de apoyo. El verde hoja y el azul cielo son acentos, con un uso decorativo o de foco. Los colores de marca se muestran junto con su contraste sobre texto.
 
 <img src="./assets/ux_design/style/general/colores-marca.png" alt="Colores de marca de SGT" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 90mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
