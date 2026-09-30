@@ -4,9 +4,13 @@ Burch, T. (2016, January 6). *Data is the crop: GNSS used by surveyors and farme
 
 Cohn, M. (2004). *User stories applied: For agile software development*. Addison-Wesley.
 
+Hick, W. E. (1952). On the rate of gain of information. *Quarterly Journal of Experimental Psychology, 4*(1), 11–26. https://doi.org/10.1080/17470215208416600
+
 Hyperscience. (n.d.). *US public sector intelligent automation solutions*. Retrieved September 15, 2026, from https://www.hyperscience.ai/solutions/public-sector/
 
 International Food Policy Research Institute. (2025, December 2). *Beyond the algorithm: The need for farmer participation and data justice in digital agricultural technology*. IFPRI Blog. https://www.ifpri.org/blog/beyond-the-algorithm-the-need-for-farmer-participation-and-data-justice-in-digital-agricultural-technology/
+
+Nielsen, J. (1994, April 24). *10 usability heuristics for user interface design*. Nielsen Norman Group. https://www.nngroup.com/articles/ten-usability-heuristics/
 
 OECD. (2026). *Digital governments at a turning point*. In *Digital Government Outlook 2026*. OECD Publishing. https://www.oecd.org/en/publications/digital-government-outlook_0496b2bc-en/full-report/digital-governments-at-a-turning-point_0491aad4.html
 
@@ -15,5 +19,7 @@ OpenG2P. (n.d.). *OpenG2P*. Retrieved September 15, 2026, from https://www.openg
 OpenSPP. (n.d.). *Farmer registry*. OpenSPP Documentation. Retrieved September 15, 2026, from https://docs.openspp.org/explanation/farmer_registry
 
 The Canton Group. (2025, June 9). *Breaking down silos: Why government IT systems need interoperability for digital transformation*. https://cantongroup.com/insights/breaking-down-silos-why-government-it-systems-need-interoperability-digital-transformation
+
+W3C. (2023, October 5). *Web content accessibility guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
 
 World Bank. (2025, October 22). *A journey of a thousand miles begins with a single step: How Malawi's reform is just the beginning for smallholder farmers*. https://www.worldbank.org/en/news/feature/2025/10/21/how-malawi-s-reform-is-just-the-beginning-for-smallholder-farmers
