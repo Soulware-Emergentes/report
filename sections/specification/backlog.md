@@ -35,8 +35,8 @@ A continuación se detalla el orden de implementación de cada historia.
         <tr>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">3</td>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-2</td>
-            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Visualizar con antelación los puntos capturados por la estación total durante la visita</td>
-            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo georreferenciador, quiero visualizar en el dispositivo los puntos que ya fueron capturados por la estación total mientras recorro el terreno, para detectar y corregir errores de medición antes de finalizar la visita.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Enviar coordenadas de georreferenciación de terreno mediante archivo</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo, quiero enviar el archivo de coordenadas de una parcela que me da la estación total, para tener la parcela precargada en el sistema cuando la vaya a registrar.</td>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">5</td>
         </tr>
         <tr>
