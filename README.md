@@ -2838,30 +2838,367 @@ Reglas de diseño de la aplicación móvil:
 
 ### Organization Systems
 
+La organización del contenido de SGT parte de los dos usuarios del sistema. El agente de campo necesita llegar rápido a sus terrenos y a la subida de fichas, y la asistente de gerencia general necesita revisar y aprobar fichas sin perder el rastro de cada dato. Por eso cada grupo de información se organiza con el sistema visual que mejor acompaña la tarea del usuario y con un esquema de categorización que permite encontrarlo sin esfuerzo.
+
+**Organización visual del contenido**  
+Se usan los tres sistemas de organización en casos distintos:
+- Jerárquica (visual hierarchy): se aplica cuando hay un elemento principal y otros que lo apoyan. La pantalla del mapa se organiza así, con el mapa como elemento dominante y la barra lateral y los paneles subordinados a él, y el popup de un terreno coloca los datos del terreno arriba y sus fichas debajo. La Landing Page también la usa, con un título y una propuesta principal antes del detalle.
+- Secuencial (step-by-step to accomplish): se aplica cuando el usuario debe completar pasos en un orden. Es el caso del envío del archivo en el móvil, que va de elegir el archivo a revisarlo y enviarlo, de la validación de una ficha, que va de verificar la integridad del documento a revisar los datos y aprobar, de los campos de los modales de creación de terreno y de subida de ficha, que siguen el orden en que se llenan, y de la sección Cómo funciona de la Landing Page.
+- Matricial: se aplica cuando hay muchos registros con los mismos atributos que se comparan entre sí. Son las tablas de Beneficiarios, Agentes de campo, Fichas y Terrenos, donde cada fila es un registro y cada columna un atributo, y la pantalla dividida de validación, que pone lado a lado los datos de la IA y el documento.
+
+**Esquemas de categorización**  
+Se usan los cuatro esquemas según el grupo de información:
+- Por tópicos: la barra lateral agrupa el sistema en Beneficiarios, Agentes de campo, Fichas y Terrenos, que son las cuatro entidades del dominio. La Landing Page agrupa su contenido en propósito, funcionamiento, perfiles y seguridad.
+- Cronológico: las fichas y los terrenos se ordenan por fecha, con lo más reciente primero, porque el usuario busca casi siempre lo último que se registró. El desplegable de fichas del popup de un terreno sigue el mismo orden.
+- Alfabético: Beneficiarios y Agentes de campo se ordenan por apellido y nombre, porque son listas de personas que se buscan por nombre.
+- Según audiencia: el contenido se diferencia por rol. El agente de campo ve todos los terrenos, salvo los borradores de otros agentes, y solo ve los borradores que él guardó, mientras que la asistente revisa las fichas pendientes. La Landing Page presenta qué hace el sistema para cada perfil.
+
+La siguiente tabla resume qué sistema se aplica a cada grupo de información.
+
+<div style="width: 100%; font-family: Arial, sans-serif; font-size: 13px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Grupo de información</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Organización visual</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Categorización</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Pantalla del mapa y barra lateral</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Jerárquica</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Por tópicos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Listados de Beneficiarios y Agentes de campo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Matricial</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Alfabético</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Listados de Fichas y Terrenos</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Matricial</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cronológico y según audiencia</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Popup de terreno y desplegable de fichas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Jerárquica</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cronológico</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Validación de una ficha</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Secuencial y matricial</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Por tópicos (datos de la IA y documento)</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Modales de creación de terreno y de subida de ficha</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Secuencial</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Por tópicos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Envío del archivo en la aplicación móvil</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Secuencial</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Por tópicos (estado del envío)</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Landing Page</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Jerárquica y secuencial</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Por tópicos y según audiencia</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
 
 ### Labeling Systems
 
+Las etiquetas de SGT se escriben con el mínimo de palabras posible y con los términos que ya usa el personal del programa, tomados del lenguaje ubicuo. Se aplican cuatro reglas para evitar la confusión:
+- Un mismo concepto tiene siempre una sola etiqueta. Se usa Terreno y no Parcela, y Agente de campo y no Operador ni Operario, en la barra lateral, en las tablas, en los modales y en los mensajes.
+- Las secciones se nombran con un sustantivo en plural, y las acciones con un verbo en infinitivo seguido, cuando hace falta, de su objeto, como Validar o Subir ficha.
+- Las etiquetas no pasan de tres palabras. Lo que necesita más explicación va en el texto de ayuda y no en la etiqueta.
+- Cada etiqueta anticipa dónde lleva al usuario. Por ejemplo, Validar en la fila de una ficha lleva a la pantalla de validación, y Fichas (2) junto a un chevron indica que se despliega una lista de dos fichas.
+
+**Etiquetas de navegación**  
+<div style="width: 100%; font-family: Arial, sans-serif; font-size: 13px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Ubicación</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Etiqueta</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Qué asocia el usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Barra lateral de la web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Búsqueda y datos de los productores registrados.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Barra lateral de la web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Agentes de campo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Búsqueda de las personas que miden y reportan en campo.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Barra lateral de la web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Fichas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Fichas de evaluación subidas, con su estado y su validación.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Barra lateral de la web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos registrados y borradores pendientes de validar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Menú de la cuenta</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cerrar sesión</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Salir del sistema.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Encabezado de la Landing Page</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Ingresar</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Ir al inicio de sesión del sistema.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Encabezado de la Landing Page</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cómo funciona</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Los pasos del proceso, desde la medición hasta la aprobación.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Encabezado de la Landing Page</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Perfiles</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Qué hace el sistema por el agente de campo y por la asistente.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Encabezado de la Landing Page</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Seguridad</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cómo se protege la integridad de las fichas y los datos.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Encabezado de la Landing Page</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Ayuda</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Cómo obtener orientación, sin aglomerar el contacto en el encabezado.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+**Etiquetas de acción y de estado**  
+Las acciones usan las mismas etiquetas en web y móvil cuando hacen lo mismo. Los botones de la web son Buscar y Limpiar filtros en las grillas, Crear terreno en la tabla de terrenos, Subir ficha en el modal del mismo nombre, Validar en los terrenos y fichas pendientes, Aprobar ficha y Volver en la pantalla de validación, y Cancelar en los modales. En el móvil son Elegir archivo, Enviar como borrador, Cambiar archivo, Reintentar y Reintentar ahora.
+
+Los estados de una ficha son Borrador, En revisión, Aprobada, Observada y Alterada, y los de un terreno son Borrador y Validado. La diferencia de verbo responde al flujo: una ficha se aprueba y un terreno se valida. Cada estado se muestra con el Status chip de la guía de estilos, siempre con texto.
+
+Las columnas de las tablas repiten los atributos del dominio con etiquetas breves: Código, DNI del beneficiario, DNI del agente, Coordenadas, Fecha de llenado, Fecha de validación, Terreno, Estado y Acciones.
 
 
 <div style="page-break-after: always;"></div>
 
 ### Searching Systems
 
+La búsqueda de SGT existe para que el usuario no se pierda entre el volumen de registros. Se resuelve con grillas de búsqueda con filtros en la web, y la aplicación móvil no tiene búsqueda, porque su flujo es lineal y el archivo se elige con el selector del sistema.
+
+**Opciones de búsqueda de la web**  
+Cada una de las cuatro secciones de la barra lateral abre una grilla con sus propios filtros. Los filtros se pueden combinar entre sí, y el usuario lanza la búsqueda con el botón Buscar y los reinicia con Limpiar filtros. Los filtros de cada sección son los siguientes.
+
+<div style="width: 100%; font-family: Arial, sans-serif; font-size: 13px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Sección</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Filtros</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Columnas del resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">DNI, nombre</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">DNI, nombre, cantidad de terrenos</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Agentes de campo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">DNI, nombre</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">DNI, nombre, cantidad de fichas</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Fichas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código de ficha, código de tarea, DNI del agente, estado, fecha de llenado</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del agente, fecha de llenado, fecha de validación, terreno, estado y acción</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, estado</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, coordenadas, fecha de actualización, estado y acciones</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+Los filtros de Fichas responden a la necesidad de la asistente de ubicar rápido las fichas que quedaron con una observación pendiente, combinando código de tarea, agente, fecha y estado. Los filtros se aplican siempre sobre lo que el rol del usuario puede ver, por lo que el agente de campo no encuentra borradores de otros agentes aunque los busque.
+
+**Cómo se muestran los resultados**  
+Los resultados se presentan en una tabla con los atributos del registro en columnas, el estado con el Status chip y, en la última columna, la acción disponible, como Validar. El orden predeterminado es cronológico, con lo más reciente primero, salvo en Beneficiarios y Agentes de campo, que se ordenan alfabéticamente. Debajo de la tabla se indica cuántos registros se muestran sobre el total, por ejemplo Mostrando 3 de 3 fichas, y cuando hay más resultados de los que caben en una página, se pagina.
+
+Si ningún registro coincide, la tabla muestra el mensaje No se encontraron resultados con esos filtros y la acción Limpiar filtros, para que el usuario pueda recuperarse en un paso y no quede frente a una tabla vacía sin explicación.
+
+Además de la grilla, el mapa ofrece una forma visual de llegar a un registro: el usuario se desplaza por él y pulsa un terreno, y el popup muestra sus datos y sus fichas.
 
 
 <div style="page-break-after: always;"></div>
 
 ### SEO Tags and Meta Tags
 
+Los valores de esta sección se definen para tres piezas: la Landing Page, que es el sitio web estático y público, la aplicación web, y la aplicación móvil. El nombre del producto se mantiene como la sigla SGT, acompañado de una descripción funcional, porque el significado de la sigla no forma parte de las definiciones del proyecto. El autor de todas las piezas es Soulware, el equipo que desarrolla el sistema.
+
+**SEO Tags y Meta Tags de la Landing Page**  
+La Landing Page es informativa y pública, por lo que se indexa. Presenta el propósito de SGT, cómo funciona, los perfiles que atiende y cómo se protege la información, con un acceso al inicio de sesión.
+
+<div style="width: 100%; font-family: Arial, sans-serif; font-size: 13px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Etiqueta</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Title</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT | Registro y validación de terrenos y fichas de campo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Meta Description</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT permite registrar terrenos medidos en campo, subir y validar fichas de evaluación y mantener su trazabilidad hasta el reporte de avance institucional.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Meta Keywords</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT, registro de terrenos, fichas de campo, validación de fichas, georreferenciación, trazabilidad, programa agrícola, agente de campo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Meta Author</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Soulware</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Meta Robots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">index, follow</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Idioma</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">es-PE</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+**SEO Tags y Meta Tags de la aplicación web**  
+La aplicación web requiere inicio de sesión y maneja datos de beneficiarios que, según las decisiones de arquitectura del Capítulo IV, deben permanecer dentro de la institución. Por eso ninguna de sus páginas se indexa y todas llevan Meta Robots con el valor noindex, nofollow. Los títulos siguen el formato Página | SGT, el autor es Soulware y las palabras clave comunes son SGT, terrenos, fichas, beneficiarios y agentes de campo.
+
+<div style="width: 100%; font-family: Arial, sans-serif; font-size: 13px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Página</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Title</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Meta Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Inicio de sesión</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Iniciar sesión | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Ingrese con su usuario institucional para acceder a las funciones de su rol en SGT.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Mapa</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Mapa de terrenos | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Explore los terrenos registrados sobre el mapa y consulte sus datos y sus fichas.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Beneficiarios | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Busque beneficiarios registrados por DNI o nombre.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Agentes de campo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Agentes de campo | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Busque agentes de campo y consulte sus registros.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Fichas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Fichas | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Busque fichas por código, agente, estado o fecha y acceda a su validación.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Consulte los terrenos, cree uno nuevo y valide los borradores que guardó.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Validar ficha</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Validar ficha | SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Compare los datos extraídos de la ficha con el documento original y apruebe su validación.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+**ASO Elements de la aplicación móvil**  
+La aplicación Android se instala de forma interna en los teléfonos que la entidad entrega a los agentes de campo, y no se publica en una tienda de aplicaciones. Por eso no hay una ficha de tienda que optimizar ni búsquedas que atender, y las palabras clave no se usan. Aun así se definen los elementos que identifican la aplicación en el dispositivo y que se reutilizarían si alguna vez se publicara.
+
+<div style="width: 100%; font-family: Arial, sans-serif; font-size: 13px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Elemento</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">App Title</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">App Subtitle</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Envío de mediciones de terreno</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">App Description</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Envíe a la web, como borrador, el archivo que genera la estación total al medir un terreno. Si no hay señal, el archivo queda guardado en el teléfono y se envía cuando vuelve la conexión.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">App Keywords</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">No se usan por la instalación interna. En caso de publicarse: SGT, terrenos, estación total, georreferenciación, agente de campo.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 
 <div style="page-break-after: always;"></div>
 
 ### Navigation Systems
 
+La navegación de SGT busca que cada usuario llegue a su tarea en pocos pasos y que siempre sepa dónde está y cómo volver. Se definen de forma distinta para la Landing Page, la aplicación web y la aplicación móvil, porque cada una tiene un recorrido diferente.
+
+**Landing Page**  
+La Landing Page es una página única que se recorre hacia abajo. El encabezado es fijo y contiene el logotipo, los enlaces Cómo funciona, Perfiles, Seguridad y Ayuda, que llevan a cada bloque de la misma página, y el botón Ingresar, que es la única acción destacada y lleva al inicio de sesión. El pie repite los mismos enlaces. Como hay un solo nivel, no se usan migas de pan ni submenús.
+
+**Aplicación web**  
+La navegación principal es la barra lateral, que siempre está disponible. Da acceso a Beneficiarios, Agentes de campo, Fichas y Terrenos, resalta la sección activa y se colapsa a íconos cuando el mapa necesita todo el espacio. El mapa es el punto de partida y no figura como sección, porque es el fondo sobre el que se trabaja. Según el inicio de sesión, cada usuario ve únicamente las funciones de su rol, y el cierre de sesión está en el menú de la cuenta.
+
+Los usuarios recorren el contenido de cuatro maneras:
+- Jerárquica: de la barra lateral a una sección, y de una sección al detalle de un registro. Las secciones se abren junto al mapa o en vista completa, según el espacio que necesiten.
+- Desde el mapa: pulsar un terreno abre su popup, con los datos del terreno y el desplegable de fichas. Desde ahí se valida una ficha pendiente, o se abre el modal de subida de ficha con el terreno ya vinculado.
+- Secuencial: los modales y la pantalla de validación avanzan por pasos. Cada uno tiene Cancelar o Volver, y los modales también se cierran con la X o con la tecla Escape, de modo que el usuario nunca queda atrapado.
+- Por búsqueda: las grillas de Beneficiarios, Agentes de campo, Fichas y Terrenos permiten llegar a un registro concreto con filtros, como se detalla en Searching Systems.
+
+La acción que lleva al siguiente paso es siempre la única acción principal de la pantalla: Buscar en las grillas, Crear terreno en la tabla de terrenos, Subir ficha en su modal y Aprobar ficha en la validación.
+
+**Aplicación móvil**  
+La aplicación móvil tiene una sola tarea, por lo que no lleva menú ni barra de navegación inferior. El recorrido es lineal, en un solo sentido: elegir el archivo, revisarlo, enviarlo y ver el resultado. Cada pantalla tiene una sola acción principal, y para volver atrás se usa el gesto de navegación del sistema Android. Cuando el envío termina, la pantalla ofrece Enviar otro archivo, y si falla o no hay conexión, ofrece Reintentar, de modo que el usuario siempre tiene un siguiente paso claro.
 
 
 <div style="page-break-after: always;"></div>
