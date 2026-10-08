@@ -1,4 +1,5 @@
-Ahondamos al diagrama de contenedores, dentro del sistema SGT contamos con dos interfaces: aplicación móvil y aplicación web, ambos se comunican con el servicio SGT que contiene toda la lógica de negocio del sistema. 
-Este servicio se comunica con un modelo de IA que extrae información de las fichas que llegan al servicio SGT. Todos los archivos se guardan en el File Server Institucional.
-Los servicios externos de Beneficiarios y POI se comunican por llamadas REST con el Servicio SGT, y todos los servicios guardan su información en una única base de datos institucional en distintos esquemas.
-![Diagrama de contenedores](assets/strategic_design/architecture/container_level/contenedores.png)
+Ahondamos al diagrama de contenedores. Dentro del sistema SGT contamos con dos interfaces, la aplicación móvil y la aplicación web, que obtienen el token de la persona de Staff y se comunican con la API de SGT, que contiene la lógica de negocio de terrenos y fichas. La aplicación web también consulta los planes y tareas directamente en la API de POI.
+
+Los PDF de las fichas se guardan en un almacén de objetos compatible con S3: las aplicaciones los suben y descargan directamente con enlaces firmados que emite la API de SGT, de modo que los archivos no pasan por la API. La API de SGT guarda terrenos y fichas en su propia base de datos PostgreSQL con PostGIS, y se comunica por REST con POI, Beneficiarios y el directorio de Staff usando tokens de servicio que obtiene de Staff. Cada servicio tiene su propia base de datos.
+
+<img src="assets/strategic_design/architecture/container_level/contenedores.png" alt="Diagrama de contenedores" style="display: block; width: 100%; height: auto; margin: 0 auto;">

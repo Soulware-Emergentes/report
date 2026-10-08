@@ -1,0 +1,20 @@
+@startuml plots-database
+skinparam classAttributeIconSize 0
+hide circle
+hide empty methods
+
+class plots <<Table>> {
+    {field} id : UUID [PK]
+    {field} owner_document_type : VARCHAR(20) [NN]
+    {field} owner_document_number : VARCHAR(12) [NN]
+    {field} boundary : geometry(Polygon) [NN]
+    {field} footprint : geography(Polygon,4326) [GENERATED]
+    {field} ubigeo : VARCHAR(6) [NN]
+    {field} registration_date : TIMESTAMP [NN]
+}
+
+note bottom of plots
+    UNIQUE (owner_document_type, owner_document_number)
+end note
+
+@enduml

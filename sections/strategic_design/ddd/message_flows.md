@@ -1,12 +1,15 @@
 Para ejemplificar como cada contexto se vincula y comunica uno con otro detallamos los 3 flujos más representativos de SGT.
 
-En primer lugar, mapeamos el flujo que tiene un asistente de campo para el mapeo de un terreno dentro del sistema web. Lo que hace aquí es crear un espacio virtual con las coordenadas reales del terreno del beneficiario. Obviamente este proceso se realiza dentro del contexto del SGT, sin embargo, tiene una comunicación con el contexto de beneficiarios para hacer el match entre el DNI de beneficiario que llega para el mapeo del terreno con el beneficiario que ya se encuentra dentro del sistema de beneficiarios. El terreno solo se crea si el beneficiario se encuentra en el sistema de beneficiarios.
+En primer lugar, mapeamos el flujo con el que el agente de campo registra un terreno desde la aplicación móvil. El agente envía el documento legal del beneficiario, el ubigeo del distrito y los vértices del perímetro medidos por la estación total, con su zona UTM. El módulo Plots verifica que el beneficiario no tenga otro terreno registrado y que el perímetro no se superponga con los terrenos vecinos más allá de la tolerancia, y solo entonces registra el terreno.
+
 ![Mapear terreno](assets/strategic_design/ddd/message_flows/mapear-terreno.jpg)
 
 {{page_break}}
 
-En segundo lugar, se mapeo el flujo de mandar la ficha. El proceso empieza con el asistente de campo tomando foto con la aplicación móvil a la ficha realizada en campo, esta ficha viaja al contexto del SGT y este la traslada al contexto de la IA, donde se analiza y extrae la información de la foto. Al procesar ello, el contexto SGT guarda la información y ya esta disponible para validación de asesores de Gerencia General.
+En segundo lugar, se mapeó el flujo de mandar la ficha. El agente de campo pide a SGT un enlace firmado, sube con él el PDF de la ficha al almacén de objetos y envía la ficha indicando la tarea del POI a la que corresponde. El módulo Monitoring verifica que el PDF esté subido, asigna a la ficha su código y, una vez confirmado el envío, registra la entrega en el contexto Planning de POI. Si POI acepta la entrega, la ficha queda lista para revisión; si la rechaza porque la tarea no existe o ya tiene una entrega, la ficha se anula. Con el contexto de IA, la ficha enviada pasará además por la extracción automática de sus campos antes de la revisión.
+
 ![Mandar ficha](assets/strategic_design/ddd/message_flows/mandar-ficha.jpg)
 
-Finalmente, se mapeo el flujo de validar una ficha, en el cual se involucra los asesores de Gerencia General, quienes a través de la web observan la información extraída por el modelo de IA y la imagen real. En caso se valide exitosamente la ficha, se envia esa información al contexto POI para contribuir al avance de una actividad.
+Finalmente, se mapeó el flujo de validar una ficha, en el cual intervienen los asistentes de Gerencia General a través de la web. El asistente descarga el PDF y lo contrasta con la tarea; si la evidencia corresponde a otra tarea, reasigna la ficha y POI mueve la entrega o la intercambia con la de esa tarea. Al aprobar la ficha, el asistente confirma el beneficiario, los insumos y las fechas que figuran en el documento, y SGT completa la tarea en POI para que cuente en el avance de su actividad. Al rechazarla, SGT reabre la tarea en POI para que reciba una nueva entrega.
+
 ![Validar ficha](assets/strategic_design/ddd/message_flows/validar-ficha.jpg)

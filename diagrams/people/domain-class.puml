@@ -1,0 +1,53 @@
+@startuml people-domain
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "people.publishedlanguage" {
+    class BeneficiaryLegalDocument <<Value Object>> {
+        + type : LegalDocumentType
+        + number : String
+    }
+
+    enum LegalDocumentType <<Value Object>> {
+        DNI
+        FOREIGNER_ID_CARD
+        PASSPORT
+        - numberPattern : Pattern
+        + matches(number) : boolean
+    }
+
+    class FieldAgentId <<Value Object>> {
+        + value : UUID
+    }
+
+    class GeneralManagementAssistantId <<Value Object>> {
+        + value : UUID
+    }
+
+    class BeneficiaryProfile <<Value Object>> {
+        + document : BeneficiaryLegalDocument
+        + names : String
+        + paternalSurname : String
+        + maternalSurname : String
+        + dateOfBirth : LocalDate
+        + ubigeo : String
+    }
+
+    class FieldAgentProfile <<Value Object>> {
+        + id : FieldAgentId
+        + username : String
+        + displayName : String
+    }
+
+    class GeneralManagementAssistantProfile <<Value Object>> {
+        + id : GeneralManagementAssistantId
+        + username : String
+        + displayName : String
+    }
+}
+
+BeneficiaryLegalDocument "0..*" --> "1" LegalDocumentType : typed as >
+BeneficiaryProfile "1" *-- "1" BeneficiaryLegalDocument : identified by >
+FieldAgentProfile "1" *-- "1" FieldAgentId : identified by >
+GeneralManagementAssistantProfile "1" *-- "1" GeneralManagementAssistantId : identified by >
+@enduml

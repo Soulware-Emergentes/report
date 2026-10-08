@@ -1,0 +1,3 @@
+Planning es el contexto del servicio poi que modela el Plan Operativo Institucional: los planes, los objetivos que persiguen, las actividades con las que se avanza en cada objetivo y las tareas planificadas bajo cada actividad. Es el registro de qué tareas tienen una entrega y cómo se revisó cada una, y atiende la épica EP-04 (seguimiento de objetivos estratégicos institucionales).
+
+sgt se comunica con este contexto cada vez que una ficha cambia de estado: registra la entrega cuando se envía la ficha, completa la tarea cuando se aprueba, la reabre cuando se rechaza y reasigna la entrega cuando el revisor encuentra que la evidencia corresponde a otra tarea. Planning identifica a cada entrega por el identificador de la ficha que la hizo, sin conocer qué es una ficha.
