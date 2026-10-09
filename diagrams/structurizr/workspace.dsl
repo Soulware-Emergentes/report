@@ -86,6 +86,9 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
             }
 
             ia = softwareSystem "Modelo de IA" "Extrae los campos críticos de la ficha escaneada para su revisión." "Planificado"
+
+            fileServer = softwareSystem "File Server" "Almacenamiento de archivos físicos de la institución." "Storage"
+            dbInstitucional = softwareSystem "Base de Datos Institucional" "Motor de base de datos físico compartido, con esquemas lógicos aislados por servicio." "Database"
         }
 
         # Personas
@@ -186,6 +189,13 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
         beneficiarios.api.seeder -> beneficiarios.db "Carga los beneficiarios de prueba en" "JDBC"
         beneficiarios.api -> staff.api.authServer "Valida tokens con la clave publicada por" "JWKS"
         sgt.api -> staff.api.authServer "Valida tokens con la clave publicada por" "JWKS"
+
+        # Infraestructura institucional
+        sgt -> fileServer "Guarda los PDF escaneados de las fichas en" "S3 API"
+        sgt -> dbInstitucional "Lee y escribe terrenos y fichas en su esquema de" "JDBC"
+        poi -> dbInstitucional "Lee y escribe planes y tareas en su esquema de" "JDBC"
+        staff -> dbInstitucional "Lee personas y aplicaciones en su esquema de" "JDBC"
+        beneficiarios -> dbInstitucional "Lee beneficiarios en su esquema de" "JDBC"
 
         prod = deploymentEnvironment "Producción" {
             onprem = deploymentNode "Infraestructura on-premise" "Servidores de la institución; los datos de beneficiarios no salen de ella." "Centro de datos institucional" {
