@@ -204,6 +204,8 @@ El ciclo de vida avanza en un solo sentido. Una ficha se envía (SUBMITTED); si 
 
 FieldSheet referencia a las personas por las identidades que publica People: BeneficiaryLegalDocument para el beneficiario, FieldAgentId para quien envía la ficha y GeneralManagementAssistantId para quien la revisa. Esas clases se detallan en el contexto People.
 
+{{page_break}}
+
 TaskLedger y ScanStore son interfaces del dominio que la capa de infraestructura implementa. TaskLedger trata la negativa de poi como una respuesta válida, y cada operación identifica a la ficha que hizo la entrega, de modo que repetir un paso que ya llegó a poi no cambia nada.
 
 Las reglas de negocio del módulo se protegen con las siguientes excepciones. Todas heredan de BusinessRuleViolationException, salvo FieldSheetNotFoundException, que hereda de EntityNotFoundException.

@@ -207,6 +207,8 @@ SubmitFieldSheetHandler se ejecuta con aislamiento SERIALIZABLE, porque el códi
 </table>
 </div>
 
+{{page_break}}
+
 Tres comandos se ejecutan como reacción a los eventos del agregado, a través de los consumidores de eventos del módulo. FieldSheetSubmitted desencadena DeliverFieldSheet, FieldSheetApproved desencadena CompleteTask y FieldSheetRejected desencadena ReopenTask. Así, la comunicación con poi ocurre después de confirmar la transacción que cambió la ficha, y una falla de poi se reintenta sin deshacer el envío ni la revisión.
 
 Las capacidades del módulo atienden las siguientes historias de usuario:

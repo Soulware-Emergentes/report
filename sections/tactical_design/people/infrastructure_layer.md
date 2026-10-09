@@ -30,6 +30,8 @@ People no tiene capa de interfaz propia: los demás módulos lo usan a través d
 </table>
 </div>
 
+Cada puerto se traduce en una llamada de lote al sistema que administra los datos:
+
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>

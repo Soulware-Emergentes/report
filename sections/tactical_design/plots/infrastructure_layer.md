@@ -4,11 +4,11 @@ La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión P
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>
         <tr>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 21%;">Clase</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 16%;">Clase</th>
             <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 13%;">Categoría</th>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 16%;">Propósito</th>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 25%;">Atributos</th>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 25%;">Métodos</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 21%;">Propósito</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 22.5%;">Atributos</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 27.5%;">Métodos</th>
         </tr>
     </thead>
     <tbody>

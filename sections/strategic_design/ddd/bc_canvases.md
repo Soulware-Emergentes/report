@@ -4,15 +4,17 @@ En primer lugar se analizó el contexto SGT. Este contexto es el CORE del sistem
 
 <img src="assets/strategic_design/ddd/bc_canvases/sgp.jpg" alt="Contexto SGT" style="display: block; width: 90%; height: auto; margin: 0 auto;">
 
+{{page_break}}
+
 Luego se analizó el contexto de Beneficiarios, que representa el registro institucional de beneficiarios. Su único propósito dentro del sistema es proporcionar la información de los beneficiarios a partir de su documento legal. Se comunica con el contexto SGT.
 
 <img src="assets/strategic_design/ddd/bc_canvases/beneficiarios.jpg" alt="Contexto Beneficiarios" style="display: block; width: 90%; height: auto; margin: 0 auto;">
 
-{{page_break}}
-
 A su vez se analizó el contexto de POI. Mantiene los planes, objetivos, actividades y tareas del Plan Operativo Institucional, y registra la entrega de cada tarea y su revisión. Recibe de SGT las entregas de las fichas enviadas y el resultado de su revisión por los asistentes de Gerencia General.
 
 <img src="assets/strategic_design/ddd/bc_canvases/poi.jpg" alt="Contexto POI" style="display: block; width: 90%; height: auto; margin: 0 auto;">
+
+{{page_break}}
 
 El contexto de Staff reúne el directorio del personal y el proveedor de identidad de la organización. Autentica a las personas que usan las aplicaciones, decide qué roles tienen en cada API según los grupos del directorio a los que pertenecen, y emite los tokens de servicio con los que SGT llama a los demás contextos.
 

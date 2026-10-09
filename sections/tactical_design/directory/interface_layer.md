@@ -24,6 +24,8 @@ La capa de interfaz del directorio es un controlador REST que otros servicios ll
 </table>
 </div>
 
+{{page_break}}
+
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>

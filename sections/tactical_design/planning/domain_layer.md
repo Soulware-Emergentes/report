@@ -176,6 +176,8 @@ Los códigos son jerárquicos y forman la identidad de negocio: el plan se ident
 </table>
 </div>
 
+{{page_break}}
+
 Las reglas de negocio del contexto se protegen con las siguientes excepciones. Las de entidad no encontrada (PlanNotFoundException, ObjectiveNotFoundException, ActivityNotFoundException, TaskNotFoundException y UnknownTaskCodeException) heredan de EntityNotFoundException; el resto hereda de BusinessRuleViolationException.
 
 <div style="width: 100%; overflow-x: auto;">

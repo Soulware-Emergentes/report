@@ -101,8 +101,8 @@ Las reglas del módulo se protegen con las siguientes excepciones, que heredan d
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>
         <tr>
-            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 35%;">Excepción</th>
-            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 65%;">Regla de negocio que protege</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 60%;">Excepción</th>
+            <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 40%;">Regla de negocio que protege</th>
         </tr>
     </thead>
     <tbody>

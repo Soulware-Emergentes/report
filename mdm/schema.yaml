@@ -116,9 +116,9 @@
         - title: "EventStorming"
         - title: "Candidate Context Discovery"
           alias: "discovery"
-          skip_after: false
         - title: "Domain Message Flows Modeling"
           alias: "message-flows"
+          skip_after: false
         - title: "Bounded Context Canvases"
           alias: "bc-canvases"
         - title: "Context Mapping"
@@ -158,6 +158,7 @@
         - title: "Interface Layer"
           custom_id: "monitoring-interface-layer"
           alias: "interface-layer"
+          skip_after: true
         - title: "Application Layer"
           custom_id: "monitoring-application-layer"
           alias: "application-layer"
@@ -188,6 +189,7 @@
         - title: "Interface Layer"
           custom_id: "plots-interface-layer"
           alias: "interface-layer"
+          skip_after: true
         - title: "Application Layer"
           custom_id: "plots-application-layer"
           alias: "application-layer"
@@ -242,6 +244,7 @@
         - title: "Interface Layer"
           custom_id: "planning-interface-layer"
           alias: "interface-layer"
+          skip_after: true
         - title: "Application Layer"
           custom_id: "planning-application-layer"
           alias: "application-layer"
@@ -272,6 +275,7 @@
         - title: "Interface Layer"
           custom_id: "directory-interface-layer"
           alias: "interface-layer"
+          skip_after: true
         - title: "Application Layer"
           custom_id: "directory-application-layer"
           alias: "application-layer"
@@ -302,6 +306,7 @@
         - title: "Interface Layer"
           custom_id: "identityprovider-interface-layer"
           alias: "interface-layer"
+          skip_after: true
         - title: "Application Layer"
           custom_id: "identityprovider-application-layer"
           alias: "application-layer"
@@ -311,6 +316,7 @@
         - title: "Bounded Context Software Architecture Component Level Diagrams"
           custom_id: "identityprovider-component-level"
           alias: "component-level"
+          skip_after: false
         - title: "Bounded Context Software Architecture Code Level Diagrams"
           custom_id: "identityprovider-code-level"
           alias: "code-level"
@@ -332,6 +338,7 @@
         - title: "Interface Layer"
           custom_id: "beneficiarios-interface-layer"
           alias: "interface-layer"
+          skip_after: true
         - title: "Application Layer"
           custom_id: "beneficiarios-application-layer"
           alias: "application-layer"

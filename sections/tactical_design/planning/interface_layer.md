@@ -76,15 +76,17 @@ La autorización depende del tipo de token. Los recursos de planes y la colecci�
 </table>
 </div>
 
+{{page_break}}
+
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>
         <tr>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 21%;">Clase</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 15%;">Clase</th>
             <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 13%;">Categoría</th>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 16%;">Propósito</th>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 25%;">Atributos</th>
-            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 25%;">Métodos</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 20%;">Propósito</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 22.5%;">Atributos</th>
+            <th style="border: 1px solid #333; padding: 6px 8px; text-align: left; width: 29.5%;">Métodos</th>
         </tr>
     </thead>
     <tbody>
@@ -210,7 +212,5 @@ La autorización depende del tipo de token. Los recursos de planes y la colecci�
     </tbody>
 </table>
 </div>
-
-Las respuestas de TaskController a sgt distinguen una negativa de una falla: una tarea que no existe o que no admite la operación responde con un error de negocio, que sgt registra como REFUSED, y una operación ya realizada para la misma entrega responde igual que la primera vez.
 
 Los consumidores de eventos se registran con @ApplicationModuleListener de Spring Modulith. El evento se guarda en la tabla de publicación de eventos dentro de la misma transacción que cambió la tarea, y el consumidor actualiza el plan después de confirmarla; si falla, la publicación queda pendiente y se vuelve a intentar.
