@@ -1,0 +1,5 @@
+El siguiente diagrama de componentes del modelo C4 muestra los componentes de Monitoring dentro de la API de SGT y los contenedores con los que se comunican. Se elaboró en Structurizr, en la vista Componentes-Monitoring del workspace de la solución.
+
+<img src="assets/tactical_design/monitoring/component_level/components.png" alt="Diagrama de componentes de Monitoring" style="display: block; width: 100%; height: auto; margin: 0 auto;">
+
+FieldSheetController recibe las solicitudes de la aplicación móvil y de la aplicación web y las dirige a FieldSheetCommandService o a FieldSheetQueryService. Los comandos aplican las reglas del modelo de dominio y guardan la ficha con JpaFieldSheetRepositoryAdapter, que publica los eventos del agregado. Los consumidores de eventos reciben esos eventos después de confirmada la transacción y envían a FieldSheetCommandService los comandos que informan a poi a través de HttpTaskLedger, que obtiene su token de OAuth2ServiceTokens. Los PDF se suben y descargan directamente en el almacén de objetos con enlaces firmados que emite ObjectStoreScanLinkProjection.

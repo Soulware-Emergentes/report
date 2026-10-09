@@ -1,0 +1,28 @@
+@startuml directory-database
+skinparam classAttributeIconSize 0
+hide circle
+hide empty methods
+
+class people <<Table>> {
+    {field} id : UUID [PK]
+    {field} username : VARCHAR(255) [UQ, NN]
+    {field} display_name : VARCHAR(255) [NN]
+    {field} job_title : VARCHAR(255) [NN]
+    {field} department : VARCHAR(255) [NN]
+    {field} password_hash : VARCHAR(255)
+}
+
+class groups <<Table>> {
+    {field} id : UUID [PK]
+    {field} name : VARCHAR(255) [UQ, NN]
+    {field} description : TEXT
+}
+
+class group_members <<Table>> {
+    {field} group_id : UUID [PK, FK]
+    {field} person_id : UUID [PK, FK]
+}
+
+group_members "0..*" --> "1" groups : group_id
+group_members "0..*" --> "1" people : person_id
+@enduml

@@ -1,0 +1,77 @@
+@startuml planning-domain-task
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "planning.domain" {
+    abstract class Task <<Aggregate Root>> {
+        - id : TaskId
+        - activityId : ActivityId
+        - code : TaskCode
+        - description : Description
+        - status : TaskStatus
+        - submissionId : SubmissionId
+        - executionDate : ExecutionDate
+        # Task(...)
+        + registerDelivery(submissionId, executionDate) : void
+        + complete(submissionId) : void
+        + reopen(submissionId) : void
+        + relinkDeliveryFrom(source, submissionId) : void
+        - holdsDeliveryOf(submissionId) : boolean
+        - release() : void
+    }
+
+    class BeneficiaryFollowUpTask <<Aggregate Root>> {
+        - beneficiaryId : BeneficiaryId
+        + {static} define(...) : BeneficiaryFollowUpTask
+        + {static} reconstitute(...) : BeneficiaryFollowUpTask
+    }
+
+    class TaskId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class TaskCode <<Value Object>> {
+        + activity : ActivityCode
+        + number : int
+        + {static} parse(text) : TaskCode
+        + next() : TaskCode
+        + value() : String
+    }
+
+    enum TaskStatus <<Value Object>> {
+        PENDING
+        DELIVERED
+        COMPLETED
+    }
+
+    class SubmissionId <<Value Object>> {
+        + value : UUID
+    }
+
+    class BeneficiaryId <<Value Object>> {
+        + value : String
+    }
+
+    class ActivityId <<Entity Id>> {
+        + value : UUID
+    }
+
+    interface TaskRepository <<Repository>> {
+        + save(task) : Task
+        + getById(id) : Task
+        + getAllByIds(ids) : List<Task>
+        + delete(task) : void
+        + findByCode(code) : Optional<Task>
+        + findLastUnder(activityId) : Optional<Task>
+    }
+}
+
+Task <|-left- BeneficiaryFollowUpTask
+Task "1" *-- "1" TaskId : identified by >
+Task "1" *-- "1" TaskCode : coded as >
+Task "1" *-right- "1" TaskStatus : stands at >
+Task "0..*" --> "1" ActivityId : planned under >
+Task "1" *-- "0..1" SubmissionId : delivered by >
+BeneficiaryFollowUpTask "1" *-- "1" BeneficiaryId : visits >
+TaskRepository "1" --> "0..*" Task : stores >
+@enduml

@@ -1,0 +1,62 @@
+@startuml beneficiarios-domain
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "registry.domain" {
+    class Beneficiary <<Aggregate Root>> {
+        - id : BeneficiaryId
+        - legalDocument : LegalDocument
+        - name : PersonName
+        - dateOfBirth : DateOfBirth
+        - residence : Ubigeo
+        + {static} reconstitute(...) : Beneficiary
+    }
+
+    class BeneficiaryId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class LegalDocument <<Value Object>> {
+        + type : LegalDocumentType
+        + number : String
+    }
+
+    enum LegalDocumentType <<Value Object>> {
+        DNI
+        FOREIGNER_ID_CARD
+        PASSPORT
+        - numberPattern : Pattern
+        + accepts(number) : boolean
+        + {static} named(name) : LegalDocumentType
+    }
+
+    class PersonName <<Value Object>> {
+        + names : String
+        + paternalSurname : String
+        + maternalSurname : String
+    }
+
+    class DateOfBirth <<Value Object>> {
+        + value : LocalDate
+    }
+
+    class Ubigeo <<Value Object>> {
+        + value : String
+    }
+
+    interface BeneficiaryRepository <<Repository>> {
+        + save(beneficiary) : Beneficiary
+        + getById(id) : Beneficiary
+        + getAllByIds(ids) : List<Beneficiary>
+        + delete(beneficiary) : void
+    }
+}
+
+Beneficiary "1" *-- "1" BeneficiaryId : identified by >
+Beneficiary "1" *-- "1" LegalDocument : identified by document >
+Beneficiary "1" *-- "1" PersonName : named >
+Beneficiary "1" *-- "1" Ubigeo : resides in >
+Beneficiary "1" *-- "1" DateOfBirth : born on >
+LegalDocument "0..*" --> "1" LegalDocumentType : typed as >
+BeneficiaryRepository "1" --> "0..*" Beneficiary : stores >
+@enduml

@@ -1,0 +1,144 @@
+@startuml monitoring-domain
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "monitoring.domain" {
+    class FieldSheet <<Aggregate Root>> {
+        - id : FieldSheetId
+        - code : FieldSheetCode
+        - taskCode : TaskCode
+        - status : FieldSheetStatus
+        - beneficiaryLegalDocument : BeneficiaryLegalDocument
+        - usedSupplies : List<Supply>
+        - evaluationDate : EvaluationDate
+        - securementDate : SecurementDate
+        - scan : FieldSheetScan
+        - submittedBy : FieldAgentId
+        - submissionDate : SubmissionDate
+        - reviewedBy : GeneralManagementAssistantId
+        - reviewDate : ReviewDate
+        + {static} submit(...) : FieldSheet
+        + {static} reconstitute(...) : FieldSheet
+        + approve(...) : void
+        + reject(reviewer, reviewDate) : void
+        + recordDeliveryAccepted() : void
+        + recordDeliveryRefused() : void
+        + relinkTo(taskCode) : void
+        - review(reviewer, reviewDate, outcome) : void
+        - requireDelivered() : void
+    }
+
+    class FieldSheetId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class FieldSheetCode <<Value Object>> {
+        + number : int
+        + year : SubmissionYear
+        + {static} first(year) : FieldSheetCode
+        + {static} parse(text) : FieldSheetCode
+        + next() : FieldSheetCode
+        + value() : String
+    }
+
+    class SubmissionYear <<Value Object>> {
+        + value : int
+        + {static} of(submissionDate) : SubmissionYear
+    }
+
+    class TaskCode <<Value Object>> {
+        + value : String
+    }
+
+    class FieldSheetScan <<Value Object>> {
+        + key : ScanKey
+        + sizeInBytes : long
+    }
+
+    class ScanKey <<Value Object>> {
+        + value : String
+    }
+
+    enum FieldSheetStatus <<Value Object>> {
+        SUBMITTED
+        DELIVERED
+        APPROVED
+        REJECTED
+        VOIDED
+    }
+
+    class Supply <<Value Object>> {
+        + name : SupplyName
+        + quantity : Quantity
+    }
+
+    class SupplyName <<Value Object>> {
+        + value : String
+    }
+
+    class Quantity <<Value Object>> {
+        + value : BigDecimal
+        + unit : MeasurementUnit
+    }
+
+    enum MeasurementUnit <<Value Object>> {
+        KILOGRAM
+        LITER
+        UNIT
+    }
+
+    enum DeliveryOutcome <<Value Object>> {
+        ACCEPTED
+        REFUSED
+    }
+
+    class RelinkOutcome <<Value Object>> {
+        + result : RelinkResult
+        + swappedWith : FieldSheetId
+    }
+
+    enum RelinkResult <<Value Object>> {
+        MOVED
+        SWAPPED
+        REFUSED
+    }
+
+    interface FieldSheetRepository <<Repository>> {
+        + save(fieldSheet) : FieldSheet
+        + getById(id) : FieldSheet
+        + getAllByIds(ids) : List<FieldSheet>
+        + delete(fieldSheet) : void
+        + findLastSubmittedIn(year) : Optional<FieldSheet>
+    }
+
+    interface ScanStore <<Domain Service>> {
+        + inspect(key) : FieldSheetScan
+    }
+
+    interface TaskLedger <<Domain Service>> {
+        + registerDelivery(...) : DeliveryOutcome
+        + relink(taskCode, fromTaskCode, fieldSheetId) : RelinkOutcome
+        + complete(taskCode, fieldSheetId) : void
+        + reopen(taskCode, fieldSheetId) : void
+    }
+}
+
+FieldSheet "1" *-- "1" FieldSheetId : identified by >
+FieldSheet "1" *-- "1" FieldSheetCode : coded as >
+FieldSheetCode "1" *-- "1" SubmissionYear : numbered within >
+FieldSheet "1" *-- "1" TaskCode : submitted for >
+FieldSheet "1" *-- "1" FieldSheetStatus : stands at >
+FieldSheetScan "1" *-- "1" FieldSheet : evidenced by >
+FieldSheet "1" *-- "0..*" Supply : used supplies >
+FieldSheetScan "1" *-- "1" ScanKey : stored at >
+Supply "1" *-- "1" SupplyName : named >
+Supply "1" *-- "1" Quantity : measured as >
+Quantity "1" *-- "1" MeasurementUnit : expressed in >
+RelinkOutcome "1" *-- "1" RelinkResult : result >
+RelinkOutcome "1" --> "0..1" FieldSheetId : swapped with >
+
+FieldSheetRepository "1" --> "0..*" FieldSheet : stores >
+ScanStore ..> FieldSheetScan : inspects >
+TaskLedger ..> DeliveryOutcome : answers >
+TaskLedger ..> RelinkOutcome : answers >
+@enduml

@@ -1,0 +1,5 @@
+El siguiente diagrama de base de datos muestra las tablas de Monitoring en la base de datos PostgreSQL de sgt. Se elaboró en LucidChart a partir de las migraciones Flyway del servicio.
+
+<img src="assets/tactical_design/monitoring/code_level/db_diagram/schema.png" alt="Diagrama de base de datos de monitoring" style="display: block; width: 80%; height: auto; margin: 0 auto;">
+
+La tabla field_sheets guarda una fila por ficha, con el código único FI-número-año, el código de la tarea de poi y la ubicación y el tamaño del PDF en el almacén de objetos. Las personas se guardan como identidades sin clave foránea, porque pertenecen a otros sistemas. Las restricciones CHECK repiten las reglas del agregado: el revisor y la fecha de revisión aparecen juntos, el tipo y el número del documento del beneficiario aparecen juntos, y una ficha aprobada tiene beneficiario y fecha de evaluación. La tabla field_sheet_supplies guarda los insumos de cada ficha en orden, con clave primaria compuesta por la ficha y la posición, y se elimina en cascada con su ficha.
