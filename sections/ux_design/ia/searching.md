@@ -31,7 +31,7 @@ Cada una de las cuatro secciones de la barra lateral abre una grilla con sus pro
             <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, estado</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, coordenadas, fecha de actualización, estado y acciones</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, número de vértices, fecha de actualización, estado y acciones</td>
             </tr>
         </tbody>
     </table>

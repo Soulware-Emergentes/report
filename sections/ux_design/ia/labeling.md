@@ -74,4 +74,4 @@ Las acciones usan las mismas etiquetas en web y móvil cuando hacen lo mismo. Lo
 
 Los estados de una ficha son Borrador, En revisión, Aprobada, Observada y Alterada, y los de un terreno son Borrador y Validado. La diferencia de verbo responde al flujo: una ficha se aprueba y un terreno se valida. Cada estado se muestra con el Status chip de la guía de estilos, siempre con texto.
 
-Las columnas de las tablas repiten los atributos del dominio con etiquetas breves: Código, DNI del beneficiario, DNI del agente, Coordenadas, Fecha de llenado, Fecha de validación, Terreno, Estado y Acciones.
+Las columnas de las tablas repiten los atributos del dominio con etiquetas breves: Código, DNI del beneficiario, DNI del agente, Vértices, Fecha de llenado, Fecha de validación, Terreno, Estado y Acciones.
