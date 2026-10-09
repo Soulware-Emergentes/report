@@ -1487,13 +1487,16 @@ Hallazgo formal levantado por el área de control interno de la entidad ante una
 Unidad de terreno registrada a nombre de un beneficiario dentro del programa.
 
 **Land Boundary (Delimitación de terreno)**  
-Contorno geográfico que define el área de un terreno registrado.
+Contorno geográfico que define el área de un terreno registrado. Es un polígono cerrado que se forma uniendo sus vértices en orden.
 
 **Progress Report (Reporte de avance)**  
 Informe periódico que consolida los indicadores del programa y se presenta a la gerencia para seguimiento del Plan Operativo Institucional.
 
 **Task (Tarea)**  
 Unidad mínima realizable del Plan Operativo Institucional, planificada de antemano y totalmente rastreada durante su ejecución.
+
+**Vertex (Vértice)**  
+Punto del perímetro de un terreno, expresado con sus coordenadas Este y Norte. Los vértices llegan en el archivo que genera la estación total o se ingresan a mano desde la web.
 
 **Yield (Producción)**  
 Cantidad de producto agrícola obtenida en un terreno durante un periodo de evaluación.
@@ -6939,11 +6942,11 @@ La pantalla principal de la web es un mapa interactivo a pantalla completa. La b
 
 <img src="./assets/ux_design/style/web_mobile/layout-estados-mapa.png" alt="Estados de la pantalla del mapa" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 90mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
-Al pulsar un terreno en el mapa se abre un popup con los datos del terreno, es decir, el DNI del beneficiario y las coordenadas, y un desplegable con sus fichas. Cada ficha muestra su código, el DNI del agente, la fecha de llenado y la fecha de validación, y mientras esté pendiente incluye la acción Validar. El popup usa la superficie elevada de la guía general.
+Al pulsar un terreno en el mapa se abre un popup con los datos del terreno, es decir, el DNI del beneficiario y el área estimada, un desplegable con los vértices de su perímetro y otro con sus fichas. Los vértices también se marcan numerados sobre el polígono del mapa. Cada ficha muestra su código, el DNI del agente, la fecha de llenado y la fecha de validación, y mientras esté pendiente incluye la acción Validar. El popup usa la superficie elevada de la guía general.
 
 <img src="./assets/ux_design/style/web_mobile/popup-terreno.png" alt="Popup de terreno sobre el mapa" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
-Dos modales cubren la creación y la carga de datos. El modal de creación de terreno se usa tanto para crear un terreno desde la web como para validar los terrenos precargados desde el archivo de la estación total, que llegan con las coordenadas ya completas en un campo de solo lectura. El modal de subida de ficha permite al agente de campo subir la ficha digitalizada con su código, su fecha de llenado y el terreno vinculado, ya sea arrastrando el PDF o seleccionándolo, y también se abre desde el detalle del terreno. Cuando un modal bloquea la pantalla, se coloca sobre un fondo oscuro translúcido que lo separa del mapa.
+Dos modales cubren la creación y la carga de datos. El modal de creación de terreno se usa tanto para crear un terreno desde la web como para validar los terrenos precargados desde el archivo de la estación total, que llegan con sus vértices ya leídos del archivo. Como un terreno es un polígono y no un punto, el modal no pide un par de coordenadas sino la lista de vértices del perímetro, cada uno con su Este y su Norte en UTM. La lista se carga desde el archivo de la estación total o se ingresa a mano, se puede corregir vértice por vértice, y el área se calcula a partir de ella. El modal de subida de ficha permite al agente de campo subir la ficha digitalizada con su código, su fecha de llenado y el terreno vinculado, ya sea arrastrando el PDF o seleccionándolo, y también se abre desde el detalle del terreno. Cuando un modal bloquea la pantalla, se coloca sobre un fondo oscuro translúcido que lo separa del mapa.
 
 <img src="./assets/ux_design/style/web_mobile/modales.png" alt="Modales de creación de terreno y de subida de ficha" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 130mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
@@ -7149,7 +7152,7 @@ Las acciones usan las mismas etiquetas en web y móvil cuando hacen lo mismo. Lo
 
 Los estados de una ficha son Borrador, En revisión, Aprobada, Observada y Alterada, y los de un terreno son Borrador y Validado. La diferencia de verbo responde al flujo: una ficha se aprueba y un terreno se valida. Cada estado se muestra con el Status chip de la guía de estilos, siempre con texto.
 
-Las columnas de las tablas repiten los atributos del dominio con etiquetas breves: Código, DNI del beneficiario, DNI del agente, Coordenadas, Fecha de llenado, Fecha de validación, Terreno, Estado y Acciones.
+Las columnas de las tablas repiten los atributos del dominio con etiquetas breves: Código, DNI del beneficiario, DNI del agente, Vértices, Fecha de llenado, Fecha de validación, Terreno, Estado y Acciones.
 
 
 <div style="page-break-after: always;"></div>
@@ -7189,7 +7192,7 @@ Cada una de las cuatro secciones de la barra lateral abre una grilla con sus pro
             <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Terrenos</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, estado</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, coordenadas, fecha de actualización, estado y acciones</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Código, DNI del beneficiario, número de vértices, fecha de actualización, estado y acciones</td>
             </tr>
         </tbody>
     </table>
@@ -7366,12 +7369,90 @@ La aplicación móvil tiene una sola tarea, por lo que no lleva menú ni barra d
 
 ### Landing Page Wireframe
 
+Los wireframes de la landing page definen la estructura y el orden de lectura antes de aplicar la identidad visual final. La página está dirigida a quienes necesitan comprender qué es SGT y cómo DEPRO transforma registros de campo en información verificable para el seguimiento institucional. Su arquitectura de información sigue una secuencia de preguntas: qué es el sistema, cómo funciona, qué mejora, quiénes intervienen y para qué se utilizan los datos validados. El acceso para personal autorizado se distingue del recorrido informativo público.
+
+**Desktop Web Browser**
+
+La cabecera reúne la marca, los enlaces a las secciones principales y el acceso interno. En el hero, el título explica el propósito de SGT, el texto precisa la relación entre parcelas, beneficiarios y fichas, y una única llamada principal invita a conocer el proceso. La representación del terreno y la secuencia «Parcela → Ficha → Planes» anticipan el contenido siguiente. Esta jerarquía reduce la carga de decisión inicial: primero se presenta el valor del sistema y después su operación.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/hero-section.png" alt="Wireframe de escritorio: cabecera y hero que presentan SGT y el recorrido de parcela a planes" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 125mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+La sección «Cómo funciona» organiza el proceso en tres pasos numerados: registrar la parcela a partir de la medición enviada desde el móvil, subir la ficha PDF vinculada al beneficiario y al terreno, y validar la ficha contrastando los datos extraídos con el documento. La vista territorial y la tarjeta en estado «Borrador» dan contexto al primer paso. La numeración, los verbos de acción y el estado escrito hacen que el flujo sea comprensible incluso sin depender de los iconos.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/como-funciona.png" alt="Wireframe de escritorio: vista territorial y tres pasos de registro y validación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 120mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+La propuesta de mejora se resume en tres ideas separadas: vínculo entre parcela, beneficiario y ficha; revisión de la información extraída por IA frente al PDF; e integridad documental con registro de quién aprueba y cuándo. Las tarjetas agrupan una idea por bloque y permiten explorar el beneficio sin leer un párrafo extenso.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/mejora-depro.png" alt="Wireframe de escritorio: tres beneficios de vínculo, revisión e integridad" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+A continuación, la página traduce esos beneficios en roles concretos: el agente de campo completa los registros y la asistente de gerencia general revisa y valida cada ficha. La composición alterna ejemplos de móvil y web para explicar responsabilidades, no para presentar ambos dispositivos como una única tarea.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/quienes-usan.png" alt="Wireframe de escritorio: tareas del agente de campo y de la asistente de gerencia general" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+El cierre del recorrido muestra el destino de la información validada mediante dos bloques diferenciados, POI y PEI. El pie de página repite los enlaces de exploración, identifica a DEPRO y separa el acceso de uso interno. Así, tanto quien lee toda la página como quien llega al final puede orientarse y volver a una sección relevante.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/seguimiento-institucional.png" alt="Wireframe de escritorio: información validada destinada al seguimiento del POI y PEI" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 85mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/footer.png" alt="Wireframe de escritorio: pie de página con enlaces de exploración y acceso interno" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 85mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+**Mobile Web Browser**
+
+En el navegador móvil se conserva la misma secuencia informativa, pero la lectura pasa a una sola columna. La cabecera compacta incluye marca, acceso y menú; el hero mantiene un título breve, una acción principal visible y el resumen «Parcela → Ficha → Planes». «Cómo funciona» sitúa primero la vista territorial y después apila los tres pasos, de modo que no se obliga a leer columnas estrechas ni a interpretar el diagrama antes de conocer su contexto.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/hero-como-funciona-mobile.png" alt="Wireframes móviles: hero y sección Cómo funciona en una columna" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 170mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Las tres mejoras y los dos roles también se presentan como bloques verticales independientes. Los títulos, números y descripciones mantienen la jerarquía cuando se reduce el ancho; los ejemplos visuales del trabajo de campo y de la validación se colocan junto a la explicación correspondiente. Esta disposición favorece la lectura lineal, la ampliación del contenido y la identificación de cada responsabilidad sin depender de la posición izquierda/derecha del diseño de escritorio.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/mejora-quienes-usan-mobile.png" alt="Wireframes móviles: mejoras de SGT y roles de campo y gerencia en bloques apilados" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 170mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+El seguimiento del POI y PEI se expresa en tarjetas consecutivas y el pie de página agrupa «Explorar» y «Uso interno» con rótulos explícitos. En conjunto, los wireframes aplican jerarquía, proximidad y consistencia al separar temas y repetir patrones; para un diseño inclusivo, priorizan texto legible, acciones nombradas, pasos numerados y estados expresados con palabras, sin que la comprensión dependa únicamente de imágenes o color.
+
+<img src="./assets/ux_design/applications-design/landing-page/wireframe/seguimiento-footer-mobile.png" alt="Wireframes móviles: seguimiento institucional y pie de página" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 150mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
 
 <div style="page-break-after: always;"></div>
 
 ### Landing Page Mock-up
 
+Los mock-ups desarrollan la estructura de los wireframes con la identidad visual de SGT. Mantienen la misma arquitectura de información —presentación, proceso, beneficios, roles y seguimiento institucional— y aplican el Design System definido para los productos digitales: logotipo territorial, tipografía Roboto, azul marino para superficies y títulos, teal para la acción principal, acentos verdes, tarjetas, iconos y etiquetas de estado. La landing es una página informativa; las imágenes de las aplicaciones muestran el trabajo que se explica, sin sustituir los flujos operativos de la web y del móvil.
+
+**Desktop Web Browser**
+
+El hero emplea una fotografía aérea y el contorno de una parcela para relacionar inmediatamente la marca con el territorio. Una capa oscura permite distinguir el título y el texto sobre la imagen; el botón teal «Conozca cómo funciona» concentra la acción principal. La navegación diferencia la exploración pública del «Acceso para personal autorizado». El pequeño recorrido «Parcela → Ficha → Planes» funciona como avance visual de la historia que desarrolla la página.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/hero-section.png" alt="Mock-up de escritorio: hero con fotografía territorial, navegación y llamada a conocer el proceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 125mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+En «Cómo funciona», la vista del terreno medido aporta contexto espacial y la tarjeta «Borrador» ejemplifica un estado real del registro. A su lado, tres tarjetas numeradas explican el envío de la medición, la subida de la ficha PDF y su validación. Esta combinación de imagen contextual y pasos breves hace visible la relación entre el trabajo de campo y la revisión posterior; las etiquetas escritas complementan la iconografía y evitan que el estado se comunique solo mediante color.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/como-funciona.png" alt="Mock-up de escritorio: terreno medido y tarjetas numeradas del proceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 120mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+La sección «La mejora para DEPRO» utiliza tres tarjetas de igual familia visual para explicar el vínculo de los datos, la revisión de lo extraído por IA frente al PDF y la integridad con aprobación trazable.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/mejora-depro.png" alt="Mock-up de escritorio: tarjetas de vínculo, revisión e integridad de la información" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Después, «Quiénes lo utilizan» muestra por separado la tarea del agente de campo y la validación de gerencia, con representaciones del móvil y de la aplicación web. Esta progresión va de la capacidad del sistema a las personas que la ejecutan y evita confundir la captura con la aprobación.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/quienes-utilizan.png" alt="Mock-up de escritorio: representación del registro móvil y de la validación web por gerencia" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+El bloque final recupera el fondo azul marino y distingue el seguimiento operativo del POI y el estratégico del PEI mediante dos tarjetas con títulos desarrollados. El pie de página conserva la marca, los enlaces de exploración y el acceso interno. La repetición de color, tipografía, espaciado y superficies mantiene continuidad visual sin añadir nuevas categorías de navegación al final del recorrido.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/seguimiento-institucional.png" alt="Mock-up de escritorio: tarjetas POI y PEI sobre fondo azul marino" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 85mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/footer.png" alt="Mock-up de escritorio: pie de página con marca, exploración y acceso interno" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 85mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+**Mobile Web Browser**
+
+La adaptación móvil mantiene la fotografía y la superposición oscura del hero, mientras simplifica la cabecera a marca, acceso y menú. El título, la explicación y el botón ocupan el ancho disponible; la secuencia de parcela, ficha y planes queda al final del primer bloque. En «Cómo funciona», la vista territorial antecede a tres tarjetas apiladas, conservando el orden lógico del escritorio sin exigir desplazamiento horizontal.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/hero-funcion-mobile.png" alt="Mock-ups móviles: hero territorial y proceso de registro y revisión en una columna" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 170mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Las mejoras aparecen como tarjetas separadas con icono, número, título y explicación. Los ejemplos del agente y de gerencia se presentan uno debajo del otro, cada uno junto a su descripción; el contraste entre la superficie clara y el panel azul marino señala el cambio de rol sin depender solo de esa diferencia cromática, pues ambos están nombrados. El contenido conserva el mismo vocabulario y los mismos patrones de tarjetas que la versión de escritorio.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/mejora-quienes.usan-mobile.png" alt="Mock-ups móviles: beneficios de SGT y tareas diferenciadas de campo y gerencia" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 170mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Las tarjetas POI y PEI cierran la explicación del flujo de datos y el pie conserva enlaces etiquetados para volver a explorar o entrar al uso interno. La propuesta aplica contraste entre superficies claras y oscuras, jerarquía tipográfica, agrupación por proximidad y un único énfasis de acción en el hero. Para favorecer una lectura inclusiva, los conceptos y estados relevantes se expresan con texto además de iconos y color; la disposición en una columna facilita seguir el contenido en una pantalla estrecha. Estas decisiones son visibles en los mock-ups, aunque la comprobación técnica de contraste, foco y tamaños táctiles corresponde a la implementación.
+
+<img src="./assets/ux_design/applications-design/landing-page/mockup/seguimiento-footer-mobile.png" alt="Mock-ups móviles: seguimiento POI y PEI y pie de página" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 150mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
 
 <div style="page-break-after: always;"></div>
@@ -7380,12 +7461,319 @@ La aplicación móvil tiene una sola tarea, por lo que no lleva menú ni barra d
 
 ### Applications Wireframes
 
+**Aplicación móvil (Android)**
+
+Los wireframes de la aplicación móvil de SGT se elaboraron en Figma para el agente de campo. Esta propuesta concentra en el teléfono el registro de la medición de un terreno y el envío del archivo generado por la estación total. La aceptación posterior del terreno y la carga de fichas escaneadas corresponden a la aplicación web y se documentan por separado. Las cuatro láminas siguientes agrupan las pantallas por tarea y estado para que puedan leerse sin perder la continuidad del proceso.
+
+El acceso presenta primero la identidad de SGT, después el inicio de sesión y, como ruta de apoyo, la recuperación de contraseña mediante correo, código de verificación y creación de una nueva clave. Cada pantalla prioriza un título, campos con etiquetas persistentes y una acción principal. La confirmación final indica el siguiente paso en vez de dejar al usuario ante un estado sin salida. Esta secuencia aplica jerarquía visual, consistencia en los controles y prevención de errores desde el primer contacto con la aplicación.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireframe/mobile-wireframes-acceso-recuperacion.png" alt="Seis wireframes móviles de SGT: presentación, inicio de sesión y recuperación de contraseña con código, nueva clave y confirmación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 180mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Acceso y recuperación de contraseña en la aplicación móvil.</figcaption>
+</figure>
+
+La pantalla Inicio agrupa dos destinos reconocibles: Registrar terreno como tarea principal y Mis terrenos para retomar o consultar registros. El registro avanza en cuatro pasos visibles. Primero se solicitan el código, la fecha de medición y una referencia de ubicación; luego se selecciona el archivo de la estación total y se muestra un estado distinto cuando ya está adjunto. La barra de progreso, el título de cada paso y el botón Continuar permiten saber dónde está el agente y qué falta. Guardar borrador aparece como acción secundaria y no compite visualmente con el avance.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireframe/mobile-wireframes-registro-terreno-archivo.png" alt="Cuatro wireframes móviles: Inicio, datos del terreno, archivo de estación total por seleccionar y archivo adjunto" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 112mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Inicio, datos del terreno y selección del archivo de medición.</figcaption>
+</figure>
+
+La vinculación del beneficiario utiliza el DNI antes del envío. El estado «DNI no encontrado» explica el problema junto al campo y ofrece Volver a validar; no presenta el error únicamente mediante un color. Cuando la identidad se confirma, una tarjeta muestra el resultado y permite cambiar el DNI antes de seguir. La revisión reúne código, fecha, archivo y beneficiario para comprobarlos antes de Enviar terreno. La confirmación comunica que el registro llegó a la web y quedó en revisión; no representa la aprobación final del terreno.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireframe/mobile-wireframes-validacion-envio.png" alt="Cuatro wireframes móviles: DNI no encontrado, beneficiario validado, revisión del registro y confirmación del envío" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 112mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Validación del beneficiario, revisión y resultado del envío.</figcaption>
+</figure>
+
+Mis terrenos separa los registros pendientes de los enviados mediante pestañas. Cada tarjeta expresa su estado con palabras y, cuando el terreno ya tiene código, lo muestra para facilitar la consulta. La pantalla «Pendiente de envío» hace visible una interrupción de conectividad y ofrece Reintentar ahora o Volver a pendientes. Así se distinguen la consulta, la recuperación de la tarea y los resultados sin depender solo del contraste cromático. La navegación inferior mantiene Inicio y Mis terrenos como destinos estables, mientras que el contenido de cada pantalla sigue un orden vertical de título, información y acción.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireframe/mobile-wireframes-seguimiento-conectividad.png" alt="Tres wireframes móviles: terrenos pendientes, terrenos enviados en revisión y estado pendiente de envío por falta de conexión" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 112mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Consulta de registros y estado de conectividad.</figcaption>
+</figure>
+
+En conjunto, la propuesta aplica una arquitectura de información orientada a tareas: acceso, registro guiado, validación previa y seguimiento. La composición de una columna, las etiquetas visibles, los textos de ayuda, la diferencia entre acciones principales y secundarias y los estados descritos con palabras favorecen la lectura en una pantalla pequeña y el uso por agentes con distintas condiciones de visión o familiaridad digital. Las áreas táctiles, el contraste y la tipografía siguen las reglas definidas en la guía de estilos de SGT; las barras de estado y de gestos respetan las convenciones de Android.
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web**
+
+Los wireframes de la aplicación web se elaboraron en Figma para los dos usuarios del sistema: el agente de campo, que crea y valida terrenos y sube las fichas, y la asistente de gerencia general, que valida esas fichas contra su PDF. Todas las pantallas comparten el mismo esquema. Una barra lateral da acceso a Beneficiarios, Agentes de campo, Fichas y Terrenos, y el mapa queda siempre de fondo. Las secciones se abren junto al mapa o a pantalla completa según el espacio que necesitan, y cada panel lleva los botones para colapsarlo y cerrarlo. Las pantallas se presentan en el orden en que se usan, desde el acceso hasta el trabajo de cada rol.
+
+**Inicio de sesión**
+
+Pantalla de acceso dividida en dos zonas. A la izquierda va la identidad de SGT con una frase que resume su propósito, y a la derecha el formulario con usuario o DNI, contraseña y el botón Iniciar sesión. Debajo están los enlaces para recuperar la contraseña y para solicitar acceso. El texto de apoyo aclara que lo que el usuario ve después depende del rol que tiene asignado.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-inicio-sesion.png" alt="Wireframe web de inicio de sesión con usuario o DNI, contraseña y enlaces de recuperación y solicitud de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Inicio de sesión con credenciales institucionales.</figcaption>
+</figure>
+
+**Solicitar acceso**
+
+SGT es de uso interno, así que no hay registro libre. Esta pantalla recoge el DNI, los nombres y apellidos, el correo institucional y la oficina zonal, y envía la solicitud a la Oficina de Tecnologías, que habilita la cuenta tras verificar los datos. El texto de apoyo lo explica para que el usuario no espere un acceso inmediato.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-registro.png" alt="Wireframe web de solicitud de acceso con DNI, nombres, correo institucional y oficina zonal" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Solicitud de acceso revisada por la Oficina de Tecnologías.</figcaption>
+</figure>
+
+**Recuperar contraseña**
+
+El usuario indica su DNI o su correo institucional y recibe un enlace para restablecer la contraseña. La pantalla muestra el estado Enlace enviado con el plazo de vencimiento del enlace y ofrece volver al inicio de sesión, de modo que el usuario sabe qué hacer a continuación.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-recuperar-contrasena.png" alt="Wireframe web de recuperación de contraseña con el aviso de enlace enviado" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Recuperación de contraseña con confirmación del envío.</figcaption>
+</figure>
+
+**Vista general (mapa)**
+
+Es el punto de partida después de iniciar sesión. El mapa ocupa toda la pantalla y dibuja cada terreno como un polígono. La barra lateral queda colapsada en iconos, los controles de capas, zoom y centrado están a la derecha, y la leyenda distingue los terrenos validados, los borradores y el seleccionado. La barra inferior muestra la posición del cursor y la escala.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-vista-general.png" alt="Wireframe web del mapa a pantalla completa con terrenos dibujados como polígonos, controles y leyenda" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Mapa de terrenos como vista principal.</figcaption>
+</figure>
+
+**Beneficiarios**
+
+Panel abierto junto al mapa para buscar beneficiarios por DNI o nombre. La tabla muestra el DNI, los nombres y apellidos, la zona, el número de terrenos y el estado de cada beneficiario, con paginación al pie. El mapa sigue visible a la derecha y señala la zona y los terrenos que están en vista.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-beneficiarios.png" alt="Wireframe web de la sección Beneficiarios con filtros, tabla paginada y mapa a la derecha" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Búsqueda de beneficiarios con el mapa desplazado.</figcaption>
+</figure>
+
+**Agentes de campo**
+
+Sigue el mismo patrón que Beneficiarios. Se filtra por DNI del agente y por zona, y la tabla indica cuántas fichas registró cada agente en el mes y si está en campo, activo o sin reportar. Repetir la estructura reduce lo que el usuario tiene que aprender de una sección a otra.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-agentes-campo.png" alt="Wireframe web de la sección Agentes de campo con filtros por DNI y zona y tabla de agentes" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Consulta de agentes de campo por DNI y zona.</figcaption>
+</figure>
+
+**Fichas (asistente de gerencia general)**
+
+Vista a pantalla completa porque la tabla necesita todo el ancho. Se filtra por código de ficha, DNI del agente y estado, y cada fila muestra las fechas de llenado y de validación, el terreno vinculado y el estado escrito en un chip. Las fichas en revisión u observadas llevan el botón Validar, que abre la pantalla de validación.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-fichas.png" alt="Wireframe web de la tabla de fichas con filtros, estados y botón Validar en las fichas pendientes" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Bandeja de fichas con acceso a la validación.</figcaption>
+</figure>
+
+**Validar ficha**
+
+Es la pantalla central de la asistente. Arriba, una alerta confirma que el PDF no cambió desde que se subió. Debajo, la pantalla se divide en dos columnas: a la izquierda los datos que extrajo la IA, cada uno editable, y a la derecha el documento original con la línea correspondiente resaltada. Así la asistente compara dato y documento sin cambiar de pantalla. Si corrige un valor, el campo lo indica. Un aviso explica que al aprobar se notifica al sistema del POI y se registra quién aprobó y cuándo. Las acciones son Volver, Observar ficha y Aprobar ficha.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-validar-ficha.png" alt="Wireframe web de validación de ficha con alerta de integridad, datos extraídos por la IA y PDF original lado a lado" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Validación de la ficha: datos de la IA frente al documento original.</figcaption>
+</figure>
+
+**Terrenos (asistente de gerencia general)**
+
+Tabla de solo consulta con el código, el DNI del beneficiario, el número de vértices del perímetro, la fecha de actualización y el estado de cada terreno. La asistente no crea ni valida terrenos, por eso esta vista no tiene acciones y solo muestra los terrenos validados.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-terrenos-asistente.png" alt="Wireframe web de la tabla de terrenos de solo consulta con la columna de vértices" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Consulta de terrenos validados.</figcaption>
+</figure>
+
+**Detalle de terreno (asistente de gerencia general)**
+
+Al pulsar un terreno en el mapa se abre un popup con el DNI del beneficiario, el área estimada y dos desplegables. El de vértices permanece cerrado, porque a la asistente le interesan las fichas, pero los vértices quedan numerados sobre el polígono del mapa. El de fichas lista las fichas del terreno con su estado y el botón Validar en la que está pendiente, lo que ofrece un segundo camino hacia la validación.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-detalle-terreno-asistente.png" alt="Wireframe web del popup de terreno con área, vértices plegados, fichas y vértices numerados en el mapa" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Detalle de terreno desde el mapa, vista de la asistente.</figcaption>
+</figure>
+
+**Terrenos (agente de campo)**
+
+La misma tabla, pero con las acciones del agente. El botón Crear terreno queda arriba a la derecha, y los borradores que el agente guardó muestran el botón Validar. El agente ve todos los terrenos validados, pero solo sus propios borradores.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-terrenos-agente.png" alt="Wireframe web de la tabla de terrenos del agente con el botón Crear terreno y Validar en un borrador" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Tabla de terrenos con las acciones del agente de campo.</figcaption>
+</figure>
+
+**Crear terreno**
+
+Un terreno no se ubica con un solo punto: su perímetro es un polígono. Por eso el modal tiene dos columnas. A la izquierda van el código, que se asigna automáticamente, el DNI y el nombre del beneficiario, el área, que se calcula a partir de los vértices, y una vista previa del perímetro. A la derecha está la lista de vértices. El agente puede cargar el archivo de la estación total o escribir cada vértice a mano con su Este y su Norte en coordenadas UTM, agregarlos y quitarlos. La vista previa avisa desde el inicio que se necesitan al menos 3 vértices para dibujar el perímetro.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-crear-terreno.png" alt="Wireframe web del modal Crear terreno con datos del beneficiario, carga del archivo de la estación total y tabla de vértices vacía" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Creación de un terreno a partir de la lista de vértices de su perímetro.</figcaption>
+</figure>
+
+**Validar terreno**
+
+Cuando el agente envió la medición desde el móvil, el terreno llega como borrador con los vértices ya leídos del archivo. El modal muestra el nombre del archivo y cuántos vértices tiene, la tabla en modo lectura y el polígono dibujado con sus vértices numerados. Si un punto tiene un error de lectura, el agente edita solo esa fila, como ocurre en el vértice 4, sin volver a capturar el resto. El área se recalcula con cada cambio.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-validar-terreno.png" alt="Wireframe web del modal Validar terreno con el archivo cargado, seis vértices, un vértice en edición y la vista previa del polígono" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Validación de un terreno precargado y corrección puntual de un vértice.</figcaption>
+</figure>
+
+**Detalle de terreno (agente de campo)**
+
+En la vista del agente el desplegable de vértices se abre y muestra la tabla con el número y las coordenadas Este y Norte de cada punto, mientras el polígono del mapa los numera en el mismo orden. Debajo están las fichas del terreno y el botón Subir ficha, que abre el modal con el terreno ya vinculado.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-detalle-terreno-agente.png" alt="Wireframe web del popup de terreno con la tabla de vértices desplegada, fichas y botón Subir ficha" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Detalle de terreno con sus vértices, vista del agente.</figcaption>
+</figure>
+
+**Subir ficha**
+
+Modal con el código de la ficha, la fecha de llenado y el terreno vinculado, en el orden en que el agente los encuentra en el documento físico. La zona de carga acepta el PDF arrastrado o seleccionado desde el equipo. Al subirlo, el sistema guarda el PDF sin modificar y su hash, que después permite comprobar su integridad.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-subir-ficha.png" alt="Wireframe web del modal Subir ficha con código, fecha, terreno vinculado y zona de carga del PDF" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Subida de la ficha digitalizada.</figcaption>
+</figure>
+
+**Mis fichas**
+
+El agente consulta las fichas que subió con los mismos filtros que usa la asistente. El estado de cada ficha le dice si sigue en revisión, si fue aprobada o si fue observada y debe corregirse, sin tener que llamar a la sede.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-mis-fichas.png" alt="Wireframe web de Mis fichas con filtros y tabla de fichas subidas por el agente" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Seguimiento de las fichas subidas por el agente.</figcaption>
+</figure>
+
+**Configuración de cuenta**
+
+Agrupa los datos del usuario en tres bloques: Cuenta, con el correo, el área y el teléfono; Seguridad, con la contraseña, la verificación en dos pasos y las sesiones activas; y Preferencias, con el idioma, las notificaciones y la zona horaria. Desde aquí también se cierra la sesión.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/wireframe/web-configuracion-cuenta.png" alt="Wireframe web de configuración de cuenta con bloques de cuenta, seguridad y preferencias" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Configuración de la cuenta y cierre de sesión.</figcaption>
+</figure>
+
+En conjunto, los wireframes web aplican tres decisiones constantes. El mapa es el fondo del trabajo y no una sección más. Las tablas comparten filtros, columnas y paginación en todas las secciones. Los estados de fichas y terrenos se escriben siempre con palabras. Las diferencias entre roles se resuelven con las acciones visibles en cada pantalla y no con pantallas distintas, de modo que el agente y la asistente reconocen el mismo sistema aunque cada uno trabaje en una parte del proceso.
 
 
 <div style="page-break-after: always;"></div>
 
 ### Applications Wireflow Diagrams
 
+#### Aplicación móvil (Android) — Agente de Campo
+
+Los siguientes wireflows corresponden a Marco Quispe Huamán, el User Persona Agente de Campo. Su trabajo exige registrar la medición de un terreno y conservarla aun cuando la conectividad sea limitada. Se presentan tres objetivos dentro del alcance de la aplicación móvil: ingresar al sistema, recuperar el acceso y registrar y enviar un terreno. El primero se relaciona con la User Story SGT-10; el tercero desarrolla SGT-2 a partir de las pantallas propuestas. La recuperación de contraseña es una ruta de apoyo necesaria para que el agente pueda volver a su tarea.
+
+Antes de diagramar cada objetivo se establece su Task Flow como secuencia de acciones. En las figuras, las flechas continuas representan el recorrido principal y las discontinuas llevan a una respuesta alternativa. Cada cambio visible de la interfaz se muestra con un wireframe completo, incluidos la barra de estado y el indicador de gestos de Android. Así es posible leer tanto la acción del agente como la respuesta del sistema, sin inferir un estado que no aparece en la pantalla.
+
+<div style="page-break-after: always;"></div>
+
+##### WF-01 · Acceder al espacio de trabajo
+
+**User goal.** Como agente de campo, quiero ingresar con mis credenciales institucionales para registrar terrenos desde mi cuenta.
+
+**Task Flow.** Abrir la aplicación → ingresar correo y contraseña → pulsar «Ingresar» → acceder a Inicio.
+
+El flujo comienza con la pantalla de presentación y continúa con el formulario de acceso. El siguiente wireframe muestra las credenciales completas antes de la acción; la ruta principal termina en Inicio, donde «Registrar terreno» es la tarea destacada. Si las credenciales no coinciden, una flecha discontinua conduce a una pantalla de error completa. El mensaje permite corregir e intentar otra vez sin señalar si falló el correo o la contraseña, de acuerdo con el criterio de SGT-10.
+
+<figure style="margin: 10px 0 14px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireflows/wireflow-acceso-agente-campo.png" alt="Wireflow de acceso: splash, inicio de sesión, credenciales completas e Inicio; ruta alternativa de credenciales incorrectas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WF-01. Acceso institucional y respuesta ante credenciales incorrectas.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+##### WF-02 · Recuperar el acceso a la cuenta
+
+**User goal.** Como agente de campo, quiero restablecer mi contraseña cuando la olvide para volver a ingresar a la aplicación y continuar mi trabajo.
+
+**Task Flow.** Seleccionar «¿Olvidó su contraseña?» → introducir el correo → solicitar el código → verificarlo → crear una nueva contraseña → volver al inicio de sesión.
+
+La ruta principal enlaza el formulario de acceso con la solicitud del código, su verificación, la creación de una nueva contraseña y la confirmación del cambio. La ruta alternativa parte de la solicitud del código: cuando el correo no tiene un formato válido, se muestra otro wireframe con el campo y la indicación para corregirlo. La confirmación final incluye «Iniciar sesión», por lo que el agente conoce el siguiente paso y no queda en una pantalla sin salida.
+
+<figure style="margin: 10px 0 14px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireflows/wireflow-recuperacion-acceso.png" alt="Wireflow de recuperación: correo, código de verificación, nueva contraseña y confirmación; ruta alternativa de correo no válido" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WF-02. Recuperación de contraseña y corrección de un correo no válido.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+##### WF-03 · Registrar y enviar un terreno medido
+
+**User goal.** Como agente de campo, quiero cargar la medición de la estación total y vincular el terreno con su beneficiario para enviarlo a la web sin perder la información capturada en campo.
+
+**Task Flow.** Empezar el registro → completar código, fecha y referencia de ubicación → seleccionar el archivo de la estación total → comprobar el archivo adjunto → validar el DNI → revisar los datos → enviar el terreno.
+
+La ruta principal sigue los cuatro pasos visibles del formulario móvil. El archivo por seleccionar y el archivo adjunto son wireframes distintos, porque la selección cambia el estado de la pantalla. Tras validar el DNI, el agente revisa en un resumen el código, la medición, el archivo y el beneficiario antes de enviar. La confirmación indica que el registro llegó a la web para su revisión; no equivale a la aprobación definitiva del terreno. Esta propuesta desarrolla el envío del archivo previsto en SGT-2 e incorpora la vinculación y revisión que muestran los wireframes actuales.
+
+La primera ruta alternativa representa «DNI no encontrado» con una pantalla completa que explica el problema y permite volver a validar. La segunda se produce al enviar sin señal: el estado «Pendiente de envío» comunica que el terreno y el archivo quedaron guardados en el teléfono y ofrece reintentar. Así, la falta de conectividad no se interpreta como pérdida de la medición.
+
+<figure style="margin: 10px 0 14px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/wireflows/wireflow-registro-terreno.png" alt="Wireflow de registro: datos del terreno, archivo, beneficiario, revisión y envío; estados alternativos de DNI no encontrado y falta de conexión" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WF-03. Registro y envío de un terreno con respuestas ante DNI no encontrado y falta de conexión.</figcaption>
+</figure>
+
+En los tres diagramas, los títulos, números de paso, etiquetas de las flechas y mensajes de estado expresan el recorrido con palabras. Las acciones principales mantienen una posición reconocible y los errores explican cómo continuar. Esta consistencia apoya la lectura en una pantalla pequeña y evita que el agente deba interpretar el flujo únicamente por el color o por la forma de las flechas.
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: Agente de Campo y Asistente de Gerencia General**
+
+Los wireflows de la aplicación web cubren las tareas que el móvil deja fuera: validar el terreno que llegó como borrador, subir la ficha firmada y validarla contra su PDF. Corresponden a los dos User Persona del proyecto, Marco Quispe Huamán como Agente de Campo y Rocío Fernández Salas como Asistente de Gerencia General, y se usan los mismos wireframes presentados en la sección anterior. Se mantienen las convenciones de los diagramas móviles: las flechas continuas marcan el recorrido principal, las discontinuas el camino de corrección o la respuesta alternativa, y los rombos las decisiones del usuario o del sistema. Cada pantalla lleva su número de paso y cada flecha el nombre de la acción que la dispara.
+
+<div style="page-break-after: always;"></div>
+
+**WF-04 · Registrar un terreno y subir su ficha**
+
+**User goal.** Como agente de campo, quiero dejar registrado el perímetro del terreno y subir la ficha de evaluación firmada para que la asistente pueda validarla sin que nadie transcriba los datos.
+
+**User persona.** Marco Quispe Huamán, Agente de Campo.
+
+**Task Flow.** Iniciar sesión → abrir Terrenos → crear el terreno con sus vértices → guardar el borrador → validar los vértices → abrir el detalle del terreno → subir la ficha en PDF → consultar Mis fichas.
+
+El agente inicia sesión y llega a la tabla de terrenos. Con Crear terreno abre el modal, completa el DNI del beneficiario y registra los vértices del perímetro, ya sea cargando el archivo de la estación total o escribiéndolos a mano. Si falta el DNI o hay menos de 3 vértices, el modal marca los campos y el agente los corrige sin salir de él. Al guardar, el terreno queda como borrador y pasa a Validar terreno, donde el agente revisa cada vértice y, si uno está mal leído, edita solo esa fila. Una vez validado, el detalle del terreno muestra sus vértices y el botón Subir ficha. El modal de subida exige un PDF legible y completo. Si no lo es, el agente vuelve a cargarlo, y si lo es, la ficha aparece en Mis fichas con el estado En revisión. La primera decisión del recorrido corresponde al inicio de sesión de SGT-10, el borrador y su validación a SGT-2 y la subida de la ficha a SGT-3.
+
+<figure style="margin: 10px 0 14px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/wireflows/wireflow-terreno-ficha-agente.png" alt="Wireflow web del agente: inicio de sesión, terrenos, crear terreno, validar terreno, detalle, subir ficha y Mis fichas, con caminos de corrección" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WF-04. Registro del terreno por sus vértices y subida de la ficha.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**WF-05 · Validar una ficha contra su documento**
+
+**User goal.** Como asistente de gerencia general, quiero comparar los datos que extrajo la IA con el PDF original para aprobar la ficha con la seguridad de que el documento no fue alterado.
+
+**User persona.** Rocío Fernández Salas, Asistente de Gerencia General.
+
+**Task Flow.** Iniciar sesión → abrir Fichas → elegir una ficha en revisión → pulsar Validar → revisar la integridad del PDF → comparar los datos extraídos con el documento → aprobar u observar la ficha.
+
+Después del inicio de sesión, la asistente llega a la vista general y abre Fichas, donde filtra las que están en revisión. Al pulsar Validar entra a la pantalla de validación. La primera decisión la toma el sistema: compara el hash del PDF con el que se guardó al subirlo. Si no coincide, la ficha queda marcada como Alterada y no puede aprobarse. Si coincide, la asistente compara campo por campo los datos de la IA con el documento, que aparecen lado a lado. Cuando todo coincide, aprueba la ficha y el dato se consolida en el seguimiento del PEI y del POI con el registro de quién aprobó y cuándo. Si encuentra una diferencia que no puede resolver, observa la ficha y esta vuelve al agente. El recorrido desarrolla SGT-4 en la búsqueda, SGT-5 en la revisión de campos críticos y SGT-6 en la verificación de integridad.
+
+<figure style="margin: 10px 0 14px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/wireflows/wireflow-validar-ficha-asistente.png" alt="Wireflow web de la asistente: inicio de sesión, vista general, fichas y validación, con decisiones de integridad del PDF y coincidencia de datos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WF-05. Validación de una ficha con verificación de integridad y resultado aprobado, observado o alterado.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**WF-06 · Gestionar el acceso a la cuenta**
+
+**User goal.** Como usuario de SGT, quiero solicitar mi cuenta, recuperar mi contraseña cuando la olvide y ajustar mis datos para mantener el acceso al sistema sin depender de terceros más allá de lo necesario.
+
+**User persona.** Marco Quispe Huamán, Agente de Campo, y Rocío Fernández Salas, Asistente de Gerencia General.
+
+**Task Flow.** Solicitud de acceso: pulsar Solicite acceso → completar los datos → enviar la solicitud. Recuperación: pulsar ¿Olvidó su contraseña? → indicar el DNI o el correo → recibir el enlace. Configuración: ingresar → abrir el menú de cuenta → editar los datos → guardar los cambios.
+
+Los tres recorridos parten del inicio de sesión. En el primero, el usuario completa la solicitud y, si los datos están completos y son válidos, la solicitud llega a la Oficina de Tecnologías, que habilita la cuenta. Si falta algún dato, el formulario lo señala. En el segundo, el sistema envía el enlace de restablecimiento solo si el DNI o el correo están registrados, y si no lo están, muestra un aviso sin revelar qué cuentas existen. En el tercero, el usuario entra a Configuración de cuenta desde el menú de la cuenta y guarda los cambios cuando son válidos. Desde la misma pantalla puede cerrar sesión. Los recorridos se relacionan con SGT-10 y SGT-11.
+
+<figure style="margin: 10px 0 14px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/wireflows/wireflow-cuenta.png" alt="Wireflow web de cuenta: solicitud de acceso, recuperación de contraseña y configuración, cada uno desde el inicio de sesión" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WF-06. Solicitud de acceso, recuperación de contraseña y configuración de la cuenta.</figcaption>
+</figure>
+
+Los tres wireflows web comparten las convenciones de los móviles, de modo que el lector compara ambas aplicaciones con la misma clave de lectura. Ninguna decisión deja al usuario sin salida: cada camino discontinuo regresa a la pantalla donde puede corregir o termina en un estado nombrado, como En revisión, Observada o Alterada, que el otro rol también ve.
 
 
 <div style="page-break-after: always;"></div>
