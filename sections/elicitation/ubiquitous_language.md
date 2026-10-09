@@ -39,13 +39,16 @@ Hallazgo formal levantado por el área de control interno de la entidad ante una
 Unidad de terreno registrada a nombre de un beneficiario dentro del programa.
 
 **Land Boundary (Delimitación de terreno)**  
-Contorno geográfico que define el área de un terreno registrado.
+Contorno geográfico que define el área de un terreno registrado. Es un polígono cerrado que se forma uniendo sus vértices en orden.
 
 **Progress Report (Reporte de avance)**  
 Informe periódico que consolida los indicadores del programa y se presenta a la gerencia para seguimiento del Plan Operativo Institucional.
 
 **Task (Tarea)**  
 Unidad mínima realizable del Plan Operativo Institucional, planificada de antemano y totalmente rastreada durante su ejecución.
+
+**Vertex (Vértice)**  
+Punto del perímetro de un terreno, expresado con sus coordenadas Este y Norte. Los vértices llegan en el archivo que genera la estación total o se ingresan a mano desde la web.
 
 **Yield (Producción)**  
 Cantidad de producto agrícola obtenida en un terreno durante un periodo de evaluación.
