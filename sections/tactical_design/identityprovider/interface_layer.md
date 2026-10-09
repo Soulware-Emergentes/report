@@ -1,7 +1,7 @@
 El proveedor de identidad expone los endpoints estándar de OAuth 2.1 y OpenID Connect a través de Spring Authorization Server, configurado en la capa de infraestructura, y un formulario de inicio de sesión. Las aplicaciones públicas inician sesión en nombre de las personas con el flujo authorization code con PKCE; las aplicaciones confidenciales, como sgt, obtienen tokens para sí mismas con el flujo client credentials.
 
 <div style="width: 100%; overflow-x: auto;">
-<table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px;">
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>
         <tr>
             <th style="border: 1px solid #333; padding: 8px 10px; text-align: left; width: 40%;">Endpoint</th>
