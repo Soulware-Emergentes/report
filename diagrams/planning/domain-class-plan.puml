@@ -1,0 +1,120 @@
+@startuml planning-domain-plan
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "planning.domain" {
+    class Plan <<Aggregate Root>> {
+        - id : PlanId
+        - code : PlanCode
+        - name : Name
+        - description : Description
+        - objectives : List<Objective>
+        + {static} define(id, code, name, description, sameCode) : Plan
+        + {static} reconstitute(id, code, name, description, objectives) : Plan
+        + defineObjective(id, name, description) : void
+        + defineActivity(...) : void
+        + trackTask(activityId, taskId) : void
+        + recordTaskCompletion(activityId, taskId) : void
+        + isComplete() : boolean
+        - activity(activityId) : Activity
+    }
+
+    class Objective <<Entity>> {
+        - id : ObjectiveId
+        - code : ObjectiveCode
+        - name : Name
+        - description : Description
+        - activities : List<Activity>
+        + {static} define(id, code, name, description) : Objective
+        + {static} reconstitute(...) : Objective
+        + defineActivity(...) : void
+        + activity(activityId) : Optional<Activity>
+        + isComplete() : boolean
+    }
+
+    class Activity <<Entity>> {
+        - id : ActivityId
+        - code : ActivityCode
+        - name : Name
+        - description : Description
+        - measurementUnit : MeasurementUnit
+        - target : Target
+        - openTasks : Set<TaskId>
+        - hasTasks : boolean
+        + {static} define(...) : Activity
+        + {static} reconstitute(...) : Activity
+        + trackTask(taskId) : void
+        + recordTaskCompletion(taskId) : void
+        + isComplete() : boolean
+    }
+
+    class PlanId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class ObjectiveId <<Entity Id>> {
+        + value : UUID
+    }
+
+    class ActivityId <<Entity Id>> {
+        + value : UUID
+    }
+
+    class TaskId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class PlanCode <<Value Object>> {
+        + startYear : int
+        + endYear : int
+        + {static} parse(text) : PlanCode
+        + value() : String
+    }
+
+    class ObjectiveCode <<Value Object>> {
+        + plan : PlanCode
+        + number : int
+        + {static} parse(text) : ObjectiveCode
+        + next() : ObjectiveCode
+        + value() : String
+    }
+
+    class ActivityCode <<Value Object>> {
+        + objective : ObjectiveCode
+        + number : int
+        + {static} parse(text) : ActivityCode
+        + next() : ActivityCode
+        + value() : String
+    }
+
+    class MeasurementUnit <<Value Object>> {
+        + value : String
+    }
+
+    class Target <<Value Object>> {
+        + units : long
+    }
+
+    interface PlanRepository <<Repository>> {
+        + save(plan) : Plan
+        + getById(id) : Plan
+        + getAllByIds(ids) : List<Plan>
+        + delete(plan) : void
+        + findByCode(code) : Optional<Plan>
+        + findByActivity(activityId) : Optional<Plan>
+    }
+}
+
+Plan "1" *-left- "1" PlanId : identified by >
+Plan "1" *-right- "1" PlanCode : coded as >
+Plan "1" *-down- "0..*" Objective : sets out >
+Objective "1" *-left- "1" ObjectiveId : identified by >
+Objective "1" *-right- "1" ObjectiveCode : coded as >
+Objective "1" *-down- "0..*" Activity : pursued through >
+Activity "1" *-left- "1" ActivityId : identified by >
+Activity "1" *-right- "1" ActivityCode : coded as >
+Activity "1" *-- "1" MeasurementUnit : measured in >
+Activity "1" *-- "1" Target : aims at >
+Activity "1" o-- "0..*" TaskId : keeps open >
+PlanRepository "1" --> "0..*" Plan : stores >
+@enduml

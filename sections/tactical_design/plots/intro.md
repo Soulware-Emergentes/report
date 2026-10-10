@@ -1,0 +1,1 @@
+Plots es el módulo de sgt que registra los terrenos de los beneficiarios a partir de los puntos que la estación total captura durante la visita de campo, y atiende la épica EP-01 (anexamiento de terrenos). Cada terreno queda asociado al documento legal de su titular, que toma del lenguaje publicado de People, y al ubigeo del distrito en el que se encuentra.

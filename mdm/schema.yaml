@@ -116,9 +116,9 @@
         - title: "EventStorming"
         - title: "Candidate Context Discovery"
           alias: "discovery"
-          skip_after: false
         - title: "Domain Message Flows Modeling"
           alias: "message-flows"
+          skip_after: false
         - title: "Bounded Context Canvases"
           alias: "bc-canvases"
         - title: "Context Mapping"
@@ -135,87 +135,267 @@
         - title: "Software Architecture Deployment Diagrams"
           alias: "deployment"
 
-# Capítulos V-VII are out of scope for the TB1 deliverable (Semana 4): the
-# statement's hito breakdown (page 31, "Aspectos a incluir") only requires
-# Carátula through Capítulo IV plus an "avance" of Conclusiones, Bibliografía
-# and Anexos for this entrega. Uncomment each chapter as its hito comes up
-# (Capítulos V-VI at TP1, Semana 7; Capítulo VII from TB2, Semana 12 onward).
+# Capítulo VII is out of scope until its hito: the statement's hito breakdown
+# (page 31, "Aspectos a incluir") asks for it from TB2 (Semana 12) onward.
+# Uncomment it when that hito comes up.
 #
-# Bounded contexts aren't known yet (they come out of Chapter IV's Domain-
-# Driven Design work), so even once Capítulo V is back in scope, its content
-# stays commented out rather than instantiated with a placeholder. When a
-# context is identified, copy this block per context: the "alias" IS the
-# context's short name (that's what names the folder, so the child files
-# below don't need to repeat "Bounded Context" in either their title or
-# their own alias), and the "<bc>" prefix in each custom_id just keeps
-# anchors unique once multiple contexts coexist.
-# - title: "Capítulo V: Tactical-Level Software Design"
-  # alias: "tactical-design"
-  # children:
-#    - title: "Bounded Context: <bc>"
-#      alias: "<bc>"
-#      children:
-#        - title: "Domain Layer"
-#          custom_id: "<bc>-domain-layer"
-#        - title: "Interface Layer"
-#          custom_id: "<bc>-interface-layer"
-#        - title: "Application Layer"
-#          custom_id: "<bc>-application-layer"
-#        - title: "Infrastructure Layer"
-#          custom_id: "<bc>-infrastructure-layer"
-#        - title: "Bounded Context Software Architecture Component Level Diagrams"
-#          custom_id: "<bc>-component-level"
-#          alias: "component-level"
-#        - title: "Bounded Context Software Architecture Code Level Diagrams"
-#          custom_id: "<bc>-code-level"
-#          alias: "code-level"
-#          children:
-#            - title: "Bounded Context Domain Layer Class Diagrams"
-#              custom_id: "<bc>-class-diagram"
-#              alias: "class-diagram"
-#            - title: "Bounded Context Database Design Diagram"
-#              custom_id: "<bc>-db-diagram"
-#              alias: "db-diagram"
+# Capítulo V has one bounded context per code module. The "alias" IS the
+# module's short name (that's what names the folder), and the alias prefix in
+# each custom_id keeps anchors unique across contexts. A layer joins its
+# context's children once that layer is written, in the statement's order:
+# Domain, Interface, Application, Infrastructure, Component Level, Code Level.
+- title: "Capítulo V: Tactical-Level Software Design"
+  alias: "tactical-design"
+  children:
+    - title: "Bounded Context: Monitoring"
+      alias: "monitoring"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "monitoring-domain-layer"
+          alias: "domain-layer"
+        - title: "Interface Layer"
+          custom_id: "monitoring-interface-layer"
+          alias: "interface-layer"
+          skip_after: true
+        - title: "Application Layer"
+          custom_id: "monitoring-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "monitoring-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "monitoring-component-level"
+          alias: "component-level"
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "monitoring-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "monitoring-class-diagram"
+              alias: "class-diagram"
+            - title: "Bounded Context Database Design Diagram"
+              custom_id: "monitoring-db-diagram"
+              alias: "db-diagram"
+    - title: "Bounded Context: Plots"
+      alias: "plots"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "plots-domain-layer"
+          alias: "domain-layer"
+        - title: "Interface Layer"
+          custom_id: "plots-interface-layer"
+          alias: "interface-layer"
+          skip_after: true
+        - title: "Application Layer"
+          custom_id: "plots-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "plots-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "plots-component-level"
+          alias: "component-level"
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "plots-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "plots-class-diagram"
+              alias: "class-diagram"
+            - title: "Bounded Context Database Design Diagram"
+              custom_id: "plots-db-diagram"
+              alias: "db-diagram"
+    - title: "Bounded Context: People"
+      alias: "people"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "people-domain-layer"
+          alias: "domain-layer"
+        - title: "Application Layer"
+          custom_id: "people-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "people-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "people-component-level"
+          alias: "component-level"
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "people-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "people-class-diagram"
+              alias: "class-diagram"
+    - title: "Bounded Context: Planning"
+      alias: "planning"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "planning-domain-layer"
+          alias: "domain-layer"
+        - title: "Interface Layer"
+          custom_id: "planning-interface-layer"
+          alias: "interface-layer"
+          skip_after: true
+        - title: "Application Layer"
+          custom_id: "planning-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "planning-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "planning-component-level"
+          alias: "component-level"
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "planning-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "planning-class-diagram"
+              alias: "class-diagram"
+            - title: "Bounded Context Database Design Diagram"
+              custom_id: "planning-db-diagram"
+              alias: "db-diagram"
+    - title: "Bounded Context: Directory"
+      alias: "directory"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "directory-domain-layer"
+          alias: "domain-layer"
+        - title: "Interface Layer"
+          custom_id: "directory-interface-layer"
+          alias: "interface-layer"
+          skip_after: true
+        - title: "Application Layer"
+          custom_id: "directory-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "directory-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "directory-component-level"
+          alias: "component-level"
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "directory-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "directory-class-diagram"
+              alias: "class-diagram"
+            - title: "Bounded Context Database Design Diagram"
+              custom_id: "directory-db-diagram"
+              alias: "db-diagram"
+    - title: "Bounded Context: Identity Provider"
+      alias: "identityprovider"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "identityprovider-domain-layer"
+          alias: "domain-layer"
+        - title: "Interface Layer"
+          custom_id: "identityprovider-interface-layer"
+          alias: "interface-layer"
+          skip_after: true
+        - title: "Application Layer"
+          custom_id: "identityprovider-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "identityprovider-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "identityprovider-component-level"
+          alias: "component-level"
+          skip_after: false
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "identityprovider-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "identityprovider-class-diagram"
+              alias: "class-diagram"
+            - title: "Bounded Context Database Design Diagram"
+              custom_id: "identityprovider-db-diagram"
+              alias: "db-diagram"
+    - title: "Bounded Context: Beneficiarios"
+      alias: "beneficiarios"
+      has_intro: true
+      skip_after: false
+      children:
+        - title: "Domain Layer"
+          custom_id: "beneficiarios-domain-layer"
+          alias: "domain-layer"
+        - title: "Interface Layer"
+          custom_id: "beneficiarios-interface-layer"
+          alias: "interface-layer"
+          skip_after: true
+        - title: "Application Layer"
+          custom_id: "beneficiarios-application-layer"
+          alias: "application-layer"
+        - title: "Infrastructure Layer"
+          custom_id: "beneficiarios-infrastructure-layer"
+          alias: "infrastructure-layer"
+        - title: "Bounded Context Software Architecture Component Level Diagrams"
+          custom_id: "beneficiarios-component-level"
+          alias: "component-level"
+        - title: "Bounded Context Software Architecture Code Level Diagrams"
+          custom_id: "beneficiarios-code-level"
+          alias: "code-level"
+          children:
+            - title: "Bounded Context Domain Layer Class Diagrams"
+              custom_id: "beneficiarios-class-diagram"
+              alias: "class-diagram"
+            - title: "Bounded Context Database Design Diagram"
+              custom_id: "beneficiarios-db-diagram"
+              alias: "db-diagram"
 
-# - title: "Capítulo VI: Solution UX Design"
-  # alias: "ux-design"
-  # children:
-    # - title: "Style Guidelines"
-      # alias: "style"
-      # children:
-        # - title: "General Style Guidelines"
-          # alias: "general"
-        # - title: "Web, Mobile & Devices Style Guidelines"
-          # alias: "web-mobile"
-    # - title: "Information Architecture"
-      # alias: "ia"
-      # children:
-        # - title: "Organization Systems"
-          # alias: "organization"
-        # - title: "Labeling Systems"
-          # alias: "labeling"
-        # - title: "Searching Systems"
-          # alias: "searching"
-        # - title: "SEO Tags and Meta Tags"
-          # alias: "seo"
-        # - title: "Navigation Systems"
-          # alias: "navigation"
-    # - title: "Landing Page UI Design"
-      # alias: "landing-page"
-      # children:
-        # - title: "Landing Page Wireframe"
-          # alias: "wireframe"
-        # - title: "Landing Page Mock-up"
-          # alias: "mockup"
-    # - title: "Applications UX/UI Design"
-      # alias: "apps-ui"
-      # children:
-        # - title: "Applications Wireframes"
-          # alias: "wireframes"
-        # - title: "Applications Wireflow Diagrams"
-          # alias: "wireflows"
-        # - title: "Applications Mock-ups"
-          # alias: "mockups"
+- title: "Capítulo VI: Solution UX Design"
+  alias: "ux-design"
+  children:
+    - title: "Style Guidelines"
+      alias: "style"
+      children:
+        - title: "General Style Guidelines"
+          alias: "general"
+        - title: "Web, Mobile & Devices Style Guidelines"
+          alias: "web-mobile"
+    - title: "Information Architecture"
+      alias: "ia"
+      children:
+        - title: "Organization Systems"
+          alias: "organization"
+        - title: "Labeling Systems"
+          alias: "labeling"
+        - title: "Searching Systems"
+          alias: "searching"
+        - title: "SEO Tags and Meta Tags"
+          alias: "seo"
+        - title: "Navigation Systems"
+          alias: "navigation"
+    - title: "Landing Page UI Design"
+      alias: "landing-page"
+      children:
+        - title: "Landing Page Wireframe"
+          alias: "wireframe"
+        - title: "Landing Page Mock-up"
+          alias: "mockup"
+    - title: "Applications UX/UI Design"
+      alias: "apps-ui"
+      children:
+        - title: "Applications Wireframes"
+          alias: "wireframes"
+        - title: "Applications Wireflow Diagrams"
+          alias: "wireflows"
         # - title: "Applications User Flow Diagrams"
           # alias: "user-flows"
     # - title: "Applications Prototyping"

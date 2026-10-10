@@ -1,0 +1,32 @@
+@startuml monitoring-database
+skinparam classAttributeIconSize 0
+hide circle
+hide empty methods
+
+class field_sheets <<Table>> {
+    {field} id : UUID [PK]
+    {field} code : VARCHAR(12) [UQ, NN]
+    {field} task_code : VARCHAR(20) [NN]
+    {field} beneficiary_document_type : VARCHAR(20)
+    {field} beneficiary_document_number : VARCHAR(12)
+    {field} evaluation_date : TIMESTAMP
+    {field} securement_date : TIMESTAMP
+    {field} scan_key : TEXT [NN]
+    {field} scan_size : BIGINT [NN]
+    {field} submitted_by : UUID [NN]
+    {field} submission_date : TIMESTAMP [NN]
+    {field} status : VARCHAR(20) [NN]
+    {field} reviewed_by : UUID
+    {field} review_date : TIMESTAMP
+}
+
+class field_sheet_supplies <<Table>> {
+    {field} field_sheet_id : UUID [PK, FK]
+    {field} position : INTEGER [PK]
+    {field} name : TEXT [NN]
+    {field} amount : NUMERIC [NN]
+    {field} unit : VARCHAR(20) [NN]
+}
+
+field_sheet_supplies "0..*" --> "1" field_sheets : field_sheet_id
+@enduml

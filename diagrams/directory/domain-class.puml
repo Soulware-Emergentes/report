@@ -1,0 +1,66 @@
+@startuml directory-domain
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "directory.domain" {
+    class Person <<Aggregate Root>> {
+        - id : PersonId
+        - username : Username
+        - displayName : DisplayName
+        - jobTitle : JobTitle
+        - department : Department
+        - passwordHash : PasswordHash
+        + {static} reconstitute(...) : Person
+    }
+
+    class PersonId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class Username <<Value Object>> {
+        + value : String
+    }
+
+    class DisplayName <<Value Object>> {
+        + value : String
+    }
+
+    class JobTitle <<Value Object>> {
+        + value : String
+    }
+
+    class Department <<Value Object>> {
+        + value : String
+    }
+
+    class PasswordHash <<Value Object>> {
+        + value : String
+    }
+
+    interface PersonRepository <<Repository>> {
+        + save(person) : Person
+        + getById(id) : Person
+        + getAllByIds(ids) : List<Person>
+        + delete(person) : void
+    }
+}
+
+package "directory.publishedlanguage" {
+    class PersonProfile <<Value Object>> {
+        + id : UUID
+        + username : String
+        + displayName : String
+        + jobTitle : String
+        + department : String
+    }
+}
+
+Person "1" *-- "1" PersonId : identified by >
+Person "1" *-- "1" Username : logs in as >
+Person "1" *-- "1" DisplayName : shown as >
+Person "1" *-- "1" JobTitle : works as >
+Person "1" *-- "1" Department : works in >
+Person "1" *-- "0..1" PasswordHash : authenticates with >
+PersonRepository "1" --> "0..*" Person : stores >
+PersonProfile ..> Person : describes >
+@enduml

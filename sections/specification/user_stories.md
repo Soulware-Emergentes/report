@@ -49,16 +49,17 @@ Se presenta a continuación el conjunto de User Stories planificadas para el alc
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">SGT-2</td>
-            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Visualizar con antelación los puntos capturados por la estación total durante la visita</td>
-            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo georreferenciador, quiero visualizar en el dispositivo los puntos que ya fueron capturados por la estación total mientras recorro el terreno, para detectar y corregir errores de medición antes de finalizar la visita.</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Enviar coordenadas de georreferenciación de terreno mediante archivo</td>
+            <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">Como agente de campo, quiero enviar el archivo de coordenadas de una parcela que me da la estación total, para tener la parcela precargada en el sistema cuando la vaya a registrar.</td>
             <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top;">
                 <ul>
                     <!-- Criterio BDD -->
                     <li>
-                        <strong>Scenario:</strong> Visualización de puntos capturados sin anomalías<br>
+                        <strong>Scenario:</strong> Envío de archivo de coordenadas exitoso<br>
                         <strong>Given</strong> el agente de campo se encuentra en el terreno del beneficiario<br>
-                        <strong>When</strong> la estación total envía la totalidad de los puntos del terreno<br>
-                        <strong>Then</strong> el sistema muestra la posición de cada punto capturado en el mapa<br>
+                        <strong>When</strong> pasa el archivo de coordenadas a su celular<br>
+                        <strong>AND</strong> envía el archivo de coordenadas por la aplicación móvil
+                        <strong>Then</strong> el sistema crea una parcela en estado borrador con las coordenadas extraídas del archivo de coordenadas.<br>
                     </li>
                 </ul>
             </td>

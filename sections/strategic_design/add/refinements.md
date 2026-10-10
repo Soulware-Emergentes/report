@@ -135,7 +135,7 @@ Refinamiento 3: Usabilidad
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Business Goals</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Que el agente de campo detecte y corrija errores de medición durante la misma visita (SGT-2).</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Que el agente de campo detecte y corrija errores de medición en el registro de una parcela con coordenadas pre cargadas (SGT-2).</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Relevant Quality Attributes</td>

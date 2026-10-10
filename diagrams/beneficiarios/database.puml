@@ -1,0 +1,21 @@
+@startuml beneficiarios-database
+skinparam classAttributeIconSize 0
+hide circle
+hide empty methods
+
+class beneficiaries <<Table>> {
+    {field} id : UUID [PK]
+    {field} legal_document_type : VARCHAR(20) [NN]
+    {field} legal_document : VARCHAR(12) [NN]
+    {field} names : VARCHAR(255) [NN]
+    {field} paternal_surname : VARCHAR(255) [NN]
+    {field} maternal_surname : VARCHAR(255) [NN]
+    {field} date_of_birth : DATE [NN]
+    {field} ubigeo : VARCHAR(6) [NN]
+}
+
+note bottom of beneficiaries
+    UNIQUE (legal_document_type, legal_document)
+end note
+
+@enduml

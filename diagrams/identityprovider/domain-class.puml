@@ -1,0 +1,73 @@
+@startuml identityprovider-domain
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "identityprovider.domain" {
+    class ApiResource <<Aggregate Root>> {
+        - id : ApiResourceId
+        - identifier : ResourceIdentifier
+        - roles : Set<AppRole>
+        - scopes : Set<ServiceScope>
+        + {static} reconstitute(id, identifier, roles, scopes) : ApiResource
+    }
+
+    class ClientRegistration <<Aggregate Root>> {
+        - id : ClientRegistrationId
+        - clientId : ClientId
+        - kind : ClientKind
+        - secretHash : ClientSecretHash
+        - loginRedirectUris : Set<RedirectUri>
+        - logoutRedirectUris : Set<RedirectUri>
+        - resources : Set<ResourceIdentifier>
+        + {static} reconstitute(...) : ClientRegistration
+    }
+
+    class ApiResourceId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class ClientRegistrationId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class ResourceIdentifier <<Value Object>> {
+        + value : String
+    }
+
+    class AppRole <<Value Object>> {
+        + value : String
+    }
+
+    class ServiceScope <<Value Object>> {
+        + value : String
+    }
+
+    class ClientId <<Value Object>> {
+        + value : String
+    }
+
+    enum ClientKind <<Value Object>> {
+        PUBLIC
+        CONFIDENTIAL
+    }
+
+    class ClientSecretHash <<Value Object>> {
+        + value : String
+    }
+
+    class RedirectUri <<Value Object>> {
+        + value : String
+    }
+}
+
+ApiResource "1" *-- "1" ApiResourceId : identified by >
+ApiResource "1" *-- "1" ResourceIdentifier : known as >
+ApiResource "1" *-- "0..*" AppRole : defines roles >
+ApiResource "1" *-- "0..*" ServiceScope : defines scopes >
+ClientRegistration "1" *-- "1" ClientRegistrationId : identified by >
+ClientRegistration "1" *-- "1" ClientId : named >
+ClientRegistration "1" *-- "1" ClientKind : is of kind >
+ClientRegistration "1" *-- "0..1" ClientSecretHash : proves itself with >
+ClientRegistration "1" *-- "0..*" RedirectUri : redirects to >
+ClientRegistration "0..*" --> "0..*" ResourceIdentifier : linked to >
+@enduml

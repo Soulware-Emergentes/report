@@ -1,0 +1,56 @@
+@startuml planning-database
+skinparam classAttributeIconSize 0
+hide circle
+hide empty methods
+
+class plans <<Table>> {
+    {field} id : UUID [PK]
+    {field} code : VARCHAR(9) [UQ, NN]
+    {field} name : TEXT [NN]
+    {field} description : TEXT [NN]
+    {field} completed : BOOLEAN [NN]
+}
+
+class objectives <<Table>> {
+    {field} id : UUID [PK]
+    {field} plan_id : UUID [FK, NN]
+    {field} code : VARCHAR(12) [UQ, NN]
+    {field} name : TEXT [NN]
+    {field} description : TEXT [NN]
+    {field} completed : BOOLEAN [NN]
+}
+
+class activities <<Table>> {
+    {field} id : UUID [PK]
+    {field} objective_id : UUID [FK, NN]
+    {field} code : VARCHAR(15) [UQ, NN]
+    {field} name : TEXT [NN]
+    {field} description : TEXT [NN]
+    {field} measurement_unit : TEXT [NN]
+    {field} target : BIGINT [NN]
+    {field} has_tasks : BOOLEAN [NN]
+    {field} completed : BOOLEAN [NN]
+}
+
+class activity_open_tasks <<Table>> {
+    {field} activity_id : UUID [PK, FK]
+    {field} task_id : UUID [PK]
+}
+
+class tasks <<Table>> {
+    {field} id : UUID [PK]
+    {field} activity_id : UUID [FK, NN]
+    {field} code : VARCHAR(20) [UQ, NN]
+    {field} description : TEXT [NN]
+    {field} kind : VARCHAR(40) [NN]
+    {field} status : VARCHAR(20) [NN]
+    {field} submission_id : UUID
+    {field} execution_date : DATE
+    {field} beneficiary_id : TEXT
+}
+
+objectives "0..*" -up-> "1" plans : plan_id
+activities "0..*" -right-> "1" objectives : objective_id
+tasks "0..*" -right-> "1" activities : activity_id
+activity_open_tasks "0..*" -down-> "1" activities : activity_id
+@enduml

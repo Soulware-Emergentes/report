@@ -1,0 +1,79 @@
+@startuml plots-domain
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "plots.domain" {
+    class Plot <<Aggregate Root>> {
+        ~ {static} OVERLAP_TOLERANCE : OverlapTolerance
+        - id : PlotId
+        - owner : BeneficiaryLegalDocument
+        - boundary : PlotBoundary
+        - ubigeo : Ubigeo
+        - registrationDate : RegistrationDate
+        + {static} register(...) : Plot
+        + {static} reconstitute(...) : Plot
+        - overlaps(other, geometry) : boolean
+    }
+
+    class PlotId <<Aggregate Id>> {
+        + value : UUID
+    }
+
+    class PlotBoundary <<Value Object>> {
+        + zone : UtmZone
+        + vertices : List<SurveyPoint>
+    }
+
+    class SurveyPoint <<Value Object>> {
+        + easting : double
+        + northing : double
+    }
+
+    enum UtmZone <<Value Object>> {
+        ZONE_17S
+        ZONE_18S
+        ZONE_19S
+        - epsgCode : int
+        + epsgCode() : int
+    }
+
+    class Ubigeo <<Value Object>> {
+        + value : String
+    }
+
+
+    class SharedArea <<Value Object>> {
+        + squareMeters : BigDecimal
+    }
+
+    class OverlapTolerance <<Value Object>> {
+        + squareMeters : BigDecimal
+        + isExceededBy(shared) : boolean
+    }
+
+    interface PlotRepository <<Repository>> {
+        + save(plot) : Plot
+        + getById(id) : Plot
+        + getAllByIds(ids) : List<Plot>
+        + delete(plot) : void
+        + findIntersecting(boundary) : List<Plot>
+        + findOwnedBy(owner) : Optional<Plot>
+    }
+
+    interface PlotGeometry <<Domain Service>> {
+        + sharedArea(first, second) : SharedArea
+    }
+}
+
+Plot "1" *-left- "1" PlotId : identified by >
+Plot "1" *-- "1" PlotBoundary : bounded by >
+Plot "1" *-right- "1" Ubigeo : lies in >
+Plot "1" --> "1" OverlapTolerance : tolerates >
+PlotBoundary "1" *-- "3..*" SurveyPoint : vertices >
+PlotBoundary "1" *-- "1" UtmZone : measured in >
+OverlapTolerance .down.> SharedArea : compares >
+PlotGeometry .right.> SharedArea : measures >
+PlotGeometry .left.> PlotBoundary : relates >
+PlotRepository "1" --> "0..*" Plot : stores >
+Plot ..> PlotGeometry : checks overlap with >
+@enduml
