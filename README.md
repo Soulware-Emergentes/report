@@ -195,6 +195,68 @@ Contribuciones de los integrantes durante TB1:
 
 ![Contribuciones por integrante durante TB1](assets/insights/tb1/contributors.png)
 
+<div style="page-break-after: always;"></div>
+
+**TP1**
+
+Tareas asignadas
+
+Para el desarrollo del TP1, cada participante del equipo realizó las siguientes tareas:
+
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Integrante</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Tareas asignadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo VI: Landing Page UI Design, con los wireframes y los mock-ups de la landing page informativa de SGT, incluyendo la estructura y el orden de lectura de la página y la aplicación de la identidad visual definida en la guía de estilos.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Esteban Román, Henry Kalet</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo VI: Applications UX/UI Design, con los wireframes de las aplicaciones móvil Android y web, y seis wireflows con su User Goal, Task Flow, recorrido principal y respuestas alternativas, vinculados a las User Stories SGT-10 y SGT-2.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo V: Tactical-Level Software Design, elaborado junto con Paolo. Bounded Contexts Beneficiarios, Directory, IdentityProvider, Monitoring, People, Planning y Plots, con sus capas Domain, Interface, Application e Infrastructure y sus diagramas de componentes, de clases y de base de datos.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reaño Delgadillo, Henry Paolo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo V: Tactical-Level Software Design, elaborado junto con Álvaro. Bounded Contexts Beneficiarios, Directory, IdentityProvider, Monitoring, People, Planning y Plots, con sus capas Domain, Interface, Application e Infrastructure y sus diagramas de componentes, de clases y de base de datos.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Capítulo VI: Style Guidelines general y Web, Mobile &amp; Devices, con los colores, la tipografía, el espaciado, los componentes y el logotipo en Figma. Information Architecture con los Organization, Labeling, Navigation y Searching Systems y los SEO Tags y Meta Tags. Ajuste del formato de las tablas del Capítulo V para la exportación a PDF en tamaño A4. Actualización de Registro de Versiones, Conclusiones, Student Outcome y Project Report Collaboration Insights para el TP1.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-after: always;"></div>
+
+GitHub Collaboration Insights
+
+Para el TP1 el equipo trabajó en la organización [https://github.com/Soulware-Emergentes](https://github.com/Soulware-Emergentes), que contiene el repositorio report con el informe del proyecto, gestionado con el flujo GitFlow y ramas de trabajo por capítulo y por sección para cada integrante.
+
+Gráfico de commits por integrante durante TP1:
+
+<img src="assets/insights/tp1/commits.png" alt="Gráfico de commits del repositorio durante TP1" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Gráfico de red (network graph) de ramas en el repositorio durante TP1:
+
+<img src="assets/insights/tp1/network.png" alt="Network graph de las ramas del repositorio durante TP1" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+<div style="page-break-after: always;"></div>
+
+Contribuciones de los integrantes durante TP1:
+
+<img src="assets/insights/tp1/contributors.png" alt="Contribuciones por integrante durante TP1" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 200mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+
 
 <div style="page-break-after: always;"></div>
 
