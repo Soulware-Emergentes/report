@@ -2,5 +2,8 @@ Enlace privado del video de exposición de la entrega TB1, publicado en Microsof
 
 [Ver video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u20221e247_upc_edu_pe/IQDRu_OunlHlTIQsxhO9AnutAZMCsDQV4js-u0hJOIRJ-OA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=zQXXxF)
 
+{{page_break}}
+
 Modelo archimate:
-<img src="anexos.assets/archi.jpg" alt="Modelado archi mate" style="width: 80px;">
+
+<img src="anexo_a.assets/archi.jpg" alt="Modelo ArchiMate de SGT" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 215mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
