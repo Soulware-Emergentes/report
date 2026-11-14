@@ -396,6 +396,9 @@ Contribuciones de los integrantes durante TP1:
   - [Applications UX/UI Design](#applications-ux-ui-design)
     - [Applications Wireframes](#applications-wireframes)
     - [Applications Wireflow Diagrams](#applications-wireflow-diagrams)
+    - [Applications Mock-ups](#applications-mock-ups)
+    - [Applications User Flow Diagrams](#applications-user-flow-diagrams)
+  - [Applications Prototyping](#applications-prototyping)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
 - [Bibliografía](#bibliografía)
@@ -7854,6 +7857,757 @@ Los tres recorridos parten del inicio de sesión. En el primero, el usuario comp
 </figure>
 
 Los tres wireflows web comparten las convenciones de los móviles, de modo que el lector compara ambas aplicaciones con la misma clave de lectura. Ninguna decisión deja al usuario sin salida: cada camino discontinuo regresa a la pantalla donde puede corregir o termina en un estado nombrado, como En revisión, Observada o Alterada, que el otro rol también ve.
+
+
+<div style="page-break-after: always;"></div>
+
+### Applications Mock-ups
+
+Los mock-ups de SGT presentan la propuesta visual de las aplicaciones Android y web con sus estados de entrada, validación, error y confirmación. Aplican la identidad definida en Style Guidelines mediante el logotipo, la tipografía Roboto, el azul marino, el teal para las acciones principales y los colores semánticos acompañados de texto. La jerarquía entre títulos, etiquetas, ayudas y botones orienta la lectura; la repetición de componentes y términos permite reconocer una misma tarea entre pantallas.
+
+La organización responde a dos ámbitos de trabajo: el agente de campo registra y envía la medición desde Android, y en la web se consultan y validan terrenos y fichas según el rol. El diseño incorpora etiquetas persistentes, instrucciones junto a los campos y estados expresados con palabras para facilitar la lectura y la corrección de errores.
+
+**Aplicación móvil (Android)**
+
+La aplicación Android se dirige a Marco Quispe Huamán, User Persona Agente de Campo. El registro se organiza en cuatro pasos: datos del terreno, archivo de medición, vinculación del beneficiario y revisión para el envío. La navegación general separa Inicio de Enviados.
+
+<div style="page-break-after: always;"></div>
+
+**Acceso a la aplicación**
+
+El acceso presenta la marca SGT y un formulario de correo y contraseña para el agente de campo. El fondo azul marino, las superficies claras y el botón teal trasladan la identidad de la guía general al teléfono. Las etiquetas permanecen visibles cuando hay datos y el error de credenciales se comunica con texto junto al formulario; el correo se conserva para facilitar la corrección.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-01-acceso.png" alt="Mock-ups Android de SGT: acceso a la aplicación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-01. Acceso a la aplicación.</figcaption>
+</figure>
+<div style="page-break-after: always;"></div>
+
+**Solicitud de recuperación de acceso**
+
+La recuperación solicita el correo asociado a la cuenta y explica que se enviará un código. Se muestran los estados vacío, completo y de formato inválido, además del paso siguiente. El enlace para volver al inicio de sesión mantiene una salida reconocible y la ayuda sobre el correo no deseado acompaña la tarea sin competir con Enviar código.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-02-recuperacion.png" alt="Mock-ups Android de SGT: solicitud de recuperación de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-02. Solicitud de recuperación de acceso.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Verificación del código**
+
+El código de seis dígitos tiene una etiqueta y una indicación de uso; se permite copiarlo y pegarlo. El estado incorrecto o vencido explica cómo continuar y ofrece solicitar otro código. La confirmación de reenvío cambia el mensaje de la pantalla, de modo que el agente reconoce la respuesta del sistema por las palabras y la jerarquía visual, además del color.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-03-verificacion-codigo.png" alt="Mock-ups Android de SGT: verificación del código" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-03. Verificación del código.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Nueva contraseña y confirmación**
+
+La nueva clave se escribe y se confirma en campos separados. El mensaje de discrepancia aparece junto al campo que debe corregirse, mientras que la confirmación del cambio ofrece Iniciar sesión como siguiente acción. La repetición de tipografía, márgenes y posición del botón principal conserva la continuidad con los pasos anteriores.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-04-nueva-contrasena.png" alt="Mock-ups Android de SGT: nueva contraseña y confirmación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-04. Nueva contraseña y confirmación.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Datos del terreno**
+
+El registro comienza con código, fecha de medición y referencia de ubicación. PASO 1 DE 4 sitúa al agente dentro de la tarea; las ayudas explican qué dato se espera y el estado incompleto señala los campos por corregir. La disposición en una columna permite leer de arriba abajo y diferencia Volver de Continuar sin introducir destinos ajenos al registro.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-05-datos-terreno.png" alt="Mock-ups Android de SGT: datos del terreno" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-05. Datos del terreno.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Archivo de la estación total**
+
+El segundo paso distingue entre archivo por seleccionar, archivo adjunto y archivo que supera el límite de 20 MB. El nombre y el tamaño permiten comprobar qué se enviará; Cambiar archivo o Elegir otro archivo facilitan la corrección. La instrucción de conexión informa la condición necesaria antes del envío y el mensaje de error identifica el límite con palabras.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-06-archivo-medicion.png" alt="Mock-ups Android de SGT: archivo de la estación total" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-06. Archivo de la estación total.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Vinculación del beneficiario**
+
+El tercer paso solicita un DNI de ocho dígitos y separa su ingreso de la acción Validar DNI. La respuesta muestra la identidad confirmada y permite cambiar el documento antes de continuar. Esta secuencia evita asociar el terreno sin una comprobación explícita y mantiene próximos el dato ingresado, su resultado y la acción siguiente.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-07-beneficiario.png" alt="Mock-ups Android de SGT: vinculación del beneficiario" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-07. Vinculación del beneficiario.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Incidencias en la validación del DNI**
+
+DNI no encontrado y falta de conexión tienen respuestas distintas: el primero solicita revisar los ocho dígitos y el segundo pide conexión para reintentar. Ambos estados explican por qué no se puede continuar. La combinación de título, mensaje y acción de recuperación hace que la advertencia no dependa únicamente del rojo o de un icono.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-08-incidencias-beneficiario.png" alt="Mock-ups Android de SGT: incidencias en la validación del dni" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-08. Incidencias en la validación del DNI.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Revisión y envío**
+
+El cuarto paso reúne código, fecha, archivo y beneficiario antes de Enviar terreno. Durante la transferencia se muestra el porcentaje y se solicita mantener abierta la aplicación. La confirmación identifica el resultado como Borrador en web e indica revisar los vértices y validar desde la oficina; así se distingue la recepción del archivo de la validación del terreno.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-09-revision-envio.png" alt="Mock-ups Android de SGT: revisión y envío" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-09. Revisión y envío.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Errores de envío y salida del registro**
+
+La falta de señal y el error de transferencia indican que el envío no se completó y permiten reintentar o volver a revisión. Al salir se solicita confirmar el descarte de los datos y se ofrece Seguir editando. Estos mock-ups no incluyen guardado de borradores locales ni una cola automática sin conexión: antes de abandonar el registro, el agente debe confirmar que fue recibido en la web.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-10-incidencias-envio-salida.png" alt="Mock-ups Android de SGT: errores de envío y salida del registro" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-10. Errores de envío y salida del registro.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Inicio y orientación de la tarea**
+
+Inicio destaca Registrar terreno y resume qué se necesita para completar el proceso. El aviso sobre conexión anticipa la validación del DNI y el envío; cuando hay actividad, se muestra el terreno recibido en la web. La navegación inferior conserva Inicio y Enviados como destinos estables y usa texto junto a los iconos para facilitar su reconocimiento.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-11-inicio.png" alt="Mock-ups Android de SGT: inicio y orientación de la tarea" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-11. Inicio y orientación de la tarea.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Consulta de terrenos enviados**
+
+Enviados presenta un estado vacío con una acción para comenzar y una lista de los terrenos recibidos por la web. El detalle reúne archivo, fecha y beneficiario y mantiene visible Borrador en web. Esta organización permite comprobar la recepción sin atribuir a la aplicación Android la revisión de vértices o la aprobación posterior.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-12-terrenos-enviados.png" alt="Mock-ups Android de SGT: consulta de terrenos enviados" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-12. Consulta de terrenos enviados.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: escritorio**
+
+La web cubre el trabajo de Marco Quispe Huamán, Agente de Campo, y Rocío Fernández Salas, Asistente de Gerencia General. La navegación organiza las consultas y acciones del dominio alrededor del mapa, los terrenos y sus fichas. El agente registra y revisa terrenos y carga las fichas digitalizadas; la asistente contrasta los datos extraídos con el documento original y registra el resultado de su revisión.
+
+**Acceso institucional**
+
+El acceso, la solicitud de cuenta y la recuperación se presentan como formularios diferenciados. La composición combina identidad institucional con una superficie clara de captura, etiquetas persistentes y un botón principal teal. Solicitar acceso informa que la Oficina de Tecnologías revisará los datos, por lo que enviar el formulario no se confunde con tener una cuenta habilitada.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-01.png" alt="Mock-ups web de escritorio de SGT: acceso institucional" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-01. Acceso institucional en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Mapa y consultas**
+
+El mapa proporciona el contexto territorial y la barra lateral organiza Beneficiarios, Agentes de campo, Fichas, Terrenos y Mi cuenta. Los filtros Buscar y Limpiar filtros separan consulta y restablecimiento; las tablas conservan identificadores, estados y paginación. El detalle del terreno reúne área, vértices y fichas, reduciendo la necesidad de recordar datos de otra vista. La leyenda nombra los estados representados sobre el mapa.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-02.png" alt="Mock-ups web de escritorio de SGT: mapa y consultas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-02. Mapa y consultas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de terrenos**
+
+La bandeja permite distinguir Borrador de Validado y acceder a la revisión. Los formularios admiten archivo de estación total o ingreso manual de vértices UTM, muestran el perímetro y calculan el área a partir de los puntos. El borrador recibido desde Android conserva el archivo y sus vértices para verificarlos en la web. Guardar borrador y Validar terreno expresan resultados distintos y el detalle validado ofrece Subir ficha.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-03.png" alt="Mock-ups web de escritorio de SGT: gestión de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-03. Gestión de terrenos en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de fichas**
+
+La carga vincula un PDF con código, fecha y terreno. Mis fichas ofrece seguimiento al agente y la bandeja de Fichas permite a la asistente acceder a la validación. La revisión coloca los datos extraídos junto al documento original y permite corregirlos antes de aprobar. El aviso de integridad y la explicación de la notificación al POI hacen visible el efecto de la decisión.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-04.png" alt="Mock-ups web de escritorio de SGT: gestión de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-04. Gestión de fichas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Cuenta y preferencias**
+
+Mi cuenta agrupa datos personales, seguridad y preferencias bajo rótulos reconocibles. La identidad y el rol aparecen al inicio para situar a la persona en su cuenta institucional. Editar perfil, Guardar cambios y Cerrar sesión se distinguen por propósito, y la confirmación Cambios guardados informa el resultado de la edición.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-05.png" alt="Mock-ups web de escritorio de SGT: cuenta y preferencias" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-05. Cuenta y preferencias en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de acceso**
+
+Las credenciales incorrectas reciben un aviso general sin revelar qué dato falló. La solicitud de acceso señala los campos inválidos y su confirmación indica que queda pendiente de revisión. La recuperación usa una respuesta condicional sobre el envío del enlace y explica su vencimiento. Estos estados conservan la estructura del formulario y ofrecen una acción para continuar.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-06.png" alt="Mock-ups web de escritorio de SGT: estados de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-06. Estados de acceso en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Restablecimiento de contraseña**
+
+La creación de una nueva clave incluye confirmación y ayuda para evitar reutilizar una contraseña anterior. La discrepancia se explica junto al campo, el éxito ofrece regresar al inicio de sesión y el enlace vencido o utilizado permite solicitar otro. La misma familia de mensajes y controles mantiene consistencia entre errores y resultados satisfactorios.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-07.png" alt="Mock-ups web de escritorio de SGT: restablecimiento de contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-07. Restablecimiento de contraseña en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de terrenos**
+
+La validación incompleta pide DNI y al menos tres vértices completos antes de guardar. Cuando se lee el archivo, el formulario identifica la medición y permite revisar los puntos. Las confirmaciones posteriores distinguen el borrador guardado del terreno validado y explican cuándo queda habilitada la carga de fichas. Los títulos y las etiquetas de estado complementan el color.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-08.png" alt="Mock-ups web de escritorio de SGT: estados de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-08. Estados de terrenos en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Carga y búsqueda de fichas**
+
+Antes de subir se muestra el PDF adjunto y se pide comprobar que sus páginas y firmas sean legibles. Un archivo inválido o dañado recibe una explicación y la opción de seleccionar otra copia. La recepción confirma el vínculo con el terreno y el estado En revisión. La búsqueda sin coincidencias ofrece revisar o limpiar filtros, evitando interpretar una lista vacía como un fallo del sistema.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-09.png" alt="Mock-ups web de escritorio de SGT: carga y búsqueda de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-09. Carga y búsqueda de fichas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Revisión y resultados de las fichas**
+
+La ficha Alterada bloquea la aprobación y explica que se necesita una copia íntegra. Observar ficha solicita un motivo y conserva el vínculo con el documento; el resultado Observada indica que todavía se espera la corrección del agente. La aprobación identifica a la responsable, registra la fecha y comunica la notificación al POI. La separación visual de mensajes, datos y acciones ayuda a distinguir revisar, observar y aprobar.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-10.png" alt="Mock-ups web de escritorio de SGT: revisión y resultados de las fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-10. Revisión y resultados de las fichas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Bandejas de seguimiento**
+
+Las bandejas reflejan el estado posterior de cada ficha y ajustan su acción: consultar la aprobada, validar la pendiente o revisar la alterada. Código, fechas, terreno y estado se mantienen en posiciones comparables para localizar un registro y seguir su evolución. Las etiquetas escritas permiten distinguir Aprobada, Observada, En revisión y Alterada sin depender solo de su tratamiento cromático.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-11.png" alt="Mock-ups web de escritorio de SGT: bandejas de seguimiento" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-11. Bandejas de seguimiento en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: navegador móvil**
+
+La versión responsive permite consultar y gestionar la información desde un navegador móvil. Conserva las tareas y los estados de la web: los formularios se ordenan en una columna, los registros incorporan etiquetas y la revisión distribuye sus bloques verticalmente. Los nombres de las secciones y las acciones se mantienen entre escritorio y móvil para facilitar el cambio de dispositivo.
+
+**Acceso institucional**
+
+El acceso y sus rutas de apoyo se reorganizan en una columna. Se conservan las etiquetas y los enlaces entre formularios, mientras que el ancho disponible se destina a los campos y a la acción principal.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-01.png" alt="Mock-ups web responsive de SGT en navegador móvil: acceso institucional" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-01. Acceso institucional en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Mapa y consultas**
+
+Las consultas de beneficiarios, agentes y terrenos convierten la información tabular en registros verticales con etiquetas. El mapa y el detalle mantienen la leyenda y los identificadores, de modo que la adaptación cambia la distribución y conserva el significado.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-02.png" alt="Mock-ups web responsive de SGT en navegador móvil: mapa y consultas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-02. Mapa y consultas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de terrenos**
+
+Los datos del terreno, el archivo, la vista previa y los vértices se apilan para su revisión en un ancho reducido. Las acciones de guardar y validar siguen diferenciadas y el detalle conserva el acceso a la carga de fichas.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-03.png" alt="Mock-ups web responsive de SGT en navegador móvil: gestión de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-03. Gestión de terrenos en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de fichas**
+
+La carga de PDF y las bandejas mantienen sus filtros, estados y acciones. En la validación, los datos extraídos y el documento se disponen en vertical para poder contrastarlos sin reducir toda la vista de escritorio a una miniatura.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-04.png" alt="Mock-ups web responsive de SGT en navegador móvil: gestión de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-04. Gestión de fichas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Cuenta y preferencias**
+
+La cuenta presenta sus grupos de datos en una columna y acompaña los campos editables con ayudas. La confirmación de guardado conserva la misma redacción que en escritorio.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-05.png" alt="Mock-ups web responsive de SGT en navegador móvil: cuenta y preferencias" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-05. Cuenta y preferencias en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de acceso**
+
+Los avisos de credenciales incorrectas, campos inválidos, solicitud enviada y recuperación recibida se integran en el ancho del formulario. La explicación de cada resultado permanece próxima a la acción para continuar.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-06.png" alt="Mock-ups web responsive de SGT en navegador móvil: estados de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-06. Estados de acceso en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Restablecimiento de contraseña**
+
+La confirmación de contraseña y los estados de discrepancia, cambio realizado y enlace vencido mantienen sus mensajes y salidas. Los controles se distribuyen verticalmente para facilitar su lectura en el navegador móvil.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-07.png" alt="Mock-ups web responsive de SGT en navegador móvil: restablecimiento de contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-07. Restablecimiento de contraseña en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de terrenos**
+
+Los estados incompletos, el archivo leído, el borrador guardado y el terreno validado conservan la secuencia de revisión. Las etiquetas de los vértices y de sus coordenadas permiten interpretar cada dato aunque ya no se vea una tabla ancha.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-08.png" alt="Mock-ups web responsive de SGT en navegador móvil: estados de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-08. Estados de terrenos en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Carga y búsqueda de fichas**
+
+El PDF seleccionado, su rechazo y la confirmación de carga se presentan como estados distintos. Los resultados de búsqueda mantienen las etiquetas de cada registro y el estado vacío conserva las indicaciones para corregir los filtros.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-09.png" alt="Mock-ups web responsive de SGT en navegador móvil: carga y búsqueda de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-09. Carga y búsqueda de fichas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Revisión y resultados de las fichas**
+
+La revisión conserva el bloqueo por integridad, el motivo de observación y la confirmación de aprobación. La disposición vertical mantiene el orden de lectura entre aviso, datos, documento y acciones.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-10.png" alt="Mock-ups web responsive de SGT en navegador móvil: revisión y resultados de las fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-10. Revisión y resultados de las fichas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Bandejas de seguimiento**
+
+El seguimiento transforma las filas en bloques con código, estado, fechas y terreno. Las acciones de consulta o revisión permanecen junto al registro correspondiente y conservan las mismas reglas que en escritorio.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-11.png" alt="Mock-ups web responsive de SGT en navegador móvil: bandejas de seguimiento" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-11. Bandejas de seguimiento en navegador móvil.</figcaption>
+</figure>
+
+
+<div style="page-break-after: always;"></div>
+
+### Applications User Flow Diagrams
+
+Los user flows de SGT describen los recorridos que permiten al agente de campo y a la asistente de gerencia general alcanzar sus objetivos en las aplicaciones. Cada recorrido relaciona las pantallas con las decisiones del sistema, el resultado esperado y las alternativas de corrección o salida.
+
+Las cápsulas representan inicios, resultados y referencias de continuidad; los rombos expresan condiciones y los mock-ups muestran los estados de la interfaz. Las flechas continuas en teal indican el recorrido principal y las discontinuas en rojo señalan errores, reintentos o salidas alternativas. Las etiquetas indican qué acción o condición produce cada transición.
+
+**Aplicación móvil (Android): Agente de Campo**
+
+User Persona: Marco Quispe Huamán. La aplicación permite ingresar al espacio de trabajo, recuperar el acceso y enviar la medición de un terreno a la web. Los recorridos corresponden a los wireflows WF-01, WF-02 y WF-03; el registro actual requiere conexión para validar el DNI y enviar, y no ofrece guardado de borradores locales.
+
+<div style="page-break-after: always;"></div>
+
+**UF-01. Acceder al espacio de trabajo**
+
+**User goal.** Como agente de campo, quiero ingresar con mis credenciales institucionales para registrar terrenos desde mi cuenta.
+
+**Explicación:** El agente abre la aplicación e ingresa con el correo y la contraseña de su cuenta institucional. Si las credenciales son válidas, llega a Inicio. Si son incorrectas, el sistema presenta un aviso y permite corregirlas y reintentar. La opción de contraseña olvidada conduce a UF-02.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m01-diagrama.png" alt="User flow de SGT: UF-01. Acceso institucional" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-01. Acceso institucional.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-02. Recuperar el acceso a la cuenta**
+
+**User goal.** Como agente de campo, quiero restablecer mi contraseña para recuperar el acceso a mi cuenta.
+
+**Explicación:** Desde Inicio de sesión, el agente selecciona ¿Olvidó su contraseña?, escribe el correo asociado a su cuenta y solicita el código. Si el formato es válido, continúa con la verificación; de lo contrario, corrige el campo. Un código correcto y vigente permite avanzar a la referencia A. Si el código es incorrecto o venció, puede corregirlo o solicitar otro; el estado de reenvío regresa a la verificación.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m02a-diagrama.png" alt="User flow de SGT: UF-02A. Correo y verificación del código" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-02A. Correo y verificación del código.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** La referencia A continúa con la creación y confirmación de la nueva contraseña. Si ambas coinciden, el sistema guarda el cambio y permite volver al inicio de sesión. Si difieren, el agente corrige los campos antes de guardar. La confirmación del cambio deja disponible el acceso con la nueva clave.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m02b-diagrama.png" alt="User flow de SGT: UF-02B. Nueva contraseña y retorno al acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-02B. Nueva contraseña y retorno al acceso.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-03. Registrar, enviar y consultar un terreno**
+
+**User goal.** Como agente de campo, quiero registrar la medición de un terreno, vincular al beneficiario y enviarla a la web para comprobar su recepción.
+
+**Explicación:** Con la sesión iniciada, el agente comienza el registro desde Inicio y completa los datos del terreno. Los campos incompletos conducen a su corrección antes de avanzar. Luego selecciona el archivo de medición; si supera los 20 MB, elige otro. Con los datos y el archivo válidos, la referencia B continúa con la vinculación del beneficiario.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m03a-diagrama.png" alt="User flow de SGT: UF-03A. Datos del terreno y archivo de medición" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-03A. Datos del terreno y archivo de medición.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde B, el agente ingresa el DNI y solicita validarlo. Con conexión y un beneficiario registrado, revisa la identidad y el resumen antes de enviar. Un DNI no encontrado exige corregirlo; la falta de conexión permite reintentar la consulta. La referencia C inicia el envío. Si intenta salir, puede seguir editando o confirmar la salida y descartar los datos. R permite regresar a esta revisión desde un error de envío.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m03b-diagrama.png" alt="User flow de SGT: UF-03B. Beneficiario, revisión y salida del registro" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-03B. Beneficiario, revisión y salida del registro.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde C, la aplicación transfiere el registro. Solo una recepción confirmada conduce a Terreno enviado; después, el agente abre Inicio, Enviados y el detalle para comprobar el Borrador en web. Si falta conexión o la transferencia falla, puede reintentar o regresar mediante R a la revisión. No se genera un borrador local ni una cola automática de envíos pendientes. La validación de los vértices se realiza posteriormente en la web.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m03c-diagrama.png" alt="User flow de SGT: UF-03C. Envío y consulta de la recepción" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-03C. Envío y consulta de la recepción.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: Agente de Campo**
+
+User Persona: Marco Quispe Huamán. El agente registra y valida terrenos, carga las fichas firmadas y consulta su estado. El acceso institucional y la gestión de cuenta acompañan estas tareas.
+
+**UF-W01. Acceder a las funciones del rol**
+
+**User goal.** Como agente de campo, quiero iniciar sesión con mis credenciales institucionales para acceder a las funciones asignadas a mi rol.
+
+**Explicación:** El usuario ingresa sus credenciales y solicita iniciar sesión. Si son válidas, el sistema identifica el rol: el agente accede a Terrenos y la asistente a la vista general del mapa. En este segmento, el recorrido termina con las funciones de campo disponibles. Las credenciales incorrectas producen un aviso general y permiten corregir y reintentar.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w01-diagrama.png" alt="User flow de SGT: UF-W01. Acceso según el rol" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W01. Acceso según el rol.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W02. Solicitar acceso institucional**
+
+**User goal.** Como agente de campo, quiero enviar mis datos a la Oficina de Tecnologías para solicitar una cuenta institucional.
+
+**Explicación:** El usuario selecciona Solicite acceso, completa sus datos y envía la solicitud. Los campos incompletos o con formato inválido se corrigen antes de reenviar. La confirmación deja la solicitud pendiente de revisión por la Oficina de Tecnologías; la cuenta todavía no está habilitada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w02-diagrama.png" alt="User flow de SGT: UF-W02. Solicitud y revisión de datos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W02. Solicitud y revisión de datos.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W03. Recuperar la contraseña**
+
+**User goal.** Como agente de campo, quiero restablecer mi contraseña para recuperar el acceso a mi cuenta institucional.
+
+**Explicación:** Desde Inicio de sesión, el usuario selecciona ¿Olvidó su contraseña? y solicita el restablecimiento con su DNI o correo registrado. La confirmación conserva el mismo mensaje exista o no la cuenta. Si los datos están registrados, recibe un enlace: cuando está vigente, abre Nueva contraseña y continúa en A; si venció o ya fue utilizado, solicita otro.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03a-diagrama.png" alt="User flow de SGT: UF-W03A. Solicitud del enlace de recuperación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03A. Solicitud del enlace de recuperación.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde A, el usuario escribe y confirma la nueva clave. Si ambas entradas son válidas y coinciden, guarda el cambio y vuelve al inicio de sesión. Si difieren, corrige los valores y vuelve a guardar. Para acceder a las funciones del sistema debe iniciar sesión con la contraseña actualizada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03b-diagrama.png" alt="User flow de SGT: UF-W03B. Definición de la nueva contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03B. Definición de la nueva contraseña.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W04. Registrar y validar un terreno**
+
+**User goal.** Como agente de campo, quiero registrar el perímetro y comprobar sus vértices para dejar el terreno validado y habilitar la carga de su ficha.
+
+**Explicación:** Con su sesión iniciada, el agente abre Terrenos y crea un registro con el archivo de medición o con vértices ingresados manualmente. Si falta el DNI o no hay al menos tres vértices completos, corrige el formulario. Después guarda el borrador, revisa los puntos y valida el terreno. Cuando el borrador procede de Android, selecciona Validar en el listado y continúa en el paso 05 del diagrama. El resultado habilita la carga de la ficha.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w04-diagrama.png" alt="User flow de SGT: UF-W04. Registro y validación del perímetro" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W04. Registro y validación del perímetro.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W05. Subir la ficha firmada y consultar su estado**
+
+**User goal.** Como agente de campo, quiero subir la ficha de evaluación firmada en PDF para vincularla al terreno y consultar su estado.
+
+**Explicación:** Desde el detalle de un terreno validado, el agente abre Subir ficha, completa los datos y adjunta el PDF. Un archivo inválido o dañado produce un aviso y permite seleccionar otra copia. Con un PDF válido, confirma la carga y consulta Mis fichas. La recepción deja el documento vinculado al terreno y en estado En revisión, a la espera de la evaluación de gerencia.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w05-diagrama.png" alt="User flow de SGT: UF-W05. Carga del PDF y seguimiento" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W05. Carga del PDF y seguimiento.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W07. Actualizar los datos de la cuenta**
+
+**User goal.** Como agente de campo, quiero actualizar mis datos de contacto para mantener vigente la información de mi cuenta institucional.
+
+**Explicación:** El usuario abre Mi cuenta, selecciona Editar perfil y modifica los datos permitidos. Guardar cambios produce la confirmación de actualización. Si cierra antes de guardar, vuelve al mapa sin registrar la edición. La identidad, el rol y el área institucional se conservan como información de consulta.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w07-diagrama.png" alt="User flow de SGT: UF-W07. Edición y guardado del perfil" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W07. Edición y guardado del perfil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W08. Cerrar la sesión**
+
+**User goal.** Como agente de campo, quiero cerrar mi sesión para impedir que otra persona utilice el sistema con mis credenciales.
+
+**Explicación:** Desde Mi cuenta, el usuario selecciona Cerrar sesión. El sistema termina la sesión y muestra el formulario de acceso; volver a trabajar requiere ingresar las credenciales. Cerrar únicamente el panel con la X regresa al mapa y conserva la sesión activa.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w08-diagrama.png" alt="User flow de SGT: UF-W08. Cierre de sesión y cierre del panel" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W08. Cierre de sesión y cierre del panel.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: Asistente de Gerencia General**
+
+User Persona: Rocío Fernández Salas. La asistente consulta las fichas, verifica la integridad de los documentos y contrasta los datos extraídos antes de aprobar u observar. La vista general permite acceder a las consultas territoriales y a la revisión.
+
+**UF-W01. Acceder a las funciones del rol**
+
+**User goal.** Como asistente de gerencia general, quiero iniciar sesión con mis credenciales institucionales para acceder a las funciones asignadas a mi rol.
+
+**Explicación:** El usuario ingresa sus credenciales y solicita iniciar sesión. Si son válidas, el sistema identifica el rol: el agente accede a Terrenos y la asistente a la vista general del mapa. En este segmento, el recorrido termina con las funciones de gerencia disponibles. Las credenciales incorrectas producen un aviso general y permiten corregir y reintentar.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w01-diagrama.png" alt="User flow de SGT: UF-W01. Acceso según el rol" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W01. Acceso según el rol.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W02. Solicitar acceso institucional**
+
+**User goal.** Como asistente de gerencia general, quiero enviar mis datos a la Oficina de Tecnologías para solicitar una cuenta institucional.
+
+**Explicación:** El usuario selecciona Solicite acceso, completa sus datos y envía la solicitud. Los campos incompletos o con formato inválido se corrigen antes de reenviar. La confirmación deja la solicitud pendiente de revisión por la Oficina de Tecnologías; la cuenta todavía no está habilitada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w02-diagrama.png" alt="User flow de SGT: UF-W02. Solicitud y revisión de datos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W02. Solicitud y revisión de datos.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W03. Recuperar la contraseña**
+
+**User goal.** Como asistente de gerencia general, quiero restablecer mi contraseña para recuperar el acceso a mi cuenta institucional.
+
+**Explicación:** Desde Inicio de sesión, el usuario selecciona ¿Olvidó su contraseña? y solicita el restablecimiento con su DNI o correo registrado. La confirmación conserva el mismo mensaje exista o no la cuenta. Si los datos están registrados, recibe un enlace: cuando está vigente, abre Nueva contraseña y continúa en A; si venció o ya fue utilizado, solicita otro.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03a-diagrama.png" alt="User flow de SGT: UF-W03A. Solicitud del enlace de recuperación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03A. Solicitud del enlace de recuperación.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde A, el usuario escribe y confirma la nueva clave. Si ambas entradas son válidas y coinciden, guarda el cambio y vuelve al inicio de sesión. Si difieren, corrige los valores y vuelve a guardar. Para acceder a las funciones del sistema debe iniciar sesión con la contraseña actualizada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03b-diagrama.png" alt="User flow de SGT: UF-W03B. Definición de la nueva contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03B. Definición de la nueva contraseña.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W06. Revisar y resolver una ficha**
+
+**User goal.** Como asistente de gerencia general, quiero contrastar los datos extraídos con el PDF original para aprobar u observar la ficha con evidencia verificable.
+
+**Explicación:** Desde la vista general, la asistente abre Fichas y busca el registro. Si no hay resultados, ajusta o limpia los filtros. Al seleccionar Validar, se comprueba la integridad del PDF. Si coincide con la registrada en la carga, se habilita la revisión y se continúa en B. Si no coincide, la ficha queda Alterada y su aprobación se bloquea; la bandeja conserva ese resultado.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w06a-diagrama.png" alt="User flow de SGT: UF-W06A. Búsqueda y comprobación de integridad" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W06A. Búsqueda y comprobación de integridad.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde B, la asistente compara los campos extraídos con el documento. Si los datos son correctos y completos, aprueba la ficha y comprueba el resultado en la bandeja. Si encuentra un valor que puede corregir con el PDF, lo edita y vuelve a comparar. Cuando falta evidencia o la diferencia no puede resolverse, registra un motivo y envía la observación. La ficha queda Observada para que el agente atienda la corrección.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w06b-diagrama.png" alt="User flow de SGT: UF-W06B. Comparación de datos y resolución" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W06B. Comparación de datos y resolución.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W07. Actualizar los datos de la cuenta**
+
+**User goal.** Como asistente de gerencia general, quiero actualizar mis datos de contacto para mantener vigente la información de mi cuenta institucional.
+
+**Explicación:** El usuario abre Mi cuenta, selecciona Editar perfil y modifica los datos permitidos. Guardar cambios produce la confirmación de actualización. Si cierra antes de guardar, vuelve al mapa sin registrar la edición. La identidad, el rol y el área institucional se conservan como información de consulta.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w07-diagrama.png" alt="User flow de SGT: UF-W07. Edición y guardado del perfil" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W07. Edición y guardado del perfil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W08. Cerrar la sesión**
+
+**User goal.** Como asistente de gerencia general, quiero cerrar mi sesión para impedir que otra persona utilice el sistema con mis credenciales.
+
+**Explicación:** Desde Mi cuenta, el usuario selecciona Cerrar sesión. El sistema termina la sesión y muestra el formulario de acceso; volver a trabajar requiere ingresar las credenciales. Cerrar únicamente el panel con la X regresa al mapa y conserva la sesión activa.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w08-diagrama.png" alt="User flow de SGT: UF-W08. Cierre de sesión y cierre del panel" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W08. Cierre de sesión y cierre del panel.</figcaption>
+</figure>
+
+
+<div style="page-break-after: always;"></div>
+
+## Applications Prototyping
+
+Los prototipos interactivos de SGT simulan la navegación y las respuestas de las aplicaciones Android y web a partir de los mock-ups y los User Flow Diagrams. Permiten recorrer las tareas del agente de campo y de la asistente de gerencia general, reconocer las decisiones de cada proceso y revisar las alternativas ante errores antes de su implementación.
+
+Las interacciones mantienen la organización definida en la arquitectura de información. En Android, Inicio y Enviados son los destinos principales, mientras que el registro avanza mediante pasos consecutivos con las acciones Volver y Continuar. En la web, la barra lateral organiza el acceso a Beneficiarios, Agentes de campo, Fichas, Terrenos y Mi cuenta. Los formularios, paneles y ventanas de confirmación conservan el contexto de la tarea y diferencian avanzar, cancelar y finalizar.
+
+Los botones y enlaces conducen a estados que muestran el resultado de la acción. Los mensajes de validación se presentan junto a los campos, las confirmaciones indican qué ocurrió y los errores ofrecen una forma de corregir o reintentar. Las acciones de descarte y salida se distinguen de las acciones principales para reducir pérdidas involuntarias de información. El color se acompaña de títulos y etiquetas que permiten interpretar cada estado.
+
+La selección de archivos, la comprobación de identidad, la transferencia de información y la verificación de integridad se representan mediante estados de interfaz. El prototipo permite revisar estos recorridos; su ejecución con archivos, servicios y datos reales corresponde a las aplicaciones implementadas.
+
+**Aplicación móvil (Android): Agente de Campo**
+
+El prototipo móvil corresponde a Marco Quispe Huamán, User Persona Agente de Campo. Comprende el acceso institucional, la recuperación de contraseña y el registro y envío de la medición de un terreno. La navegación inferior conserva Inicio y Enviados para separar el comienzo de una tarea de la consulta de su recepción en la web.
+
+**Prototipo interactivo:** [Aplicación Android de SGT](https://www.figma.com/proto/BRCoSsU9rg30nFZ45MqYiv/PROTOTIPOS-EMERGENTES?node-id=350-5461&scaling=scale-down&content-scaling=fixed&page-id=350%3A622&starting-point-node-id=350%3A5497&show-proto-sidebar=1).
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/FIGMA-PROTOTIPO-MOBILE.png" alt="Conexiones del prototipo Android de SGT entre acceso, recuperación, registro y consulta de terrenos enviados" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 150mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Conexiones de navegación e interacción del prototipo Android.</figcaption>
+</figure>
+
+**Acceso y recuperación de contraseña.** El recorrido comienza en la presentación de SGT y continúa hacia el formulario de acceso. Las credenciales válidas permiten llegar a Inicio; las incorrectas muestran un aviso y permiten volver a intentarlo. La recuperación enlaza el correo, la verificación del código, su reenvío y la definición de una nueva contraseña. Los estados de correo inválido, código incorrecto o vencido y contraseñas que no coinciden permiten comprobar cómo se orienta la corrección dentro de la misma tarea.
+
+**Registro y envío del terreno.** Desde Inicio, el agente comienza un registro de cuatro pasos: datos del terreno, archivo de medición, vinculación del beneficiario y revisión. El prototipo diferencia los campos incompletos, el archivo adjunto y el archivo que supera los 20 MB. La consulta del DNI distingue la identidad confirmada, el documento no encontrado y la falta de conexión. Antes de enviar, el resumen reúne la información para que el agente pueda revisarla y volver al paso anterior si necesita corregirla.
+
+**Resultado y seguimiento.** El envío muestra un estado de transferencia y una confirmación de recepción como Borrador en web. Desde Inicio y Enviados, el agente consulta el detalle del terreno recibido. Las alternativas de falta de conexión o error permiten reintentar o volver a revisión. Al salir del registro sin enviar, una confirmación permite seguir editando o descartar los datos. La aplicación no ofrece guardado de borradores locales ni una cola automática de pendientes; el borrador recibido se revisa y valida posteriormente en la web.
+
+**Video de demostración en Microsoft Stream:** [Demostración de los prototipos Android y web](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQBtG5oadjsDQ62zfPdxv4FNAeFjwB8qI9xASyOH8ayCvtw?e=nRaTCT&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D).
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/video-prototipo-mobile.png" alt="Captura del video del prototipo Android de SGT: selección del archivo de estación total" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Demostración del prototipo Android: selección del archivo de medición.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web**
+
+El prototipo web reúne los recorridos del agente de campo y de la asistente de gerencia general. El acceso conduce a las funciones correspondientes a cada rol: Terrenos para el agente y la vista general del mapa para la asistente. La navegación lateral mantiene las secciones del dominio y permite pasar de la consulta territorial al trabajo con terrenos y fichas.
+
+**Prototipo interactivo:** [Aplicación web de SGT](https://www.figma.com/proto/BRCoSsU9rg30nFZ45MqYiv/PROTOTIPOS-EMERGENTES?node-id=387-2908&scaling=scale-down&content-scaling=fixed&page-id=350%3A621&starting-point-node-id=387%3A2908&show-proto-sidebar=1).
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/FIGMA-PROTOTIPO-WEB.png" alt="Conexiones del prototipo web de SGT para el acceso y los recorridos de Agente de Campo y Asistente de Gerencia General" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 150mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Conexiones de navegación e interacción del prototipo web para ambos roles.</figcaption>
+</figure>
+
+**Agente de Campo**
+
+El recorrido de Marco Quispe Huamán comienza con el acceso a Terrenos. Desde el listado puede crear un registro con el archivo de la estación total o mediante el ingreso manual de vértices. Los datos incompletos llevan a una respuesta de validación; cuando están completos, el agente guarda un borrador y revisa el perímetro antes de validar. Los terrenos enviados desde Android se incorporan a este mismo proceso de revisión de vértices.
+
+Una vez validado el terreno, su detalle permite abrir Subir ficha. El prototipo representa la selección del PDF, el archivo listo para enviar y el rechazo de una copia inválida o dañada. La confirmación de carga conduce al seguimiento en Mis fichas, donde el agente reconoce el estado En revisión y puede consultar el resultado posterior. La recepción del documento y su aprobación son momentos distintos del proceso.
+
+La interacción mantiene próximos el terreno, sus vértices y las fichas vinculadas. Las acciones de guardar, validar y subir identifican el resultado de cada paso; Cancelar permite abandonar el formulario y regresar al contexto de consulta.
+
+**Asistente de Gerencia General**
+
+El recorrido de Rocío Fernández Salas parte de la vista general y permite consultar beneficiarios, agentes y terrenos. En Fichas, los filtros localizan el documento que se revisará. Una búsqueda sin resultados permite ajustar los criterios; al iniciar la validación, el estado de integridad determina si se puede continuar con la comparación de datos o si la ficha queda Alterada y se bloquea su aprobación.
+
+La revisión presenta los datos extraídos junto al PDF original para compararlos dentro de la misma vista. Si un valor puede corregirse con el documento, la asistente lo modifica y vuelve a revisar. Cuando los datos son correctos y completos, Aprobar ficha conduce a la confirmación y al estado Aprobada en la bandeja. Si falta evidencia o una diferencia no puede resolverse, Observar ficha solicita un motivo y deja el documento en estado Observada para su atención por el agente.
+
+Los resultados distinguen la aprobación registrada, la corrección solicitada y el bloqueo por integridad. El aviso de aprobación comunica la notificación al sistema POI, mientras que la observación conserva el vínculo con el documento y explica qué requiere corrección. La vuelta a Fichas permite comprobar el estado resultante sin perder la referencia del registro evaluado.
+
+**Acceso y gestión de cuenta.** Ambos roles disponen de solicitud de acceso institucional, recuperación de contraseña, edición de los datos permitidos de su cuenta y cierre de sesión. La solicitud queda pendiente de revisión institucional. La recuperación web utiliza un enlace recibido por correo, con estados de vencimiento y confirmación del cambio. Guardar cambios confirma la edición del perfil; Cerrar sesión termina el acceso, mientras que cerrar únicamente el panel conserva la sesión activa.
+
+**Video de demostración en Microsoft Stream (ambos roles):** [Demostración de los prototipos Android y web](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQBtG5oadjsDQ62zfPdxv4FNAeFjwB8qI9xASyOH8ayCvtw?e=nRaTCT&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D).
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/video-prototipo-web.png" alt="Captura del video del prototipo web de SGT: consulta de beneficiarios" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Demostración del prototipo web: consulta de beneficiarios.</figcaption>
+</figure>
 
 
 <div style="page-break-after: always;"></div>
