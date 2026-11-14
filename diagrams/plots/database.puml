@@ -13,8 +13,23 @@ class plots <<Table>> {
     {field} registration_date : TIMESTAMP [NN]
 }
 
+class districts <<Table>> {
+    {field} ubigeo : VARCHAR(6) [PK]
+    {field} name : VARCHAR(255) [NN]
+    {field} province : VARCHAR(255) [NN]
+    {field} department : VARCHAR(255) [NN]
+    {field} boundary : geometry(MultiPolygon,4326) [NN]
+}
+
+plots .right.> districts : ubigeo deducido de >
+
 note bottom of plots
     UNIQUE (owner_document_type, owner_document_number)
+end note
+
+note bottom of districts
+    Datos de referencia: límites distritales del INEI 2025,
+    cargados por migración en todos los entornos.
 end note
 
 @enduml

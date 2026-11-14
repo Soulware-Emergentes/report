@@ -2,6 +2,8 @@ El agregado Plot protege dos reglas que abarcan más de un terreno: un beneficia
 
 El cálculo del área compartida entre dos polígonos, que pueden ser no convexos, se delega en la interfaz de dominio PlotGeometry, que la infraestructura implementa con una librería de geometría.
 
+El ubigeo del terreno no lo indica quien lo registra: se deduce de dónde está el perímetro. La interfaz de dominio PlotDistricts devuelve el distrito que contiene la mayor parte del área del terreno, y un terreno que no cae en ningún distrito del Perú se rechaza.
+
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>
@@ -91,6 +93,13 @@ El cálculo del área compartida entre dos polígonos, que pueden ser no convexo
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ sharedArea(first, second): SharedArea</td>
         </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotDistricts</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Domain Service</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Indica el distrito del Perú en que se encuentra un terreno, a partir de su perímetro.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ districtOf(boundary): Ubigeo</td>
+        </tr>
     </tbody>
 </table>
 </div>
@@ -151,6 +160,10 @@ Las reglas de negocio del módulo se protegen con las siguientes excepciones. To
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Una región consultada es un departamento, una provincia o un distrito: dos, cuatro o seis dígitos.</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">InvalidBoundingBoxException</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Una vista del mapa consultada es un rectángulo de longitudes y latitudes válidas, con el oeste antes que el este y el sur antes que el norte.</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">NegativeSharedAreaException</td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">El área compartida entre dos terrenos no es negativa.</td>
         </tr>
@@ -164,7 +177,11 @@ Las reglas de negocio del módulo se protegen con las siguientes excepciones. To
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">OverlappingPlotException</td>
-            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Un terreno nuevo no comparte con sus vecinos más área que la tolerancia.</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Un terreno nuevo no comparte con sus vecinos más área que la tolerancia. Nombra los terrenos registrados con los que se superpone.</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">PlotOutsideDistrictsException</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Un terreno se encuentra en algún distrito del Perú.</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">PlotNotFoundException</td>

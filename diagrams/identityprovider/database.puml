@@ -3,10 +3,23 @@ skinparam classAttributeIconSize 0
 hide circle
 hide empty methods
 
+class applications <<Table>> {
+    {field} id : UUID [PK]
+    {field} name : VARCHAR(255) [UQ, NN]
+    {field} icon : BYTEA
+    {field} icon_media_type : VARCHAR(100)
+}
+
+class environments <<Table>> {
+    {field} code : VARCHAR(20) [PK]
+    {field} name : VARCHAR(100) [NN]
+}
+
 class api_resources <<Table>> {
     {field} id : UUID [PK]
     {field} identifier : VARCHAR(255) [UQ, NN]
-    {field} name : VARCHAR(255) [NN]
+    {field} application_id : UUID [FK, NN]
+    {field} environment : VARCHAR(20) [FK, NN]
 }
 
 class api_roles <<Table>> {
@@ -26,8 +39,11 @@ class api_scopes <<Table>> {
 class client_registrations <<Table>> {
     {field} id : UUID [PK]
     {field} client_id : VARCHAR(255) [UQ, NN]
+    {field} application_id : UUID [FK, NN]
+    {field} environment : VARCHAR(20) [FK, NN]
     {field} kind : VARCHAR(20) [NN]
     {field} secret_hash : VARCHAR(255)
+    {field} home_uri : VARCHAR(1000)
 }
 
 class client_redirect_uris <<Table>> {
@@ -51,6 +67,15 @@ class scope_grants <<Table>> {
     {field} scope_id : UUID [PK, FK]
 }
 
+note bottom of api_resources
+    UNIQUE (application_id, environment)
+end note
+
+note bottom of client_registrations
+    CHECK: secret_hash solo si kind = CONFIDENTIAL
+    CHECK: home_uri solo si kind = PUBLIC
+end note
+
 note bottom of api_roles
     UNIQUE (resource_id, value)
 end note
@@ -59,6 +84,10 @@ note bottom of api_scopes
     UNIQUE (resource_id, value)
 end note
 
+api_resources "0..*" --> "1" applications : application_id
+api_resources "0..*" --> "1" environments : environment
+client_registrations "0..*" --> "1" applications : application_id
+client_registrations "0..*" --> "1" environments : environment
 api_roles "0..*" --> "1" api_resources : resource_id
 api_scopes "0..*" --> "1" api_resources : resource_id
 client_redirect_uris "0..*" --> "1" client_registrations : client_registration_id
