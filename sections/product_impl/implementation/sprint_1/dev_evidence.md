@@ -1,12 +1,12 @@
 Durante el Sprint 1 el equipo avanzó en seis repositorios de la organización Soulware-Emergentes: la landing page, la aplicación web y los servicios web SGT, POI, Staff y Beneficiarios. El trabajo de cada producto se hizo en ramas feature y se integró en develop mediante pull requests, siguiendo el flujo descrito en Source Code Management.
 
-En Staff quedó la base sobre la que se apoyan los demás servicios. El directorio guarda a las personas y sus grupos y verifica contraseñas, y el proveedor de identidad emite tokens tanto para personas como para servicios. Al final del sprint se sumaron la página de inicio de sesión propia con los tokens de diseño de SGT, en inglés y español, un hub con las aplicaciones a las que cada persona tiene acceso y el inicio de sesión silencioso entre aplicaciones.
+En Staff quedó la base sobre la que se apoyan los demás servicios. El directorio guarda a las personas y sus grupos y verifica contraseñas, y el proveedor de identidad emite tokens tanto para personas como para servicios. Al final del sprint se sumaron la página de inicio de sesión propia con los tokens de diseño de SGT, en inglés y español, un hub con las aplicaciones a las que cada persona tiene acceso y el inicio de sesión silencioso entre aplicaciones. Staff también entrega al frontend de SGT un segundo token, obtenido en silencio, para que el agente de campo consulte el padrón de beneficiarios.
 
-SGT acepta solo tokens emitidos por Staff y consulta a Staff y Beneficiarios con tokens de servicio. Permite registrar un terreno por beneficiario dentro de un distrito y consultarlo por id, por región o por propietario. Las fichas de campo reciben un código FI-NNNN-YYYY al enviarse y se listan con paginación, filtros y orden. Al aprobar o rechazar una ficha, SGT completa o reabre la tarea correspondiente en POI.
+SGT acepta solo tokens emitidos por Staff y consulta a Staff y Beneficiarios con tokens de servicio. Permite registrar un terreno por beneficiario y consultarlo por id, por región o por propietario. Los límites distritales del INEI 2025 se cargan en PostGIS, así que cada terreno se asigna al distrito con el que comparte más superficie y se rechaza uno que no cae en ningún distrito. El mapa pide los terrenos que tocan el área visible y los recibe en GeoJSON. Si un registro se superpone con terrenos existentes, la respuesta indica cuáles son, y cada error de dominio trae un código propio para que el cliente distinga un rechazo de otro. Las fichas de campo reciben un código FI-NNNN-YYYY al enviarse y se listan con paginación, filtros y orden. Al aprobar o rechazar una ficha, SGT completa o reabre la tarea correspondiente en POI.
 
-POI modela el plan operativo con sus objetivos, actividades y tareas, y lo devuelve como un árbol. Las tareas reciben las entregas y revisiones que llegan desde SGT, y al completarse cierran en cascada la actividad, el objetivo y el plan. Beneficiarios carga el padrón de beneficiarios, permite buscarlos y paginarlos, y admite varios formatos de documento legal. Los cuatro servicios documentan su API con springdoc.
+POI modela el plan operativo con sus objetivos, actividades y tareas, y lo devuelve como un árbol. Las tareas reciben las entregas y revisiones que llegan desde SGT, y al completarse cierran en cascada la actividad, el objetivo y el plan. Beneficiarios carga el padrón de beneficiarios, permite buscarlos y paginarlos, y admite varios formatos de documento legal. La búsqueda de beneficiarios ahora también acepta el token de un agente de campo, para que el frontend de SGT la use directamente. Los cuatro servicios documentan su API con springdoc.
 
-En el frontend, la landing page publicó su contenido con soporte de varios idiomas, con inglés por defecto, y la configuración para enlazar la URL de SGT en el despliegue. La aplicación web incorporó los tokens de diseño de SGT como tema de Tailwind y el inicio de sesión que redirige al SSO de Staff bajo el estándar OIDC.
+En el frontend, la landing page publicó su contenido con soporte de varios idiomas, con inglés por defecto, y la configuración para enlazar la URL de SGT en el despliegue. La aplicación web incorporó los tokens de diseño de SGT como tema de Tailwind y el inicio de sesión que redirige al SSO de Staff bajo el estándar OIDC. Después sumó el mapa de los terrenos registrados y el diálogo para registrar uno nuevo. En el diálogo se ingresa el documento del beneficiario, cuyo nombre se busca en el padrón, y los vértices del terreno, escritos a mano o leídos desde el archivo de la estación total. Antes de registrar es obligatorio ver el terreno en el mapa, que lo colorea según si parece cruzarse con uno ya registrado. La aplicación también ganó un menú lateral con íconos que se puede expandir.
 
 La siguiente tabla reúne los commits de implementación de cada repositorio, con la rama en la que se hicieron.
 
@@ -94,6 +94,54 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/login</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/login</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">87793b9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): add plot map and plot registration</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Map of the registered plots, loaded by cells around the view.<br>- Create plot dialog: beneficiary document (DNI, foreigner ID card, passport) with the holder's name looked up in the beneficiary registry, vertices typed in or read from a total station file, estimated area and perimeter preview.<br>- Mandatory "show on map" step before registering: the map keeps the drafted plot, previews it coloured by whether it looks like it crosses a registered plot, and hands it back to the dialog, which only offers to register while its vertices are unchanged.<br>- Shortcut to glide back to the drafted plot.<br>- Second silent authorization after login for a beneficiary registry token, kept in session storage; each API gets its own bearer token.<br>- Shell, home page and icons.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2a2f380</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(map): upgrade user experience by adding extra interactions</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Added a few interactions, animations and feedback messages to futher improve UX.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2975dd5</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(sidenav): add SGT icon to sidenav</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4c53e09</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(sidenav): add navigation item icons</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7c495d1</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(sidenav): add toggle extended sidenav button</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">b8c2fa7</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
@@ -224,6 +272,70 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
             </tr>
             <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">dce0a61</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track the test support and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ApplicationLaunchIT, the one test the repository tracks, extends PostgresIntegrationTest, which was ignored along with the other tests, so a clone could not compile its tests. The support package is tracked now, and the CI workflow with it, so the build passes on a clean checkout.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6b5d9bf</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">test: track every test except the architecture rules</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a27fc46</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(monitoring): hold every field sheet date as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1b0d7dc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(plots): hold the registration date as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">67bf4c4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3a71427</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): serve plots in view and file plots under their district</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- GET /plots/within answers the plots whose footprint touches a bounding box, as GeoJSON, at most 1000 and saying when it held more.<br>- The INEI 2025 district boundaries in PostGIS, seeded by migration.<br>- A registered plot is filed under the district it shares the most ground with, so the request no longer carries a ubigeo; a plot in no district is refused.<br>- The frontend origin the browser calls come from is now port 4200.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">389f59b</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): tell domain failures apart and name the plots an overlap hits</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Every domain error response carries its message key as code, so a client tells failures apart without reading the message.<br>- A failure that has details beyond its message implements DomainException.Detailed; its response carries them as details.<br>- An overlap refusal names the registered plots it overlaps, under details.overlappingPlots.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7655c28</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">fc0c063</td>
@@ -321,6 +433,14 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">c56ea41</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7952d02</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">build(deps): add the OAuth2 authorization server starter</td>
@@ -356,14 +476,6 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">e5976f0</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">style(shared): name the identity in the bulk load's key mapping</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">c56ea41</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
             </tr>
@@ -424,6 +536,22 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
             </tr>
             <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">088bca6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): give sgt's frontend a beneficiary registry token</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Dev seed: a field-agent role on the beneficiary registry for sgt's field agents and developers, and sgt-web-dev allowed to ask for it.<br>- Tests that a field agent gets the second token silently and that a person with no role on the registry is denied it.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">9b922bd</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #3 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): give sgt's frontend a beneficiary registry token</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/legal-document</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1d7f165</td>
@@ -438,6 +566,14 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(legal-document): add mutli-format legal document type support</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">01/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">152ea0e</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
@@ -497,11 +633,43 @@ La siguiente tabla reúne los commits de implementación de cada repositorio, co
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">152ea0e</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4dae890</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(registry): hold the date of birth as a value object</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
                 <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2bc87be</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">60fa159</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(registry): hold the date of birth as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1cd0367</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): let field agents look beneficiaries up from sgt's frontend</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Person tokens for the registry are accepted, with their roles as authorities; service tokens keep their scopes.<br>- POST /beneficiaries/lookup is open to the field-agent role as well as to the read scope; the rest of the API stays service-only.<br>- CORS for the lookup, from BENEFICIARIOS_WEB_ORIGIN only.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a07d55b</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #3 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): let field agents look beneficiaries up from sgt's frontend</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
             </tr>
         </tbody>
     </table>
