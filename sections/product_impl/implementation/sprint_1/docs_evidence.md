@@ -15,17 +15,17 @@ La siguiente tabla relaciona las rutas de documentación y los repositorios de l
         <tbody>
             <tr style="break-inside: avoid; page-break-inside: avoid;">
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">sgt</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code><br><a href="./assets/product_impl/sprint-1/services/sgt-openapi.json">Especificación OpenAPI adjunta</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code></td>
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/sgt">Soulware-Emergentes/sgt</a></td>
             </tr>
             <tr style="break-inside: avoid; page-break-inside: avoid;">
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">staff</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code><br><a href="./assets/product_impl/sprint-1/services/staff-openapi.json">Especificación OpenAPI adjunta</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code></td>
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/staff">Soulware-Emergentes/staff</a></td>
             </tr>
             <tr style="break-inside: avoid; page-break-inside: avoid;">
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">beneficiarios</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code><br><a href="./assets/product_impl/sprint-1/services/beneficiarios-openapi.json">Especificación OpenAPI adjunta</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code></td>
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/beneficiarios">Soulware-Emergentes/beneficiarios</a></td>
             </tr>
         </tbody>
