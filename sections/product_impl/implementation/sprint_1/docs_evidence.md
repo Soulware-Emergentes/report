@@ -1,6 +1,6 @@
-Durante el Sprint 1 se incorporó la documentación de los servicios web SGT, Staff y Beneficiarios con OpenAPI 3.1 mediante springdoc. Swagger UI permite consultar las rutas publicadas, las acciones HTTP, los parámetros y los esquemas de solicitud y respuesta. Las capturas de esta sección corresponden a la documentación disponible en el entorno local de los tres servicios.
+Durante el Sprint 1 se incorporó la documentación de los servicios web SGT, Staff y Beneficiarios con OpenAPI 3.1 mediante springdoc. Swagger UI permite consultar las rutas publicadas, las acciones HTTP, los parámetros y los esquemas de solicitud y respuesta.
 
-La siguiente tabla reúne los accesos a la documentación y los repositorios de los servicios incluidos en esta evidencia.
+La siguiente tabla relaciona las rutas de documentación y los repositorios de los servicios.
 
 <div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
     <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
@@ -15,24 +15,24 @@ La siguiente tabla reúne los accesos a la documentación y los repositorios de 
         <tbody>
             <tr style="break-inside: avoid; page-break-inside: avoid;">
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">sgt</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="http://localhost:8080/swagger-ui/index.html">http://localhost:8080/swagger-ui/index.html</a><br><a href="http://localhost:8080/v3/api-docs">OpenAPI JSON local</a><br><a href="./assets/product_impl/sprint-1/services/sgt-openapi.json">Especificación OpenAPI adjunta</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code><br><a href="./assets/product_impl/sprint-1/services/sgt-openapi.json">Especificación OpenAPI adjunta</a></td>
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/sgt">Soulware-Emergentes/sgt</a></td>
             </tr>
             <tr style="break-inside: avoid; page-break-inside: avoid;">
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">staff</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="http://localhost:8082/swagger-ui/index.html">http://localhost:8082/swagger-ui/index.html</a><br><a href="http://localhost:8082/v3/api-docs">OpenAPI JSON local</a><br><a href="./assets/product_impl/sprint-1/services/staff-openapi.json">Especificación OpenAPI adjunta</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code><br><a href="./assets/product_impl/sprint-1/services/staff-openapi.json">Especificación OpenAPI adjunta</a></td>
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/staff">Soulware-Emergentes/staff</a></td>
             </tr>
             <tr style="break-inside: avoid; page-break-inside: avoid;">
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">beneficiarios</td>
-                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="http://localhost:8081/swagger-ui/index.html">http://localhost:8081/swagger-ui/index.html</a><br><a href="http://localhost:8081/v3/api-docs">OpenAPI JSON local</a><br><a href="./assets/product_impl/sprint-1/services/beneficiarios-openapi.json">Especificación OpenAPI adjunta</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code><br><a href="./assets/product_impl/sprint-1/services/beneficiarios-openapi.json">Especificación OpenAPI adjunta</a></td>
                 <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/beneficiarios">Soulware-Emergentes/beneficiarios</a></td>
             </tr>
         </tbody>
     </table>
 </div>
 
-Los servicios utilizan autenticación Bearer con tokens JWT emitidos por Staff. Para explorar operaciones protegidas desde Swagger se emplea Authorize con un token de la audiencia y los permisos correspondientes. En SGT, la identidad del actor procede del token; el campo caller que aparece en la documentación generada representa ese contexto del servidor.
+Los servicios utilizan autenticación Bearer con tokens JWT emitidos por Staff. Para explorar operaciones protegidas desde Swagger se emplea Authorize con un token de la audiencia y los permisos correspondientes.
 
 En SGT, la documentación del módulo de terrenos describe el registro de la medición y las consultas por región, identificador, propietario y área visible del mapa.
 
@@ -81,7 +81,7 @@ En SGT, la documentación del módulo de terrenos describe el registro de la med
     </table>
 </div>
 
-El registro recibe el documento del propietario, la zona UTM y la lista de vértices del perímetro. El siguiente ejemplo de cuerpo JSON utiliza los datos de muestra presentados en el formulario web; ilustra la sintaxis de la solicitud.
+El registro recibe un cuerpo JSON con el documento del propietario, la zona UTM y los vértices del perímetro:
 
 <pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>{
   &quot;ownerDocumentType&quot;: &quot;DNI&quot;,
@@ -216,9 +216,9 @@ Staff documenta las consultas del directorio de personas. El listado admite filt
     </table>
 </div>
 
-La interacción de ejemplo solicita dos personas de la primera página, ordenadas por nombre visible. Swagger muestra HTTP 200 y una respuesta con content, totalPages, totalElements, actualPage y pageSize. En el entorno de desarrollo, el directorio contiene 41 personas.
+La interacción de ejemplo solicita dos personas de la primera página, ordenadas por nombre visible. Swagger muestra HTTP 200 y una respuesta con content, totalPages, totalElements, actualPage y pageSize. La respuesta indica un total de 41 personas.
 
-<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>GET http://localhost:8082/api/v3/people?sort=displayName&amp;direction=asc&amp;page=0&amp;size=2</code></pre>
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>GET /api/v3/people?sort=displayName&amp;direction=asc&amp;page=0&amp;size=2</code></pre>
 
 <div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
     <img src="./assets/product_impl/sprint-1/services/05-staff-get-200.jpg" alt="Figura 4. Consulta del directorio desde Swagger: respuesta HTTP 200 con personas de muestra." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
@@ -257,9 +257,9 @@ Beneficiarios documenta el listado del padrón y la búsqueda por documentos leg
     </table>
 </div>
 
-La consulta de ejemplo solicita dos beneficiarios de la primera página, ordenados por apellido paterno. La respuesta HTTP 200 contiene los datos de los beneficiarios y la información de paginación. El padrón de desarrollo utilizado en esta evidencia contiene 150 registros de muestra.
+La consulta de ejemplo solicita dos beneficiarios de la primera página, ordenados por apellido paterno. La respuesta HTTP 200 contiene los datos de los beneficiarios y la información de paginación. La respuesta indica un total de 150 beneficiarios.
 
-<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>GET http://localhost:8081/api/v1/beneficiaries?sort=paternalSurname&amp;direction=asc&amp;page=0&amp;size=2</code></pre>
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>GET /api/v1/beneficiaries?sort=paternalSurname&amp;direction=asc&amp;page=0&amp;size=2</code></pre>
 
 <div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
     <img src="./assets/product_impl/sprint-1/services/02-beneficiarios-get-200.jpg" alt="Figura 6. Consulta del padrón desde Swagger: respuesta HTTP 200 con beneficiarios de muestra." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
@@ -286,15 +286,24 @@ POST /api/v1/beneficiaries/lookup
       &quot;maternalSurname&quot;: &quot;Rendón&quot;,
       &quot;dateOfBirth&quot;: &quot;1998-08-30&quot;,
       &quot;ubigeo&quot;: &quot;295134&quot;
+    },
+    {
+      &quot;legalDocument&quot;: {
+        &quot;type&quot;: &quot;DNI&quot;,
+        &quot;number&quot;: &quot;62642120&quot;
+      },
+      &quot;names&quot;: &quot;Luz&quot;,
+      &quot;paternalSurname&quot;: &quot;Acevedo&quot;,
+      &quot;maternalSurname&quot;: &quot;Trujillo&quot;,
+      &quot;dateOfBirth&quot;: &quot;1943-03-23&quot;,
+      &quot;ubigeo&quot;: &quot;354105&quot;
     }
   ],
-  &quot;totalPages&quot;: 150,
+  &quot;totalPages&quot;: 75,
   &quot;totalElements&quot;: 150,
   &quot;actualPage&quot;: 0,
-  &quot;pageSize&quot;: 1
+  &quot;pageSize&quot;: 2
 }</code></pre>
-
-El último JSON ilustra una página de un elemento a partir del esquema documentado; las capturas de las consultas ejecutadas utilizan un tamaño de dos elementos. Los valores completos y los esquemas anidados se encuentran en las especificaciones OpenAPI adjuntas.
 
 Los commits relacionados con la configuración de la documentación se presentan a continuación. En los tres servicios incorporan ApiDocsConfiguration y la documentación de la API mediante springdoc.
 
@@ -327,5 +336,3 @@ Los commits relacionados con la configuración de la documentación se presentan
         </tbody>
     </table>
 </div>
-
-Las tablas describen las 17 operaciones publicadas en estos tres servicios. Las imágenes de Swagger presentan tanto la documentación de las rutas como ejemplos de interacción con datos de desarrollo, complementando la evidencia de las pantallas de la aplicación web.
