@@ -1,4 +1,4 @@
-La capa de interfaz es un controlador REST que solo atiende a otros servicios. Toda ruta bajo /api exige un token de Staff de tipo servicio (token_use igual a service), dirigido a la API de beneficiarios y con el scope beneficiaries.read. El token de una persona recibe una respuesta 401, y un token sin el scope, una respuesta 403.
+La capa de interfaz es un controlador REST que atiende a otros servicios y, en la búsqueda por documentos, también al agente de campo desde la aplicación web de SGT. Toda ruta bajo /api exige un token de Staff dirigido a la API de beneficiarios, de tipo servicio (token_use igual a service) o de persona (token_use igual a user). De un token de servicio se toman sus scopes, y de un token de persona, sus roles en la API. La página de beneficiarios exige el scope beneficiaries.read; la búsqueda por documentos admite ese scope o el rol field-agent. Un token de otro tipo recibe una respuesta 401, y uno sin el scope o el rol requerido, una respuesta 403.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -18,7 +18,7 @@ La capa de interfaz es un controlador REST que solo atiende a otros servicios. T
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">POST /api/v1/beneficiaries/lookup</td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Resuelve hasta 100 documentos legales en beneficiarios, e informa los que nadie tiene.</td>
-            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">beneficiaries.read</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">beneficiaries.read o rol field-agent</td>
         </tr>
     </tbody>
 </table>
@@ -99,3 +99,5 @@ La capa de interfaz es un controlador REST que solo atiende a otros servicios. T
 </div>
 
 Una entrada inválida, como un tipo de documento desconocido o una página fuera de rango, recibe una respuesta 422 con el sobre de error común a los servicios.
+
+Como la aplicación web llama a la búsqueda por documentos desde el navegador, la API admite solicitudes CORS en esa sola ruta, con el método POST y solo desde el origen configurado para la aplicación web. El resto de la API no admite solicitudes de navegador.

@@ -1,0 +1,15 @@
+La solución se despliega en la infraestructura on-premise de la institución, porque los datos de los beneficiarios no pueden salir de ella (TS-01). Cada API (SGT, POI, Staff y Beneficiarios) se construye a partir de su repositorio como un JAR ejecutable de Spring Boot, con su Tomcat embebido, y corre en el servidor de aplicaciones. Cada una tiene su propia base de datos PostgreSQL en el servidor de base de datos.
+
+Los pasos para desplegar una API desde su repositorio son los mismos en los cuatro servicios:
+- Preparar la base de datos. En el servidor de base de datos, con PostgreSQL instalado (y PostGIS en el caso de SGT, que guarda las geometrías de los terrenos), se ejecuta el script scripts/db/setup-roles.sql del repositorio. El script crea la base de datos y dos roles: el rol migrator, dueño del esquema, que usa Flyway, y el rol app, con permisos de lectura y escritura sobre los datos, que usa la aplicación en ejecución. Las contraseñas de ambos se leen de variables de entorno, para que no queden en el historial de la consola.
+- Construir el artefacto. Desde la raíz del repositorio, ./mvnw verify ejecuta toda la suite de pruebas, incluidas las de integración con PostgreSQL en un contenedor, y ./mvnw package genera el JAR en target/. GitHub Actions ejecuta la misma suite en cada pull request y en cada push a main y develop, así que el release que se despliega ya pasó por ella.
+- Configurar el entorno. Cada repositorio trae un archivo .env.example con todas las variables que la aplicación necesita, comentadas: las credenciales de los dos roles de base de datos, el emisor de tokens de Staff, la audiencia con la que la API está registrada en Staff, las URLs de los servicios que consume y el origen permitido de la aplicación web. Las propiedades de base de datos no tienen valores por defecto, así que una variable faltante detiene el arranque en lugar de conectar a una base equivocada. En producción, API_DOCS_ENABLED se fija en false para no publicar Swagger UI.
+- Arrancar el servicio. Al iniciar, Flyway aplica las migraciones pendientes con el rol migrator, y Hibernate valida que las entidades coincidan con el esquema resultante.
+
+El orden de arranque sigue las dependencias entre servicios. Staff va primero, porque emite los tokens que las demás APIs validan; antes de su primer arranque se genera el par de claves RSA con el que firma esos tokens, con los comandos openssl indicados en su .env.example. Después arrancan Beneficiarios y POI, y al final SGT, que consume a los tres con tokens de servicio obtenidos de Staff mediante el grant client credentials.
+
+SGT además necesita un almacén de objetos compatible con S3 en el servidor de archivos, con el bucket donde se guardan los PDF de las fichas; su endpoint, región, bucket y credenciales se configuran con las variables SCANS_* del entorno.
+
+El diagrama de despliegue resume esta configuración, con la aplicación web servida como archivos estáticos.
+
+<img src="assets/strategic_design/architecture/deployment/despliegue.png" alt="Diagrama de despliegues" style="display: block; width: 100%; height: auto; margin: 0 auto;">

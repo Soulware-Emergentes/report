@@ -1,4 +1,4 @@
-Esta sección resume las modificaciones relevantes realizadas al informe durante el ciclo de vida del proyecto. Cada versión corresponde a la incorporación, corrección o mejora de una o más secciones, y todas las registradas a la fecha forman parte del avance hacia las entregas TB1 y TP1.
+Esta sección resume las modificaciones relevantes realizadas al informe durante el ciclo de vida del proyecto. Cada versión corresponde a la incorporación, corrección o mejora de una o más secciones, y todas las registradas a la fecha forman parte del avance hacia las entregas TB1, TP1 y TB2.
 
 <div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
     <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
@@ -22,6 +22,12 @@ Esta sección resume las modificaciones relevantes realizadas al informe durante
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-10-09</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco<br>Esteban Román, Henry Kalet<br>Orozco Torres, Álvaro Joaquín<br>Reaño Delgadillo, Henry Paolo<br>Vilca Saboya, Diego Alejandro</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Incorporación de los Capítulos V y VI para la entrega TP1.<br>Capítulo V: Tactical-Level Software Design<br>- Bounded Contexts: Beneficiarios, Directory, IdentityProvider, Monitoring, People, Planning y Plots<br>- Por cada contexto: Domain Layer, Interface Layer, Application Layer, Infrastructure Layer, diagramas de componentes, de clases y de base de datos<br>- Ajuste del formato de las tablas para la exportación a PDF en tamaño A4<br>Capítulo VI: Solution UX Design<br>- Style Guidelines: General y Web, Mobile &amp; Devices<br>- Information Architecture: Organization, Labeling, SEO Tags y Meta Tags, Navigation y Searching Systems<br>- Landing Page UI Design: wireframes y mock-ups<br>- Applications UX/UI Design: wireframes y wireflows<br>Actualización de Registro de Versiones, Student Outcome, Conclusiones y Bibliografía.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">3.0.0</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-11-15</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco<br>Esteban Román, Henry Kalet<br>Orozco Torres, Álvaro Joaquín<br>Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Incorporación del Capítulo VII para la entrega TB2.<br>Capítulo VI: Solution UX Design<br>- Applications UX/UI Design: mock-ups y User Flow Diagrams por rol<br>- Applications Prototyping: prototipos interactivos y videos<br>Capítulo VII: Product Implementation, Validation &amp; Deployment<br>- Software Configuration Management: Development Environment, Source Code Management, Style Guide &amp; Conventions y Deployment Configuration<br>- Sprint 1: Sprint Planning, Sprint Backlog, evidencias de desarrollo, pruebas, ejecución, documentación de servicios y despliegue, y Team Collaboration Insights<br>Actualización de los diagramas y la documentación técnica de los Capítulos IV y V al código actual.<br>Anexo A: videos de TP1, entrevistas y prototipos.<br>Actualización de Carátula, Registro de Versiones, Project Report Collaboration Insights y Conclusiones.</td>
             </tr>
         </tbody>
     </table>

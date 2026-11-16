@@ -396,6 +396,25 @@ Contribuciones de los integrantes durante TP1:
   - [Applications UX/UI Design](#applications-ux-ui-design)
     - [Applications Wireframes](#applications-wireframes)
     - [Applications Wireflow Diagrams](#applications-wireflow-diagrams)
+    - [Applications Mock-ups](#applications-mock-ups)
+    - [Applications User Flow Diagrams](#applications-user-flow-diagrams)
+  - [Applications Prototyping](#applications-prototyping)
+- [Capítulo VII: Product Implementation, Validation & Deployment](#capítulo-vii-product-implementation-validation--deployment)
+  - [Software Configuration Management](#software-configuration-management)
+    - [Software Development Environment Configuration](#software-development-environment-configuration)
+    - [Source Code Management](#source-code-management)
+    - [Source Code Style Guide & Conventions](#source-code-style-guide--conventions)
+    - [Software Deployment Configuration](#software-deployment-configuration)
+  - [Solution Implementation](#solution-implementation)
+    - [Sprint 1](#sprint-1)
+      - [Sprint Planning 1](#sprint-1-planning)
+      - [Sprint Backlog 1](#sprint-1-backlog)
+      - [Development Evidence for Sprint Review](#sprint-1-dev-evidence)
+      - [Testing Suite Evidence for Sprint Review](#sprint-1-test-evidence)
+      - [Execution Evidence for Sprint Review](#sprint-1-exec-evidence)
+      - [Services Documentation Evidence for Sprint Review](#sprint-1-docs-evidence)
+      - [Software Deployment Evidence for Sprint Review](#sprint-1-deploy-evidence)
+      - [Team Collaboration Insights during Sprint](#sprint-1-collaboration)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
 - [Bibliografía](#bibliografía)
@@ -2841,7 +2860,7 @@ Este diagrama representa la situación a gran escala de la arquitectura de la so
 
 ### Software Architecture Container Level Diagrams
 
-Ahondamos al diagrama de contenedores. Dentro del sistema SGT contamos con dos interfaces, la aplicación móvil y la aplicación web, que obtienen el token de la persona de Staff y se comunican con la API de SGT, que contiene la lógica de negocio de terrenos y fichas. La aplicación web también consulta los planes y tareas directamente en la API de POI.
+Ahondamos al diagrama de contenedores. Dentro del sistema SGT contamos con dos interfaces, la aplicación móvil y la aplicación web, que obtienen el token de la persona de Staff y se comunican con la API de SGT, que contiene la lógica de negocio de terrenos y fichas. La aplicación web también consulta los planes y tareas directamente en la API de POI, y busca a los beneficiarios por su documento en la API de Beneficiarios con un segundo token de persona que obtiene de Staff sin volver a pedir las credenciales.
 
 Los PDF de las fichas se guardan en un almacén de objetos compatible con S3: las aplicaciones los suben y descargan directamente con enlaces firmados que emite la API de SGT, de modo que los archivos no pasan por la API. La API de SGT guarda terrenos y fichas en su propia base de datos PostgreSQL con PostGIS, y se comunica por REST con POI, Beneficiarios y el directorio de Staff usando tokens de servicio que obtiene de Staff. Cada servicio tiene su propia base de datos.
 
@@ -3827,6 +3846,8 @@ El agregado Plot protege dos reglas que abarcan más de un terreno: un beneficia
 
 El cálculo del área compartida entre dos polígonos, que pueden ser no convexos, se delega en la interfaz de dominio PlotGeometry, que la infraestructura implementa con una librería de geometría.
 
+El ubigeo del terreno no lo indica quien lo registra: se deduce de dónde está el perímetro. La interfaz de dominio PlotDistricts devuelve el distrito que contiene la mayor parte del área del terreno, y un terreno que no cae en ningún distrito del Perú se rechaza.
+
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
     <thead>
@@ -3916,6 +3937,13 @@ El cálculo del área compartida entre dos polígonos, que pueden ser no convexo
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ sharedArea(first, second): SharedArea</td>
         </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotDistricts</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Domain Service</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Indica el distrito del Perú en que se encuentra un terreno, a partir de su perímetro.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ districtOf(boundary): Ubigeo</td>
+        </tr>
     </tbody>
 </table>
 </div>
@@ -3976,6 +4004,10 @@ Las reglas de negocio del módulo se protegen con las siguientes excepciones. To
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Una región consultada es un departamento, una provincia o un distrito: dos, cuatro o seis dígitos.</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">InvalidBoundingBoxException</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Una vista del mapa consultada es un rectángulo de longitudes y latitudes válidas, con el oeste antes que el este y el sur antes que el norte.</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">NegativeSharedAreaException</td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">El área compartida entre dos terrenos no es negativa.</td>
         </tr>
@@ -3989,7 +4021,11 @@ Las reglas de negocio del módulo se protegen con las siguientes excepciones. To
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">OverlappingPlotException</td>
-            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Un terreno nuevo no comparte con sus vecinos más área que la tolerancia.</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Un terreno nuevo no comparte con sus vecinos más área que la tolerancia. Nombra los terrenos registrados con los que se superpone.</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">PlotOutsideDistrictsException</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Un terreno se encuentra en algún distrito del Perú.</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">PlotNotFoundException</td>
@@ -4008,7 +4044,7 @@ Las reglas de negocio del módulo se protegen con las siguientes excepciones. To
 
 <h3 id="plots-interface-layer">Interface Layer</h3>
 
-La capa de interfaz de Plots es un controlador REST que atiende a la aplicación del agente de campo.
+La capa de interfaz de Plots es un controlador REST que atiende al agente de campo, tanto en la aplicación móvil como en la aplicación web. La aplicación web llama a la API desde el navegador, por lo que la API admite solicitudes CORS solo desde el origen configurado para esa aplicación.
 
 Todas las solicitudes llevan el token de acceso de una persona emitido por staff. El componente compartido CallerArgumentResolver entrega a cada controlador un Caller construido con el sujeto y los roles del token, y el mapper de cada contexto exige el rol con el que se ejecuta la operación; un llamador que no actúa en ese rol recibe una respuesta 403.
 
@@ -4035,6 +4071,11 @@ Todas las solicitudes llevan el token de acceso de una persona emitido por staff
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">GET /api/v1/plots/owner?documentType=&amp;documentNumber=</td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Devuelve el terreno de un beneficiario.</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">field-agent</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">GET /api/v1/plots/within?bbox=</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Devuelve como GeoJSON los terrenos que tocan una vista del mapa, dada como oeste, sur, este y norte en grados.</td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">field-agent</td>
         </tr>
         <tr>
@@ -4065,20 +4106,20 @@ Todas las solicitudes llevan el token de acceso de una persona emitido por staff
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Controller</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Expone las operaciones de terrenos como recursos REST.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- plotCommandService: PlotCommandService<br>- plotQueryService: PlotQueryService</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ register(request, caller): PlotResponse<br>+ inRegion(region, caller): PlotsResponse<br>+ ofOwner(documentType, documentNumber, caller): PlotResponse<br>+ plot(plotId, caller): PlotResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ register(request, caller): PlotResponse<br>+ inRegion(region, caller): PlotsResponse<br>+ ofOwner(documentType, documentNumber, caller): PlotResponse<br>+ inView(bbox, caller): PlotFeatureCollectionResponse<br>+ plot(plotId, caller): PlotResponse</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotWireMapper</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Wire Mapper</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Traduce solicitudes en comandos y criterios, exige el rol del llamador y traduce resultados en respuestas.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ toRegisterPlot(request, caller): RegisterPlot<br>+ toPlotById(plotId, caller): PlotById<br>+ toPlotsInRegion(region, caller): PlotsInRegion<br>+ toPlotOfOwner(documentType, documentNumber, caller): PlotOfOwner<br>+ toPlotResponse(result): PlotResponse<br>+ toPlotsResponse(result): PlotsResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ toRegisterPlot(request, caller): RegisterPlot<br>+ toPlotById(plotId, caller): PlotById<br>+ toPlotsInRegion(region, caller): PlotsInRegion<br>+ toPlotOfOwner(documentType, documentNumber, caller): PlotOfOwner<br>+ toPlotsInView(bbox, caller): PlotsInView<br>+ toPlotResponse(result): PlotResponse<br>+ toPlotsResponse(result): PlotsResponse<br>+ toPlotFeatureCollectionResponse(result): PlotFeatureCollectionResponse</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">RegisterPlotRequest</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Request</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Cuerpo del registro de un terreno.</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ ownerDocumentType, ownerDocumentNumber: String<br>+ ubigeo, utmZone: String<br>+ boundary: List&lt;VertexRequest&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ ownerDocumentType, ownerDocumentNumber: String<br>+ utmZone: String<br>+ boundary: List&lt;VertexRequest&gt;</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
@@ -4109,16 +4150,48 @@ Todas las solicitudes llevan el token de acceso de una persona emitido por staff
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ easting: double<br>+ northing: double</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotFeatureCollectionResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Response</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Terrenos de una vista del mapa como FeatureCollection de GeoJSON, con la indicación de si la vista contenía más.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ type: String<br>+ features: List&lt;PlotFeatureResponse&gt;<br>+ truncated: boolean</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotFeatureResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Response</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Un terreno como Feature de GeoJSON.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ type: String<br>+ id: UUID<br>+ geometry: PolygonGeometryResponse<br>+ properties: PlotPropertiesResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PolygonGeometryResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Response</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Contorno del terreno como Polygon de GeoJSON, en longitud y latitud.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ type: String<br>+ coordinates: List&lt;List&lt;List&lt;Double&gt;&gt;&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotPropertiesResponse</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Response</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Datos del terreno que acompañan a su contorno en el mapa.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ ubigeo: String</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
     </tbody>
 </table>
 </div>
+
+El registro no recibe el ubigeo, porque el dominio lo deduce del perímetro. La respuesta de GET /api/v1/plots/within se puede guardar en la caché privada del navegador durante un minuto y varía según el token, de modo que mover el mapa sobre una zona ya vista no repite la consulta.
+
+Cuando el dominio rechaza una operación, la respuesta lleva el sobre de error común a los servicios con dos campos más. El campo code contiene la clave del mensaje de la excepción, como error.plots.overlapping-plot, para que el cliente distinga los rechazos sin leer el mensaje traducido. El campo details aparece solo en las excepciones que tienen algo más que el mensaje: el rechazo por superposición nombra en details.overlappingPlots los terrenos registrados con los que se superpone el terreno nuevo, y la aplicación web los resalta en el mapa.
 
 
 <div style="page-break-after: always;"></div>
 
 <h3 id="plots-application-layer">Application Layer</h3>
 
-La capa de aplicación expone el registro de terrenos y dos consultas. RegisterPlotHandler se ejecuta con aislamiento SERIALIZABLE, porque las reglas de superposición y de titular único abarcan varios agregados: si dos registros concurrentes leen los mismos vecinos, la base de datos rechaza uno de ellos al confirmar, y al reintentarlo se encuentra el terreno ya registrado y se informa la superposición.
+La capa de aplicación expone el registro de terrenos y cuatro consultas. RegisterPlotHandler se ejecuta con aislamiento SERIALIZABLE, porque las reglas de superposición y de titular único abarcan varios agregados: si dos registros concurrentes leen los mismos vecinos, la base de datos rechaza uno de ellos al confirmar, y al reintentarlo se encuentra el terreno ya registrado y se informa la superposición.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -4143,14 +4216,14 @@ La capa de aplicación expone el registro de terrenos y dos consultas. RegisterP
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">RegisterPlot</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Command</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Registra un terreno levantado a nombre de un beneficiario.</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ owner: BeneficiaryLegalDocument<br>+ boundary: PlotBoundary<br>+ ubigeo: Ubigeo</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ owner: BeneficiaryLegalDocument<br>+ boundary: PlotBoundary</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">RegisterPlotHandler</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Command Handler</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Carga el terreno del titular y los vecinos que intersecan el perímetro, y registra el terreno nuevo.</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- plotRepository: PlotRepository<br>- plotGeometry: PlotGeometry</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Carga el terreno del titular y los vecinos que intersecan el perímetro, obtiene el distrito del terreno y registra el terreno nuevo.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- plotRepository: PlotRepository<br>- plotGeometry: PlotGeometry<br>- plotDistricts: PlotDistricts</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ handle(RegisterPlot): PlotId</td>
         </tr>
         <tr>
@@ -4158,7 +4231,7 @@ La capa de aplicación expone el registro de terrenos y dos consultas. RegisterP
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Service</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Punto de entrada de lectura sobre terrenos.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- plotProjection: PlotProjection</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ byId(PlotById): PlotResult<br>+ inRegion(PlotsInRegion): PlotsResult<br>+ ofOwner(PlotOfOwner): PlotResult</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ byId(PlotById): PlotResult<br>+ inRegion(PlotsInRegion): PlotsResult<br>+ ofOwner(PlotOfOwner): PlotResult<br>+ inView(PlotsInView): PlotsInViewResult</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotById</td>
@@ -4172,6 +4245,13 @@ La capa de aplicación expone el registro de terrenos y dos consultas. RegisterP
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Criteria</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Terrenos ubicados en un departamento, provincia o distrito.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ region: String</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotsInView</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Criteria</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Terrenos que tocan una vista del mapa, dada como un rectángulo en grados WGS84.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ west, south, east, north: double</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
@@ -4203,11 +4283,32 @@ La capa de aplicación expone el registro de terrenos y dos consultas. RegisterP
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotsInViewResult</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Terrenos de una vista del mapa, e indicación de si la vista contenía más de los que se devuelven.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ plots: List&lt;PlotFootprintResult&gt;<br>+ truncated: boolean</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotFootprintResult</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Terreno dibujado en el mapa: su identidad, su ubigeo y su contorno en WGS84.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ id: UUID<br>+ ubigeo: String<br>+ footprint: List&lt;CoordinateResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">CoordinateResult</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Punto del contorno en longitud y latitud.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ longitude: double<br>+ latitude: double</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">PlotProjection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Projection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Puerto de lectura de los terrenos almacenados.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findById(PlotById): Optional&lt;PlotResult&gt;<br>+ findInRegion(PlotsInRegion): List&lt;PlotResult&gt;<br>+ findOfOwner(PlotOfOwner): Optional&lt;PlotResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findById(PlotById): Optional&lt;PlotResult&gt;<br>+ findInRegion(PlotsInRegion): List&lt;PlotResult&gt;<br>+ findOfOwner(PlotOfOwner): Optional&lt;PlotResult&gt;<br>+ findInView(PlotsInView, limit): List&lt;PlotFootprintResult&gt;</td>
         </tr>
     </tbody>
 </table>
@@ -4215,12 +4316,14 @@ La capa de aplicación expone el registro de terrenos y dos consultas. RegisterP
 
 La consulta por región compara el ubigeo por prefijo, de modo que una misma consulta sirve para los tres niveles de la división administrativa.
 
+La consulta por vista del mapa devuelve como máximo 1000 terrenos. PlotQueryService pide a la proyección uno más que ese límite: si lo recibe, responde los 1000 primeros e indica que la vista contenía más, para que el cliente acerque el mapa en lugar de dibujar una vista incompleta como si estuviera completa.
+
 
 <div style="page-break-after: always;"></div>
 
 <h3 id="plots-infrastructure-layer">Infrastructure Layer</h3>
 
-La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión PostGIS y delega en la librería JTS el cálculo geométrico que el dominio pide a PlotGeometry.
+La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión PostGIS y delega en la librería JTS el cálculo geométrico que el dominio pide a PlotGeometry. El distrito que el dominio pide a PlotDistricts se resuelve con una consulta espacial sobre los límites distritales guardados en la misma base de datos.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -4270,17 +4373,26 @@ La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión P
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ sharedArea(first, second): SharedArea</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">JdbcPlotDistricts</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Domain Service Adapter</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa PlotDistricts con una consulta PostGIS que devuelve el distrito que comparte más área con el perímetro.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- jdbc: NamedParameterJdbcTemplate</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ districtOf(boundary): Ubigeo</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">JdbcPlotProjection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Projection Adapter</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa PlotProjection con consultas SQL sobre plots.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- jdbc: NamedParameterJdbcTemplate</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findById(PlotById): Optional&lt;PlotResult&gt;<br>+ findInRegion(PlotsInRegion): List&lt;PlotResult&gt;<br>+ findOfOwner(PlotOfOwner): Optional&lt;PlotResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findById(PlotById): Optional&lt;PlotResult&gt;<br>+ findInRegion(PlotsInRegion): List&lt;PlotResult&gt;<br>+ findOfOwner(PlotOfOwner): Optional&lt;PlotResult&gt;<br>+ findInView(PlotsInView, limit): List&lt;PlotFootprintResult&gt;</td>
         </tr>
     </tbody>
 </table>
 </div>
 
-La tabla plots guarda el perímetro en las coordenadas UTM en que se midió y, además, una columna footprint generada en coordenadas geográficas WGS84 con un índice espacial GIST. Así, la búsqueda de vecinos compara terrenos medidos en zonas UTM distintas, y la consulta por región usa un índice sobre el prefijo del ubigeo.
+La tabla plots guarda el perímetro en las coordenadas UTM en que se midió y, además, una columna footprint generada en coordenadas geográficas WGS84 con un índice espacial GIST. Así, la búsqueda de vecinos compara terrenos medidos en zonas UTM distintas, y la consulta por región usa un índice sobre el prefijo del ubigeo. La consulta por vista del mapa usa el mismo índice de footprint para encontrar los terrenos que tocan el rectángulo pedido y los devuelve ya en WGS84.
+
+La tabla districts guarda los límites distritales del INEI de 2025 en WGS84, con su propio índice GIST. Son datos de referencia que todo entorno necesita iguales, por lo que se cargan con una migración Flyway y no como datos de prueba.
 
 
 <div style="page-break-after: always;"></div>
@@ -4291,7 +4403,7 @@ El siguiente diagrama de componentes del modelo C4 muestra los componentes de Pl
 
 <img src="assets/tactical_design/plots/component_level/components.png" alt="Diagrama de componentes de Plots" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
-PlotController recibe las solicitudes de la aplicación móvil. PlotCommandService carga los terrenos vecinos con JpaPlotRepositoryAdapter, mide la superposición con JtsPlotGeometry y guarda el terreno nuevo. Las consultas se resuelven con JdbcPlotProjection sobre la base de datos de SGT con PostGIS.
+PlotController recibe las solicitudes de la aplicación móvil y de la aplicación web. PlotCommandService carga los terrenos vecinos con JpaPlotRepositoryAdapter, mide la superposición con JtsPlotGeometry, obtiene el distrito del terreno con JdbcPlotDistricts y guarda el terreno nuevo. Las consultas, incluidos los terrenos de una vista del mapa, se resuelven con JdbcPlotProjection sobre la base de datos de SGT con PostGIS.
 
 
 <div style="page-break-after: always;"></div>
@@ -4304,7 +4416,7 @@ El siguiente diagrama de clases UML muestra la capa de dominio de Plots, junto c
 
 <img src="assets/tactical_design/plots/code_level/class_diagram/domain.png" alt="Diagrama de clases de la capa de dominio de plots" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
-Plot compone su identidad, su perímetro y su ubigeo, y referencia a su titular por el documento legal. PlotBoundary compone entre tres y muchos vértices SurveyPoint y la zona UTM en que se midieron. La regla de superposición se apoya en PlotGeometry, que devuelve un SharedArea, y en la tolerancia OverlapTolerance que el agregado mantiene como constante.
+Plot compone su identidad, su perímetro y su ubigeo, y referencia a su titular por el documento legal. PlotBoundary compone entre tres y muchos vértices SurveyPoint y la zona UTM en que se midieron. La regla de superposición se apoya en PlotGeometry, que devuelve un SharedArea, y en la tolerancia OverlapTolerance que el agregado mantiene como constante. PlotDistricts ubica el perímetro y entrega el Ubigeo del distrito en que se encuentra el terreno.
 
 
 <div style="page-break-after: always;"></div>
@@ -4316,6 +4428,8 @@ El siguiente diagrama de base de datos muestra las tablas de Plots en la base de
 <img src="assets/tactical_design/plots/code_level/db_diagram/schema.png" alt="Diagrama de base de datos de plots" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
 La tabla plots guarda una fila por terreno. El perímetro se almacena como polígono PostGIS en el sistema de referencia de su zona UTM, y la columna footprint, generada a partir de él, lo guarda en coordenadas geográficas WGS84 con un índice GIST para la búsqueda de terrenos que se intersecan. La restricción única sobre el tipo y el número de documento del titular respalda la regla de un terreno por beneficiario, y el índice sobre el ubigeo con text_pattern_ops atiende las consultas por prefijo de región.
+
+La tabla districts guarda una fila por distrito del Perú, con su ubigeo, su nombre, su provincia, su departamento y su límite como multipolígono en WGS84, con un índice GIST. No tiene una llave foránea hacia plots: el ubigeo de un terreno se obtiene al registrarlo, buscando el distrito que comparte más área con su perímetro, y desde entonces se guarda en la fila del terreno.
 
 
 <div style="page-break-after: always;"></div>
@@ -6043,14 +6157,14 @@ El siguiente diagrama de base de datos muestra las tablas de Directory en la bas
 
 <img src="assets/tactical_design/directory/code_level/db_diagram/schema.png" alt="Diagrama de base de datos de directory" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
-La tabla people guarda a las personas del directorio, con el nombre de usuario único y el hash de contraseña opcional. Las tablas groups y group_members guardan los grupos y la pertenencia de cada persona, con clave primaria compuesta y eliminación en cascada.
+La tabla people guarda a las personas del directorio, con el nombre de usuario único, el hash de contraseña opcional y una foto opcional, guardada junto con su tipo de contenido, como la guarda el atributo thumbnailPhoto de Active Directory. Las tablas groups y group_members guardan los grupos y la pertenencia de cada persona, con clave primaria compuesta y eliminación en cascada.
 
 
 <div style="page-break-after: always;"></div>
 
 ## Bounded Context: Identity Provider
 
-Identity Provider es el módulo del servicio staff que emite los tokens con los que las aplicaciones de la organización autentican a las personas y a los servicios. Registra las aplicaciones cliente y las API que protege, y decide qué roles tiene una persona en cada API según los grupos del directorio a los que pertenece. Atiende la épica EP-05 (autenticación) y las historias SGT-10 y SGT-11.
+Identity Provider es el módulo del servicio staff que emite los tokens con los que las aplicaciones de la organización autentican a las personas y a los servicios. Registra las aplicaciones cliente y las API que protege, y decide qué roles tiene una persona en cada API según los grupos del directorio a los que pertenece. Además, sirve las páginas con las que la persona inicia sesión una sola vez y abre desde un hub cualquiera de las aplicaciones en las que tiene un rol. Atiende la épica EP-05 (autenticación) y las historias SGT-10 y SGT-11.
 
 
 <h3 id="identityprovider-domain-layer">Domain Layer</h3>
@@ -6200,7 +6314,7 @@ Las reglas del módulo se protegen con las siguientes excepciones, que heredan d
 
 <h3 id="identityprovider-interface-layer">Interface Layer</h3>
 
-El proveedor de identidad expone los endpoints estándar de OAuth 2.1 y OpenID Connect a través de Spring Authorization Server, configurado en la capa de infraestructura, y un formulario de inicio de sesión. Las aplicaciones públicas inician sesión en nombre de las personas con el flujo authorization code con PKCE; las aplicaciones confidenciales, como sgt, obtienen tokens para sí mismas con el flujo client credentials.
+El proveedor de identidad expone los endpoints estándar de OAuth 2.1 y OpenID Connect a través de Spring Authorization Server, configurado en la capa de infraestructura, y sus propias páginas: el formulario de inicio de sesión, el aviso que se muestra antes de volver a una aplicación y el hub, donde una persona ve las aplicaciones que puede abrir. Las aplicaciones públicas inician sesión en nombre de las personas con el flujo authorization code con PKCE; las aplicaciones confidenciales, como sgt, obtienen tokens para sí mismas con el flujo client credentials.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -6217,7 +6331,19 @@ El proveedor de identidad expone los endpoints estándar de OAuth 2.1 y OpenID C
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">GET, POST /login</td>
-            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Muestra y procesa el formulario de inicio de sesión.</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Muestra y procesa el formulario de inicio de sesión. Con continue, el formulario retoma la solicitud de autorización de la aplicación que envió al navegador; sin él, termina en el hub.</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">GET /continuing</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Aviso de unos dos segundos que nombra la aplicación a la que vuelve el navegador tras iniciar sesión.</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">GET /</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Hub: saluda a la persona y lista las aplicaciones que puede abrir, agrupadas por entorno.</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">GET /opening?client=</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Abre desde el hub la aplicación indicada, si la persona puede abrirla, a través del mismo aviso.</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">POST /oauth2/token</td>
@@ -6245,12 +6371,14 @@ El proveedor de identidad expone los endpoints estándar de OAuth 2.1 y OpenID C
 
 Un inicio de sesión nombra una sola API y, opcionalmente, el rol con el que la persona va a actuar. El token de acceso de una persona lleva como sujeto su objectGUID, en roles el rol activo y en eligible_roles todos los roles que sus grupos tienen en esa API, para que el frontend ofrezca cambiar de rol. El token de un servicio lleva como sujeto su client id y en scope solo lo que se le otorgó. La claim token_use distingue ambos tipos, y cada API decide cuál acepta.
 
+Una aplicación que ya tiene la sesión de la persona en staff obtiene tokens sin mostrar el formulario: pide la autorización con prompt=none y recibe un código si el navegador ya inició sesión, o el error login_required si no. Así la aplicación web de SGT obtiene, además del token para su API, un segundo token para la API de beneficiarios, y una persona que entra desde el hub no vuelve a escribir sus credenciales. Con el parámetro ui_locales, la aplicación indica el idioma en que se muestra el formulario.
+
 
 <div style="page-break-after: always;"></div>
 
 <h3 id="identityprovider-application-layer">Application Layer</h3>
 
-La capa de aplicación del proveedor de identidad define los puertos de lectura que usa el servidor de autorización. No tiene comandos: los registros de aplicaciones y API, y las asignaciones de roles y scopes, se cargan en la base de datos. El flujo de autenticación lo conduce el servidor de autorización de la capa de infraestructura, que consulta estos puertos y la interfaz DirectoryApi del módulo Directory.
+La capa de aplicación del proveedor de identidad define los puertos de lectura que usan el servidor de autorización y las páginas de inicio de sesión y del hub. No tiene comandos: los registros de aplicaciones y API, y las asignaciones de roles y scopes, se cargan en la base de datos. El flujo de autenticación lo conduce el servidor de autorización de la capa de infraestructura, que consulta estos puertos y la interfaz DirectoryApi del módulo Directory.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -6269,7 +6397,7 @@ La capa de aplicación del proveedor de identidad define los puertos de lectura 
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Projection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Puerto de lectura de las aplicaciones registradas.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findByClientId(ClientByClientId): Optional&lt;ClientResult&gt;<br>+ findById(ClientById): Optional&lt;ClientResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findByClientId(ClientByClientId): Optional&lt;ClientResult&gt;<br>+ findById(ClientById): Optional&lt;ClientResult&gt;<br>+ findLaunchable(ClientsOfGroups): List&lt;LaunchableClientResult&gt;</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ClientByClientId</td>
@@ -6286,10 +6414,24 @@ La capa de aplicación del proveedor de identidad define los puertos de lectura 
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ClientsOfGroups</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Criteria</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Aplicaciones en las que pueden iniciar sesión las personas de ciertos grupos: los clientes públicos de las API en las que alguno de esos grupos tiene un rol.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ groupIds: List&lt;UUID&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ClientResult</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Aplicación registrada con todo lo que el servidor de autorización verifica en sus solicitudes.</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ id: UUID<br>+ clientId, kind, secretHash<br>+ loginRedirectUris, logoutRedirectUris<br>+ resources, roles, grantedScopes</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ id: UUID<br>+ clientId, applicationName<br>+ environment, environmentName<br>+ kind, secretHash<br>+ loginRedirectUris, logoutRedirectUris<br>+ resources, roles, grantedScopes</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">LaunchableClientResult</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Aplicación que una persona puede abrir, tal como la lista el hub.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ clientId, applicationName<br>+ environment, environmentName<br>+ homeUri: String</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
@@ -6322,7 +6464,7 @@ La capa de aplicación del proveedor de identidad define los puertos de lectura 
 
 <h3 id="identityprovider-infrastructure-layer">Infrastructure Layer</h3>
 
-La capa de infraestructura configura el servidor de autorización y lo conecta con el directorio y con los registros del proveedor de identidad.
+La capa de infraestructura configura el servidor de autorización y lo conecta con el directorio y con los registros del proveedor de identidad. También sirve las páginas propias de staff, generadas con Thymeleaf en inglés y en español con los tokens del sistema de diseño de SGT: el inicio de sesión, el aviso que se muestra antes de volver a una aplicación y el hub con las aplicaciones de la persona.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -6346,9 +6488,9 @@ La capa de infraestructura configura el servidor de autorización y lo conecta c
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">SecurityConfiguration</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Configuration</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Define tres cadenas de seguridad en orden: los endpoints OpenID Connect, la API del directorio y el formulario de inicio de sesión.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Define tres cadenas de seguridad en orden: los endpoints OpenID Connect, la API del directorio y las páginas de staff con el formulario de inicio de sesión. Deja que el endpoint de autorización responda por sí mismo las solicitudes con prompt=none, y permite CORS desde los orígenes de los frontends en los endpoints de tokens, userinfo y configuración.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">~ authorizationServerSecurity(http, eligibility): SecurityFilterChain<br>~ directoryApiSecurity(...): SecurityFilterChain<br>~ loginSecurity(http): SecurityFilterChain<br>~ passwordEncoder(): PasswordEncoder</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">~ authorizationServerSecurity(http, eligibility): SecurityFilterChain<br>~ directoryApiSecurity(...): SecurityFilterChain<br>~ loginSecurity(http): SecurityFilterChain<br>~ passwordEncoder(): PasswordEncoder<br>~ corsConfigurationSource(webOrigins): CorsConfigurationSource</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ProjectedRegisteredClientRepository</td>
@@ -6367,7 +6509,7 @@ La capa de infraestructura configura el servidor de autorización y lo conecta c
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">EligibilityValidator</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Validator</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Deja entrar a una persona a una aplicación solo si sus grupos tienen un rol en la API solicitada.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Deja entrar a una persona a una aplicación solo si sus grupos tienen un rol en la API solicitada. Un navegador anónimo cuenta como uno que no ha iniciado sesión.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- directoryApi: DirectoryApi<br>- grantProjection: GrantProjection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ accept(context): void</td>
         </tr>
@@ -6388,9 +6530,9 @@ La capa de infraestructura configura el servidor de autorización y lo conecta c
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">JdbcClientProjection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Projection Adapter</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa ClientProjection con SQL sobre client_registrations y sus tablas relacionadas.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa ClientProjection con SQL sobre client_registrations, applications, environments y sus tablas relacionadas.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- jdbc: NamedParameterJdbcTemplate</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findByClientId(ClientByClientId): Optional&lt;ClientResult&gt;<br>+ findById(ClientById): Optional&lt;ClientResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findByClientId(ClientByClientId): Optional&lt;ClientResult&gt;<br>+ findById(ClientById): Optional&lt;ClientResult&gt;<br>+ findLaunchable(ClientsOfGroups): List&lt;LaunchableClientResult&gt;</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">JdbcGrantProjection</td>
@@ -6398,6 +6540,76 @@ La capa de infraestructura configura el servidor de autorización y lo conecta c
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa GrantProjection con SQL sobre role_assignments y scope_grants.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- jdbc: NamedParameterJdbcTemplate</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findRoles(RolesOfGroups): List&lt;String&gt;<br>+ findScopes(ScopesOfClient): List&lt;String&gt;</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">LoginPageConfiguration</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Configuration</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Sirve el formulario de inicio de sesión en /login y el aviso de /continuing, y registra sus interceptores.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- signedIn: SignedInLoginInterceptor<br>- requestingApplication: RequestingApplicationInterceptor<br>- continuation: ContinuationInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ addViewControllers(registry): void<br>+ addInterceptors(registry): void</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ContinuedLogin</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Helper</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Distingue un inicio de sesión al que envió una aplicación, marcado con continue, de uno abierto a mano. Solo el primero retoma la solicitud de autorización guardada; el segundo la descarta y termina en el hub. Conserva la marca tras un intento fallido.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">~ isContinued(request): boolean<br>~ successHandler(): AuthenticationSuccessHandler<br>~ failureHandler(): AuthenticationFailureHandler</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">RequestingApplicationInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Interceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Nombra en el formulario la aplicación que pidió el inicio de sesión y, fuera de producción, su entorno. Los toma del registro de la aplicación y nunca de la solicitud, para que un enlace no pueda hacer que la página nombre otra aplicación.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- requestCache: RequestCache<br>- clientProjection: ClientProjection<br>- messageSource: MessageSource</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ postHandle(request, response, handler, model): void</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">SignedInLoginInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Interceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Saca del formulario a un navegador que ya inició sesión: lo envía a la aplicación que pidió el inicio de sesión o al hub.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- requestCache: RequestCache</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ preHandle(request, response, handler): boolean</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ContinuationInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Interceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Da al aviso de /continuing la dirección de la aplicación a la que vuelve el navegador, tomada de la solicitud de autorización guardada; sin ella, envía al hub.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- requestCache: RequestCache</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ preHandle(request, response, handler): boolean<br>+ postHandle(request, response, handler, model): void</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">HubPageConfiguration</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Configuration</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Sirve el hub en / y el aviso de /opening con el que una tarjeta del hub abre su aplicación.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- hub: HubInterceptor<br>- opening: OpeningInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ addViewControllers(registry): void<br>+ addInterceptors(registry): void</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">HubInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Interceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Llena el hub: los datos de la persona según el directorio y las aplicaciones que puede abrir, agrupadas por entorno con producción primero.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- directoryApi: DirectoryApi<br>- clientProjection: ClientProjection<br>- messageSource: MessageSource</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ postHandle(request, response, handler, model): void<br>~ launchableBy(personId, locale): List&lt;EnvironmentApplications&gt;</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">OpeningInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Interceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Abre la aplicación de una tarjeta del hub en su dirección de inicio. La busca entre las que la persona puede abrir, por el client id de la tarjeta, de modo que un enlace no puede llevar a otro sitio ni abrir una aplicación sin rol.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- hub: HubInterceptor</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ preHandle(request, response, handler): boolean<br>+ postHandle(request, response, handler, model): void</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">UiLocalesFilter</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Filter</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Atiende el parámetro ui_locales de OpenID Connect: guarda en la sesión el primer idioma soportado que pide la aplicación, para que el formulario se muestre en él.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- localeResolver: LocaleResolver<br>- authorizationEndpoint: String</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;"># doFilterInternal(request, response, chain): void</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">LocaleConfiguration</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Configuration</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Define los idiomas de staff, inglés por defecto y español, y elige el de cada solicitud: el guardado en la sesión, si no el de Accept-Language, y si no inglés.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ SUPPORTED_LOCALES: List&lt;Locale&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">~ localeResolver(): LocaleResolver<br>+ supportedLocale(languageTag): Optional&lt;Locale&gt;</td>
         </tr>
     </tbody>
 </table>
@@ -6414,7 +6626,7 @@ El siguiente diagrama de componentes del modelo C4 muestra los componentes de Id
 
 <img src="assets/tactical_design/identityprovider/component_level/components.png" alt="Diagrama de componentes de Identity Provider" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
-El servidor de autorización atiende el inicio de sesión de la aplicación web y de la aplicación móvil, y la emisión de tokens de servicio a la API de SGT. Para cada solicitud busca la aplicación en ProjectedRegisteredClientRepository, autentica a la persona con DirectoryAuthenticationProvider, valida su acceso con EligibilityValidator y arma el token con StaffTokenCustomizer. Los datos de las personas y sus grupos se obtienen de DirectoryApiService.
+El servidor de autorización atiende el inicio de sesión de la aplicación web y de la aplicación móvil, y la emisión de tokens de servicio a la API de SGT. Para cada solicitud busca la aplicación en ProjectedRegisteredClientRepository, autentica a la persona con DirectoryAuthenticationProvider, valida su acceso con EligibilityValidator y arma el token con StaffTokenCustomizer. Los datos de las personas y sus grupos se obtienen de DirectoryApiService. Las páginas de staff muestran el formulario de inicio de sesión con el nombre de la aplicación que lo pidió y el hub con las aplicaciones que la persona puede abrir, que leen de JdbcClientProjection.
 
 
 <h3 id="identityprovider-code-level">Bounded Context Software Architecture Code Level Diagrams</h3>
@@ -6436,14 +6648,14 @@ El siguiente diagrama de base de datos muestra las tablas de Identity Provider e
 
 <img src="assets/tactical_design/identityprovider/code_level/db_diagram/schema.png" alt="Diagrama de base de datos de identityprovider" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
-La tabla api_resources guarda las API registradas, y api_roles y api_scopes los roles y scopes que define cada una. La tabla client_registrations guarda las aplicaciones registradas; la restricción CHECK exige secreto solo a los clientes confidenciales. client_redirect_uris y client_resources guardan las direcciones de retorno y las API vinculadas a cada aplicación. role_assignments asigna roles a grupos del directorio, referenciados por identidad, y scope_grants otorga scopes a las aplicaciones.
+La tabla applications guarda los sistemas de la organización, como SGT, con el nombre y el ícono que se muestran a las personas, iguales en todos los entornos. La tabla environments guarda los entornos en que se despliegan: desarrollo, calidad y producción. La tabla api_resources guarda las API registradas, cada una la de un sistema en un entorno, y api_roles y api_scopes los roles y scopes que define cada una. La tabla client_registrations guarda las aplicaciones registradas, cada una un frontend o backend de un sistema en un entorno; una restricción CHECK exige secreto solo a los clientes confidenciales y otra exige la dirección de inicio, con la que el hub abre la aplicación, solo a los clientes públicos. client_redirect_uris y client_resources guardan las direcciones de retorno y las API vinculadas a cada aplicación. role_assignments asigna roles a grupos del directorio, referenciados por identidad, y scope_grants otorga scopes a las aplicaciones.
 
 
 <div style="page-break-after: always;"></div>
 
 ## Bounded Context: Beneficiarios
 
-Beneficiarios es el contexto que provee la información de los beneficiarios del programa. Se implementa como el servicio beneficiarios, con el módulo registry, que reproduce el registro de beneficiarios de la institución. Es de solo lectura: sus únicos consumidores son otros servicios, que lo consultan con un token de servicio emitido por Staff. sgt lo consulta desde el módulo People para resolver a los beneficiarios a partir de su documento legal.
+Beneficiarios es el contexto que provee la información de los beneficiarios del programa. Se implementa como el servicio beneficiarios, con el módulo registry, que reproduce el registro de beneficiarios de la institución. Es de solo lectura. Lo consultan otros servicios, con un token de servicio emitido por Staff: sgt lo hace desde el módulo People para resolver a los beneficiarios a partir de su documento legal. Además, el agente de campo busca al beneficiario por su documento desde la aplicación web de SGT al registrar un terreno, con un token de persona que Staff emite para la API de beneficiarios.
 
 
 <h3 id="beneficiarios-domain-layer">Domain Layer</h3>
@@ -6588,7 +6800,7 @@ Las reglas del contexto se protegen con las siguientes excepciones. BeneficiaryN
 
 <h3 id="beneficiarios-interface-layer">Interface Layer</h3>
 
-La capa de interfaz es un controlador REST que solo atiende a otros servicios. Toda ruta bajo /api exige un token de Staff de tipo servicio (token_use igual a service), dirigido a la API de beneficiarios y con el scope beneficiaries.read. El token de una persona recibe una respuesta 401, y un token sin el scope, una respuesta 403.
+La capa de interfaz es un controlador REST que atiende a otros servicios y, en la búsqueda por documentos, también al agente de campo desde la aplicación web de SGT. Toda ruta bajo /api exige un token de Staff dirigido a la API de beneficiarios, de tipo servicio (token_use igual a service) o de persona (token_use igual a user). De un token de servicio se toman sus scopes, y de un token de persona, sus roles en la API. La página de beneficiarios exige el scope beneficiaries.read; la búsqueda por documentos admite ese scope o el rol field-agent. Un token de otro tipo recibe una respuesta 401, y uno sin el scope o el rol requerido, una respuesta 403.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 14px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -6608,7 +6820,7 @@ La capa de interfaz es un controlador REST que solo atiende a otros servicios. T
         <tr>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">POST /api/v1/beneficiaries/lookup</td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">Resuelve hasta 100 documentos legales en beneficiarios, e informa los que nadie tiene.</td>
-            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">beneficiaries.read</td>
+            <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">beneficiaries.read o rol field-agent</td>
         </tr>
     </tbody>
 </table>
@@ -6689,6 +6901,8 @@ La capa de interfaz es un controlador REST que solo atiende a otros servicios. T
 </div>
 
 Una entrada inválida, como un tipo de documento desconocido o una página fuera de rango, recibe una respuesta 422 con el sobre de error común a los servicios.
+
+Como la aplicación web llama a la búsqueda por documentos desde el navegador, la API admite solicitudes CORS en esa sola ruta, con el método POST y solo desde el origen configurado para la aplicación web. El resto de la API no admite solicitudes de navegador.
 
 
 <div style="page-break-after: always;"></div>
@@ -6847,7 +7061,7 @@ El siguiente diagrama de componentes del modelo C4 muestra los componentes de Be
 
 <img src="assets/tactical_design/beneficiarios/component_level/components.png" alt="Diagrama de componentes de Beneficiarios" style="display: block; width: 100%; height: auto; margin: 0 auto;">
 
-BeneficiaryController atiende las consultas de la API de SGT y las dirige a BeneficiaryQueryService, que lee con JdbcBeneficiaryProjection. La API valida el token de servicio de SGT con la clave que publica Staff. Al iniciar, BeneficiarySeeder carga los beneficiarios de prueba en una base de datos vacía.
+BeneficiaryController atiende las consultas de la API de SGT y la búsqueda por documentos que hace el agente de campo desde la aplicación web, y las dirige a BeneficiaryQueryService, que lee con JdbcBeneficiaryProjection. La API valida el token de servicio de SGT y el token de persona del agente con la clave que publica Staff. Al iniciar, BeneficiarySeeder carga los beneficiarios de prueba en una base de datos vacía.
 
 
 <div style="page-break-after: always;"></div>
@@ -7854,6 +8068,2953 @@ Los tres recorridos parten del inicio de sesión. En el primero, el usuario comp
 </figure>
 
 Los tres wireflows web comparten las convenciones de los móviles, de modo que el lector compara ambas aplicaciones con la misma clave de lectura. Ninguna decisión deja al usuario sin salida: cada camino discontinuo regresa a la pantalla donde puede corregir o termina en un estado nombrado, como En revisión, Observada o Alterada, que el otro rol también ve.
+
+
+<div style="page-break-after: always;"></div>
+
+### Applications Mock-ups
+
+Los mock-ups de SGT presentan la propuesta visual de las aplicaciones Android y web con sus estados de entrada, validación, error y confirmación. Aplican la identidad definida en Style Guidelines mediante el logotipo, la tipografía Roboto, el azul marino, el teal para las acciones principales y los colores semánticos acompañados de texto. La jerarquía entre títulos, etiquetas, ayudas y botones orienta la lectura; la repetición de componentes y términos permite reconocer una misma tarea entre pantallas.
+
+La organización responde a dos ámbitos de trabajo: el agente de campo registra y envía la medición desde Android, y en la web se consultan y validan terrenos y fichas según el rol. El diseño incorpora etiquetas persistentes, instrucciones junto a los campos y estados expresados con palabras para facilitar la lectura y la corrección de errores.
+
+**Aplicación móvil (Android)**
+
+La aplicación Android se dirige a Marco Quispe Huamán, User Persona Agente de Campo. El registro se organiza en cuatro pasos: datos del terreno, archivo de medición, vinculación del beneficiario y revisión para el envío. La navegación general separa Inicio de Enviados.
+
+<div style="page-break-after: always;"></div>
+
+**Acceso a la aplicación**
+
+El acceso presenta la marca SGT y un formulario de correo y contraseña para el agente de campo. El fondo azul marino, las superficies claras y el botón teal trasladan la identidad de la guía general al teléfono. Las etiquetas permanecen visibles cuando hay datos y el error de credenciales se comunica con texto junto al formulario; el correo se conserva para facilitar la corrección.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-01-acceso.png" alt="Mock-ups Android de SGT: acceso a la aplicación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-01. Acceso a la aplicación.</figcaption>
+</figure>
+<div style="page-break-after: always;"></div>
+
+**Solicitud de recuperación de acceso**
+
+La recuperación solicita el correo asociado a la cuenta y explica que se enviará un código. Se muestran los estados vacío, completo y de formato inválido, además del paso siguiente. El enlace para volver al inicio de sesión mantiene una salida reconocible y la ayuda sobre el correo no deseado acompaña la tarea sin competir con Enviar código.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-02-recuperacion.png" alt="Mock-ups Android de SGT: solicitud de recuperación de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-02. Solicitud de recuperación de acceso.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Verificación del código**
+
+El código de seis dígitos tiene una etiqueta y una indicación de uso; se permite copiarlo y pegarlo. El estado incorrecto o vencido explica cómo continuar y ofrece solicitar otro código. La confirmación de reenvío cambia el mensaje de la pantalla, de modo que el agente reconoce la respuesta del sistema por las palabras y la jerarquía visual, además del color.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-03-verificacion-codigo.png" alt="Mock-ups Android de SGT: verificación del código" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-03. Verificación del código.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Nueva contraseña y confirmación**
+
+La nueva clave se escribe y se confirma en campos separados. El mensaje de discrepancia aparece junto al campo que debe corregirse, mientras que la confirmación del cambio ofrece Iniciar sesión como siguiente acción. La repetición de tipografía, márgenes y posición del botón principal conserva la continuidad con los pasos anteriores.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-04-nueva-contrasena.png" alt="Mock-ups Android de SGT: nueva contraseña y confirmación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-04. Nueva contraseña y confirmación.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Datos del terreno**
+
+El registro comienza con código, fecha de medición y referencia de ubicación. PASO 1 DE 4 sitúa al agente dentro de la tarea; las ayudas explican qué dato se espera y el estado incompleto señala los campos por corregir. La disposición en una columna permite leer de arriba abajo y diferencia Volver de Continuar sin introducir destinos ajenos al registro.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-05-datos-terreno.png" alt="Mock-ups Android de SGT: datos del terreno" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-05. Datos del terreno.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Archivo de la estación total**
+
+El segundo paso distingue entre archivo por seleccionar, archivo adjunto y archivo que supera el límite de 20 MB. El nombre y el tamaño permiten comprobar qué se enviará; Cambiar archivo o Elegir otro archivo facilitan la corrección. La instrucción de conexión informa la condición necesaria antes del envío y el mensaje de error identifica el límite con palabras.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-06-archivo-medicion.png" alt="Mock-ups Android de SGT: archivo de la estación total" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-06. Archivo de la estación total.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Vinculación del beneficiario**
+
+El tercer paso solicita un DNI de ocho dígitos y separa su ingreso de la acción Validar DNI. La respuesta muestra la identidad confirmada y permite cambiar el documento antes de continuar. Esta secuencia evita asociar el terreno sin una comprobación explícita y mantiene próximos el dato ingresado, su resultado y la acción siguiente.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-07-beneficiario.png" alt="Mock-ups Android de SGT: vinculación del beneficiario" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-07. Vinculación del beneficiario.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Incidencias en la validación del DNI**
+
+DNI no encontrado y falta de conexión tienen respuestas distintas: el primero solicita revisar los ocho dígitos y el segundo pide conexión para reintentar. Ambos estados explican por qué no se puede continuar. La combinación de título, mensaje y acción de recuperación hace que la advertencia no dependa únicamente del rojo o de un icono.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-08-incidencias-beneficiario.png" alt="Mock-ups Android de SGT: incidencias en la validación del dni" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-08. Incidencias en la validación del DNI.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Revisión y envío**
+
+El cuarto paso reúne código, fecha, archivo y beneficiario antes de Enviar terreno. Durante la transferencia se muestra el porcentaje y se solicita mantener abierta la aplicación. La confirmación identifica el resultado como Borrador en web e indica revisar los vértices y validar desde la oficina; así se distingue la recepción del archivo de la validación del terreno.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-09-revision-envio.png" alt="Mock-ups Android de SGT: revisión y envío" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-09. Revisión y envío.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Errores de envío y salida del registro**
+
+La falta de señal y el error de transferencia indican que el envío no se completó y permiten reintentar o volver a revisión. Al salir se solicita confirmar el descarte de los datos y se ofrece Seguir editando. Estos mock-ups no incluyen guardado de borradores locales ni una cola automática sin conexión: antes de abandonar el registro, el agente debe confirmar que fue recibido en la web.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-10-incidencias-envio-salida.png" alt="Mock-ups Android de SGT: errores de envío y salida del registro" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-10. Errores de envío y salida del registro.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Inicio y orientación de la tarea**
+
+Inicio destaca Registrar terreno y resume qué se necesita para completar el proceso. El aviso sobre conexión anticipa la validación del DNI y el envío; cuando hay actividad, se muestra el terreno recibido en la web. La navegación inferior conserva Inicio y Enviados como destinos estables y usa texto junto a los iconos para facilitar su reconocimiento.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-11-inicio.png" alt="Mock-ups Android de SGT: inicio y orientación de la tarea" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-11. Inicio y orientación de la tarea.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Consulta de terrenos enviados**
+
+Enviados presenta un estado vacío con una acción para comenzar y una lista de los terrenos recibidos por la web. El detalle reúne archivo, fecha y beneficiario y mantiene visible Borrador en web. Esta organización permite comprobar la recepción sin atribuir a la aplicación Android la revisión de vértices o la aprobación posterior.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-mobile/mockup/mobile-mockups-12-terrenos-enviados.png" alt="Mock-ups Android de SGT: consulta de terrenos enviados" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">M-12. Consulta de terrenos enviados.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: escritorio**
+
+La web cubre el trabajo de Marco Quispe Huamán, Agente de Campo, y Rocío Fernández Salas, Asistente de Gerencia General. La navegación organiza las consultas y acciones del dominio alrededor del mapa, los terrenos y sus fichas. El agente registra y revisa terrenos y carga las fichas digitalizadas; la asistente contrasta los datos extraídos con el documento original y registra el resultado de su revisión.
+
+**Acceso institucional**
+
+El acceso, la solicitud de cuenta y la recuperación se presentan como formularios diferenciados. La composición combina identidad institucional con una superficie clara de captura, etiquetas persistentes y un botón principal teal. Solicitar acceso informa que la Oficina de Tecnologías revisará los datos, por lo que enviar el formulario no se confunde con tener una cuenta habilitada.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-01.png" alt="Mock-ups web de escritorio de SGT: acceso institucional" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-01. Acceso institucional en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Mapa y consultas**
+
+El mapa proporciona el contexto territorial y la barra lateral organiza Beneficiarios, Agentes de campo, Fichas, Terrenos y Mi cuenta. Los filtros Buscar y Limpiar filtros separan consulta y restablecimiento; las tablas conservan identificadores, estados y paginación. El detalle del terreno reúne área, vértices y fichas, reduciendo la necesidad de recordar datos de otra vista. La leyenda nombra los estados representados sobre el mapa.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-02.png" alt="Mock-ups web de escritorio de SGT: mapa y consultas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-02. Mapa y consultas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de terrenos**
+
+La bandeja permite distinguir Borrador de Validado y acceder a la revisión. Los formularios admiten archivo de estación total o ingreso manual de vértices UTM, muestran el perímetro y calculan el área a partir de los puntos. El borrador recibido desde Android conserva el archivo y sus vértices para verificarlos en la web. Guardar borrador y Validar terreno expresan resultados distintos y el detalle validado ofrece Subir ficha.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-03.png" alt="Mock-ups web de escritorio de SGT: gestión de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-03. Gestión de terrenos en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de fichas**
+
+La carga vincula un PDF con código, fecha y terreno. Mis fichas ofrece seguimiento al agente y la bandeja de Fichas permite a la asistente acceder a la validación. La revisión coloca los datos extraídos junto al documento original y permite corregirlos antes de aprobar. El aviso de integridad y la explicación de la notificación al POI hacen visible el efecto de la decisión.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-04.png" alt="Mock-ups web de escritorio de SGT: gestión de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-04. Gestión de fichas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Cuenta y preferencias**
+
+Mi cuenta agrupa datos personales, seguridad y preferencias bajo rótulos reconocibles. La identidad y el rol aparecen al inicio para situar a la persona en su cuenta institucional. Editar perfil, Guardar cambios y Cerrar sesión se distinguen por propósito, y la confirmación Cambios guardados informa el resultado de la edición.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-05.png" alt="Mock-ups web de escritorio de SGT: cuenta y preferencias" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-05. Cuenta y preferencias en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de acceso**
+
+Las credenciales incorrectas reciben un aviso general sin revelar qué dato falló. La solicitud de acceso señala los campos inválidos y su confirmación indica que queda pendiente de revisión. La recuperación usa una respuesta condicional sobre el envío del enlace y explica su vencimiento. Estos estados conservan la estructura del formulario y ofrecen una acción para continuar.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-06.png" alt="Mock-ups web de escritorio de SGT: estados de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-06. Estados de acceso en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Restablecimiento de contraseña**
+
+La creación de una nueva clave incluye confirmación y ayuda para evitar reutilizar una contraseña anterior. La discrepancia se explica junto al campo, el éxito ofrece regresar al inicio de sesión y el enlace vencido o utilizado permite solicitar otro. La misma familia de mensajes y controles mantiene consistencia entre errores y resultados satisfactorios.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-07.png" alt="Mock-ups web de escritorio de SGT: restablecimiento de contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-07. Restablecimiento de contraseña en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de terrenos**
+
+La validación incompleta pide DNI y al menos tres vértices completos antes de guardar. Cuando se lee el archivo, el formulario identifica la medición y permite revisar los puntos. Las confirmaciones posteriores distinguen el borrador guardado del terreno validado y explican cuándo queda habilitada la carga de fichas. Los títulos y las etiquetas de estado complementan el color.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-08.png" alt="Mock-ups web de escritorio de SGT: estados de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-08. Estados de terrenos en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Carga y búsqueda de fichas**
+
+Antes de subir se muestra el PDF adjunto y se pide comprobar que sus páginas y firmas sean legibles. Un archivo inválido o dañado recibe una explicación y la opción de seleccionar otra copia. La recepción confirma el vínculo con el terreno y el estado En revisión. La búsqueda sin coincidencias ofrece revisar o limpiar filtros, evitando interpretar una lista vacía como un fallo del sistema.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-09.png" alt="Mock-ups web de escritorio de SGT: carga y búsqueda de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-09. Carga y búsqueda de fichas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Revisión y resultados de las fichas**
+
+La ficha Alterada bloquea la aprobación y explica que se necesita una copia íntegra. Observar ficha solicita un motivo y conserva el vínculo con el documento; el resultado Observada indica que todavía se espera la corrección del agente. La aprobación identifica a la responsable, registra la fecha y comunica la notificación al POI. La separación visual de mensajes, datos y acciones ayuda a distinguir revisar, observar y aprobar.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-10.png" alt="Mock-ups web de escritorio de SGT: revisión y resultados de las fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-10. Revisión y resultados de las fichas en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Bandejas de seguimiento**
+
+Las bandejas reflejan el estado posterior de cada ficha y ajustan su acción: consultar la aprobada, validar la pendiente o revisar la alterada. Código, fechas, terreno y estado se mantienen en posiciones comparables para localizar un registro y seguir su evolución. Las etiquetas escritas permiten distinguir Aprobada, Observada, En revisión y Alterada sin depender solo de su tratamiento cromático.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-desktop-mockups-11.png" alt="Mock-ups web de escritorio de SGT: bandejas de seguimiento" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 175mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">W-11. Bandejas de seguimiento en escritorio.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: navegador móvil**
+
+La versión responsive permite consultar y gestionar la información desde un navegador móvil. Conserva las tareas y los estados de la web: los formularios se ordenan en una columna, los registros incorporan etiquetas y la revisión distribuye sus bloques verticalmente. Los nombres de las secciones y las acciones se mantienen entre escritorio y móvil para facilitar el cambio de dispositivo.
+
+**Acceso institucional**
+
+El acceso y sus rutas de apoyo se reorganizan en una columna. Se conservan las etiquetas y los enlaces entre formularios, mientras que el ancho disponible se destina a los campos y a la acción principal.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-01.png" alt="Mock-ups web responsive de SGT en navegador móvil: acceso institucional" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-01. Acceso institucional en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Mapa y consultas**
+
+Las consultas de beneficiarios, agentes y terrenos convierten la información tabular en registros verticales con etiquetas. El mapa y el detalle mantienen la leyenda y los identificadores, de modo que la adaptación cambia la distribución y conserva el significado.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-02.png" alt="Mock-ups web responsive de SGT en navegador móvil: mapa y consultas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-02. Mapa y consultas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de terrenos**
+
+Los datos del terreno, el archivo, la vista previa y los vértices se apilan para su revisión en un ancho reducido. Las acciones de guardar y validar siguen diferenciadas y el detalle conserva el acceso a la carga de fichas.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-03.png" alt="Mock-ups web responsive de SGT en navegador móvil: gestión de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-03. Gestión de terrenos en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Gestión de fichas**
+
+La carga de PDF y las bandejas mantienen sus filtros, estados y acciones. En la validación, los datos extraídos y el documento se disponen en vertical para poder contrastarlos sin reducir toda la vista de escritorio a una miniatura.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-04.png" alt="Mock-ups web responsive de SGT en navegador móvil: gestión de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-04. Gestión de fichas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Cuenta y preferencias**
+
+La cuenta presenta sus grupos de datos en una columna y acompaña los campos editables con ayudas. La confirmación de guardado conserva la misma redacción que en escritorio.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-05.png" alt="Mock-ups web responsive de SGT en navegador móvil: cuenta y preferencias" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-05. Cuenta y preferencias en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de acceso**
+
+Los avisos de credenciales incorrectas, campos inválidos, solicitud enviada y recuperación recibida se integran en el ancho del formulario. La explicación de cada resultado permanece próxima a la acción para continuar.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-06.png" alt="Mock-ups web responsive de SGT en navegador móvil: estados de acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-06. Estados de acceso en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Restablecimiento de contraseña**
+
+La confirmación de contraseña y los estados de discrepancia, cambio realizado y enlace vencido mantienen sus mensajes y salidas. Los controles se distribuyen verticalmente para facilitar su lectura en el navegador móvil.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-07.png" alt="Mock-ups web responsive de SGT en navegador móvil: restablecimiento de contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-07. Restablecimiento de contraseña en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Estados de terrenos**
+
+Los estados incompletos, el archivo leído, el borrador guardado y el terreno validado conservan la secuencia de revisión. Las etiquetas de los vértices y de sus coordenadas permiten interpretar cada dato aunque ya no se vea una tabla ancha.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-08.png" alt="Mock-ups web responsive de SGT en navegador móvil: estados de terrenos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-08. Estados de terrenos en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Carga y búsqueda de fichas**
+
+El PDF seleccionado, su rechazo y la confirmación de carga se presentan como estados distintos. Los resultados de búsqueda mantienen las etiquetas de cada registro y el estado vacío conserva las indicaciones para corregir los filtros.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-09.png" alt="Mock-ups web responsive de SGT en navegador móvil: carga y búsqueda de fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-09. Carga y búsqueda de fichas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Revisión y resultados de las fichas**
+
+La revisión conserva el bloqueo por integridad, el motivo de observación y la confirmación de aprobación. La disposición vertical mantiene el orden de lectura entre aviso, datos, documento y acciones.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-10.png" alt="Mock-ups web responsive de SGT en navegador móvil: revisión y resultados de las fichas" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-10. Revisión y resultados de las fichas en navegador móvil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Bandejas de seguimiento**
+
+El seguimiento transforma las filas en bloques con código, estado, fechas y terreno. Las acciones de consulta o revisión permanecen junto al registro correspondiente y conservan las mismas reglas que en escritorio.
+
+<figure style="margin: 12px 0 18px; break-inside: avoid; page-break-inside: avoid; text-align: center;">
+  <img src="./assets/ux_design/applications-design/app-web/mockup/web-responsive-mockups-11.png" alt="Mock-ups web responsive de SGT en navegador móvil: bandejas de seguimiento" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 165mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">WR-11. Bandejas de seguimiento en navegador móvil.</figcaption>
+</figure>
+
+
+<div style="page-break-after: always;"></div>
+
+### Applications User Flow Diagrams
+
+Los user flows de SGT describen los recorridos que permiten al agente de campo y a la asistente de gerencia general alcanzar sus objetivos en las aplicaciones. Cada recorrido relaciona las pantallas con las decisiones del sistema, el resultado esperado y las alternativas de corrección o salida.
+
+Las cápsulas representan inicios, resultados y referencias de continuidad; los rombos expresan condiciones y los mock-ups muestran los estados de la interfaz. Las flechas continuas en teal indican el recorrido principal y las discontinuas en rojo señalan errores, reintentos o salidas alternativas. Las etiquetas indican qué acción o condición produce cada transición.
+
+**Aplicación móvil (Android): Agente de Campo**
+
+User Persona: Marco Quispe Huamán. La aplicación permite ingresar al espacio de trabajo, recuperar el acceso y enviar la medición de un terreno a la web. Los recorridos corresponden a los wireflows WF-01, WF-02 y WF-03; el registro actual requiere conexión para validar el DNI y enviar, y no ofrece guardado de borradores locales.
+
+<div style="page-break-after: always;"></div>
+
+**UF-01. Acceder al espacio de trabajo**
+
+**User goal.** Como agente de campo, quiero ingresar con mis credenciales institucionales para registrar terrenos desde mi cuenta.
+
+**Explicación:** El agente abre la aplicación e ingresa con el correo y la contraseña de su cuenta institucional. Si las credenciales son válidas, llega a Inicio. Si son incorrectas, el sistema presenta un aviso y permite corregirlas y reintentar. La opción de contraseña olvidada conduce a UF-02.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m01-diagrama.png" alt="User flow de SGT: UF-01. Acceso institucional" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-01. Acceso institucional.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-02. Recuperar el acceso a la cuenta**
+
+**User goal.** Como agente de campo, quiero restablecer mi contraseña para recuperar el acceso a mi cuenta.
+
+**Explicación:** Desde Inicio de sesión, el agente selecciona ¿Olvidó su contraseña?, escribe el correo asociado a su cuenta y solicita el código. Si el formato es válido, continúa con la verificación; de lo contrario, corrige el campo. Un código correcto y vigente permite avanzar a la referencia A. Si el código es incorrecto o venció, puede corregirlo o solicitar otro; el estado de reenvío regresa a la verificación.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m02a-diagrama.png" alt="User flow de SGT: UF-02A. Correo y verificación del código" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-02A. Correo y verificación del código.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** La referencia A continúa con la creación y confirmación de la nueva contraseña. Si ambas coinciden, el sistema guarda el cambio y permite volver al inicio de sesión. Si difieren, el agente corrige los campos antes de guardar. La confirmación del cambio deja disponible el acceso con la nueva clave.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m02b-diagrama.png" alt="User flow de SGT: UF-02B. Nueva contraseña y retorno al acceso" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-02B. Nueva contraseña y retorno al acceso.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-03. Registrar, enviar y consultar un terreno**
+
+**User goal.** Como agente de campo, quiero registrar la medición de un terreno, vincular al beneficiario y enviarla a la web para comprobar su recepción.
+
+**Explicación:** Con la sesión iniciada, el agente comienza el registro desde Inicio y completa los datos del terreno. Los campos incompletos conducen a su corrección antes de avanzar. Luego selecciona el archivo de medición; si supera los 20 MB, elige otro. Con los datos y el archivo válidos, la referencia B continúa con la vinculación del beneficiario.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m03a-diagrama.png" alt="User flow de SGT: UF-03A. Datos del terreno y archivo de medición" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-03A. Datos del terreno y archivo de medición.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde B, el agente ingresa el DNI y solicita validarlo. Con conexión y un beneficiario registrado, revisa la identidad y el resumen antes de enviar. Un DNI no encontrado exige corregirlo; la falta de conexión permite reintentar la consulta. La referencia C inicia el envío. Si intenta salir, puede seguir editando o confirmar la salida y descartar los datos. R permite regresar a esta revisión desde un error de envío.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m03b-diagrama.png" alt="User flow de SGT: UF-03B. Beneficiario, revisión y salida del registro" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-03B. Beneficiario, revisión y salida del registro.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde C, la aplicación transfiere el registro. Solo una recepción confirmada conduce a Terreno enviado; después, el agente abre Inicio, Enviados y el detalle para comprobar el Borrador en web. Si falta conexión o la transferencia falla, puede reintentar o regresar mediante R a la revisión. No se genera un borrador local ni una cola automática de envíos pendientes. La validación de los vértices se realiza posteriormente en la web.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-mobile/user-flows/uf-m03c-diagrama.png" alt="User flow de SGT: UF-03C. Envío y consulta de la recepción" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-03C. Envío y consulta de la recepción.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: Agente de Campo**
+
+User Persona: Marco Quispe Huamán. El agente registra y valida terrenos, carga las fichas firmadas y consulta su estado. El acceso institucional y la gestión de cuenta acompañan estas tareas.
+
+**UF-W01. Acceder a las funciones del rol**
+
+**User goal.** Como agente de campo, quiero iniciar sesión con mis credenciales institucionales para acceder a las funciones asignadas a mi rol.
+
+**Explicación:** El usuario ingresa sus credenciales y solicita iniciar sesión. Si son válidas, el sistema identifica el rol: el agente accede a Terrenos y la asistente a la vista general del mapa. En este segmento, el recorrido termina con las funciones de campo disponibles. Las credenciales incorrectas producen un aviso general y permiten corregir y reintentar.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w01-diagrama.png" alt="User flow de SGT: UF-W01. Acceso según el rol" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W01. Acceso según el rol.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W02. Solicitar acceso institucional**
+
+**User goal.** Como agente de campo, quiero enviar mis datos a la Oficina de Tecnologías para solicitar una cuenta institucional.
+
+**Explicación:** El usuario selecciona Solicite acceso, completa sus datos y envía la solicitud. Los campos incompletos o con formato inválido se corrigen antes de reenviar. La confirmación deja la solicitud pendiente de revisión por la Oficina de Tecnologías; la cuenta todavía no está habilitada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w02-diagrama.png" alt="User flow de SGT: UF-W02. Solicitud y revisión de datos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W02. Solicitud y revisión de datos.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W03. Recuperar la contraseña**
+
+**User goal.** Como agente de campo, quiero restablecer mi contraseña para recuperar el acceso a mi cuenta institucional.
+
+**Explicación:** Desde Inicio de sesión, el usuario selecciona ¿Olvidó su contraseña? y solicita el restablecimiento con su DNI o correo registrado. La confirmación conserva el mismo mensaje exista o no la cuenta. Si los datos están registrados, recibe un enlace: cuando está vigente, abre Nueva contraseña y continúa en A; si venció o ya fue utilizado, solicita otro.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03a-diagrama.png" alt="User flow de SGT: UF-W03A. Solicitud del enlace de recuperación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03A. Solicitud del enlace de recuperación.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde A, el usuario escribe y confirma la nueva clave. Si ambas entradas son válidas y coinciden, guarda el cambio y vuelve al inicio de sesión. Si difieren, corrige los valores y vuelve a guardar. Para acceder a las funciones del sistema debe iniciar sesión con la contraseña actualizada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03b-diagrama.png" alt="User flow de SGT: UF-W03B. Definición de la nueva contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03B. Definición de la nueva contraseña.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W04. Registrar y validar un terreno**
+
+**User goal.** Como agente de campo, quiero registrar el perímetro y comprobar sus vértices para dejar el terreno validado y habilitar la carga de su ficha.
+
+**Explicación:** Con su sesión iniciada, el agente abre Terrenos y crea un registro con el archivo de medición o con vértices ingresados manualmente. Si falta el DNI o no hay al menos tres vértices completos, corrige el formulario. Después guarda el borrador, revisa los puntos y valida el terreno. Cuando el borrador procede de Android, selecciona Validar en el listado y continúa en el paso 05 del diagrama. El resultado habilita la carga de la ficha.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w04-diagrama.png" alt="User flow de SGT: UF-W04. Registro y validación del perímetro" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W04. Registro y validación del perímetro.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W05. Subir la ficha firmada y consultar su estado**
+
+**User goal.** Como agente de campo, quiero subir la ficha de evaluación firmada en PDF para vincularla al terreno y consultar su estado.
+
+**Explicación:** Desde el detalle de un terreno validado, el agente abre Subir ficha, completa los datos y adjunta el PDF. Un archivo inválido o dañado produce un aviso y permite seleccionar otra copia. Con un PDF válido, confirma la carga y consulta Mis fichas. La recepción deja el documento vinculado al terreno y en estado En revisión, a la espera de la evaluación de gerencia.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w05-diagrama.png" alt="User flow de SGT: UF-W05. Carga del PDF y seguimiento" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W05. Carga del PDF y seguimiento.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W07. Actualizar los datos de la cuenta**
+
+**User goal.** Como agente de campo, quiero actualizar mis datos de contacto para mantener vigente la información de mi cuenta institucional.
+
+**Explicación:** El usuario abre Mi cuenta, selecciona Editar perfil y modifica los datos permitidos. Guardar cambios produce la confirmación de actualización. Si cierra antes de guardar, vuelve al mapa sin registrar la edición. La identidad, el rol y el área institucional se conservan como información de consulta.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w07-diagrama.png" alt="User flow de SGT: UF-W07. Edición y guardado del perfil" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W07. Edición y guardado del perfil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W08. Cerrar la sesión**
+
+**User goal.** Como agente de campo, quiero cerrar mi sesión para impedir que otra persona utilice el sistema con mis credenciales.
+
+**Explicación:** Desde Mi cuenta, el usuario selecciona Cerrar sesión. El sistema termina la sesión y muestra el formulario de acceso; volver a trabajar requiere ingresar las credenciales. Cerrar únicamente el panel con la X regresa al mapa y conserva la sesión activa.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w08-diagrama.png" alt="User flow de SGT: UF-W08. Cierre de sesión y cierre del panel" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W08. Cierre de sesión y cierre del panel.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web: Asistente de Gerencia General**
+
+User Persona: Rocío Fernández Salas. La asistente consulta las fichas, verifica la integridad de los documentos y contrasta los datos extraídos antes de aprobar u observar. La vista general permite acceder a las consultas territoriales y a la revisión.
+
+**UF-W01. Acceder a las funciones del rol**
+
+**User goal.** Como asistente de gerencia general, quiero iniciar sesión con mis credenciales institucionales para acceder a las funciones asignadas a mi rol.
+
+**Explicación:** El usuario ingresa sus credenciales y solicita iniciar sesión. Si son válidas, el sistema identifica el rol: el agente accede a Terrenos y la asistente a la vista general del mapa. En este segmento, el recorrido termina con las funciones de gerencia disponibles. Las credenciales incorrectas producen un aviso general y permiten corregir y reintentar.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w01-diagrama.png" alt="User flow de SGT: UF-W01. Acceso según el rol" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W01. Acceso según el rol.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W02. Solicitar acceso institucional**
+
+**User goal.** Como asistente de gerencia general, quiero enviar mis datos a la Oficina de Tecnologías para solicitar una cuenta institucional.
+
+**Explicación:** El usuario selecciona Solicite acceso, completa sus datos y envía la solicitud. Los campos incompletos o con formato inválido se corrigen antes de reenviar. La confirmación deja la solicitud pendiente de revisión por la Oficina de Tecnologías; la cuenta todavía no está habilitada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w02-diagrama.png" alt="User flow de SGT: UF-W02. Solicitud y revisión de datos" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W02. Solicitud y revisión de datos.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W03. Recuperar la contraseña**
+
+**User goal.** Como asistente de gerencia general, quiero restablecer mi contraseña para recuperar el acceso a mi cuenta institucional.
+
+**Explicación:** Desde Inicio de sesión, el usuario selecciona ¿Olvidó su contraseña? y solicita el restablecimiento con su DNI o correo registrado. La confirmación conserva el mismo mensaje exista o no la cuenta. Si los datos están registrados, recibe un enlace: cuando está vigente, abre Nueva contraseña y continúa en A; si venció o ya fue utilizado, solicita otro.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03a-diagrama.png" alt="User flow de SGT: UF-W03A. Solicitud del enlace de recuperación" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03A. Solicitud del enlace de recuperación.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde A, el usuario escribe y confirma la nueva clave. Si ambas entradas son válidas y coinciden, guarda el cambio y vuelve al inicio de sesión. Si difieren, corrige los valores y vuelve a guardar. Para acceder a las funciones del sistema debe iniciar sesión con la contraseña actualizada.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w03b-diagrama.png" alt="User flow de SGT: UF-W03B. Definición de la nueva contraseña" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W03B. Definición de la nueva contraseña.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W06. Revisar y resolver una ficha**
+
+**User goal.** Como asistente de gerencia general, quiero contrastar los datos extraídos con el PDF original para aprobar u observar la ficha con evidencia verificable.
+
+**Explicación:** Desde la vista general, la asistente abre Fichas y busca el registro. Si no hay resultados, ajusta o limpia los filtros. Al seleccionar Validar, se comprueba la integridad del PDF. Si coincide con la registrada en la carga, se habilita la revisión y se continúa en B. Si no coincide, la ficha queda Alterada y su aprobación se bloquea; la bandeja conserva ese resultado.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w06a-diagrama.png" alt="User flow de SGT: UF-W06A. Búsqueda y comprobación de integridad" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W06A. Búsqueda y comprobación de integridad.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Explicación:** Desde B, la asistente compara los campos extraídos con el documento. Si los datos son correctos y completos, aprueba la ficha y comprueba el resultado en la bandeja. Si encuentra un valor que puede corregir con el PDF, lo edita y vuelve a comparar. Cuando falta evidencia o la diferencia no puede resolverse, registra un motivo y envía la observación. La ficha queda Observada para que el agente atienda la corrección.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w06b-diagrama.png" alt="User flow de SGT: UF-W06B. Comparación de datos y resolución" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W06B. Comparación de datos y resolución.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W07. Actualizar los datos de la cuenta**
+
+**User goal.** Como asistente de gerencia general, quiero actualizar mis datos de contacto para mantener vigente la información de mi cuenta institucional.
+
+**Explicación:** El usuario abre Mi cuenta, selecciona Editar perfil y modifica los datos permitidos. Guardar cambios produce la confirmación de actualización. Si cierra antes de guardar, vuelve al mapa sin registrar la edición. La identidad, el rol y el área institucional se conservan como información de consulta.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w07-diagrama.png" alt="User flow de SGT: UF-W07. Edición y guardado del perfil" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W07. Edición y guardado del perfil.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**UF-W08. Cerrar la sesión**
+
+**User goal.** Como asistente de gerencia general, quiero cerrar mi sesión para impedir que otra persona utilice el sistema con mis credenciales.
+
+**Explicación:** Desde Mi cuenta, el usuario selecciona Cerrar sesión. El sistema termina la sesión y muestra el formulario de acceso; volver a trabajar requiere ingresar las credenciales. Cerrar únicamente el panel con la X regresa al mapa y conserva la sesión activa.
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/user-flows/uf-w08-diagrama.png" alt="User flow de SGT: UF-W08. Cierre de sesión y cierre del panel" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 160mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">UF-W08. Cierre de sesión y cierre del panel.</figcaption>
+</figure>
+
+
+<div style="page-break-after: always;"></div>
+
+## Applications Prototyping
+
+Los prototipos interactivos de SGT simulan la navegación y las respuestas de las aplicaciones Android y web a partir de los mock-ups y los User Flow Diagrams. Permiten recorrer las tareas del agente de campo y de la asistente de gerencia general, reconocer las decisiones de cada proceso y revisar las alternativas ante errores antes de su implementación.
+
+Las interacciones mantienen la organización definida en la arquitectura de información. En Android, Inicio y Enviados son los destinos principales, mientras que el registro avanza mediante pasos consecutivos con las acciones Volver y Continuar. En la web, la barra lateral organiza el acceso a Beneficiarios, Agentes de campo, Fichas, Terrenos y Mi cuenta. Los formularios, paneles y ventanas de confirmación conservan el contexto de la tarea y diferencian avanzar, cancelar y finalizar.
+
+Los botones y enlaces conducen a estados que muestran el resultado de la acción. Los mensajes de validación se presentan junto a los campos, las confirmaciones indican qué ocurrió y los errores ofrecen una forma de corregir o reintentar. Las acciones de descarte y salida se distinguen de las acciones principales para reducir pérdidas involuntarias de información. El color se acompaña de títulos y etiquetas que permiten interpretar cada estado.
+
+La selección de archivos, la comprobación de identidad, la transferencia de información y la verificación de integridad se representan mediante estados de interfaz. El prototipo permite revisar estos recorridos; su ejecución con archivos, servicios y datos reales corresponde a las aplicaciones implementadas.
+
+**Aplicación móvil (Android): Agente de Campo**
+
+El prototipo móvil corresponde a Marco Quispe Huamán, User Persona Agente de Campo. Comprende el acceso institucional, la recuperación de contraseña y el registro y envío de la medición de un terreno. La navegación inferior conserva Inicio y Enviados para separar el comienzo de una tarea de la consulta de su recepción en la web.
+
+**Prototipo interactivo:** [Aplicación Android de SGT](https://www.figma.com/proto/BRCoSsU9rg30nFZ45MqYiv/PROTOTIPOS-EMERGENTES?node-id=350-5461&scaling=scale-down&content-scaling=fixed&page-id=350%3A622&starting-point-node-id=350%3A5497&show-proto-sidebar=1).
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/FIGMA-PROTOTIPO-MOBILE.png" alt="Conexiones del prototipo Android de SGT entre acceso, recuperación, registro y consulta de terrenos enviados" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 150mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Conexiones de navegación e interacción del prototipo Android.</figcaption>
+</figure>
+
+**Acceso y recuperación de contraseña.** El recorrido comienza en la presentación de SGT y continúa hacia el formulario de acceso. Las credenciales válidas permiten llegar a Inicio; las incorrectas muestran un aviso y permiten volver a intentarlo. La recuperación enlaza el correo, la verificación del código, su reenvío y la definición de una nueva contraseña. Los estados de correo inválido, código incorrecto o vencido y contraseñas que no coinciden permiten comprobar cómo se orienta la corrección dentro de la misma tarea.
+
+**Registro y envío del terreno.** Desde Inicio, el agente comienza un registro de cuatro pasos: datos del terreno, archivo de medición, vinculación del beneficiario y revisión. El prototipo diferencia los campos incompletos, el archivo adjunto y el archivo que supera los 20 MB. La consulta del DNI distingue la identidad confirmada, el documento no encontrado y la falta de conexión. Antes de enviar, el resumen reúne la información para que el agente pueda revisarla y volver al paso anterior si necesita corregirla.
+
+**Resultado y seguimiento.** El envío muestra un estado de transferencia y una confirmación de recepción como Borrador en web. Desde Inicio y Enviados, el agente consulta el detalle del terreno recibido. Las alternativas de falta de conexión o error permiten reintentar o volver a revisión. Al salir del registro sin enviar, una confirmación permite seguir editando o descartar los datos. La aplicación no ofrece guardado de borradores locales ni una cola automática de pendientes; el borrador recibido se revisa y valida posteriormente en la web.
+
+**Video de demostración en Microsoft Stream:** [Demostración de los prototipos Android y web](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQBtG5oadjsDQ62zfPdxv4FNAeFjwB8qI9xASyOH8ayCvtw?e=nRaTCT&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D).
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/video-prototipo-mobile.png" alt="Captura del video del prototipo Android de SGT: selección del archivo de estación total" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Demostración del prototipo Android: selección del archivo de medición.</figcaption>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+**Aplicación web**
+
+El prototipo web reúne los recorridos del agente de campo y de la asistente de gerencia general. El acceso conduce a las funciones correspondientes a cada rol: Terrenos para el agente y la vista general del mapa para la asistente. La navegación lateral mantiene las secciones del dominio y permite pasar de la consulta territorial al trabajo con terrenos y fichas.
+
+**Prototipo interactivo:** [Aplicación web de SGT](https://www.figma.com/proto/BRCoSsU9rg30nFZ45MqYiv/PROTOTIPOS-EMERGENTES?node-id=387-2908&scaling=scale-down&content-scaling=fixed&page-id=350%3A621&starting-point-node-id=387%3A2908&show-proto-sidebar=1).
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/FIGMA-PROTOTIPO-WEB.png" alt="Conexiones del prototipo web de SGT para el acceso y los recorridos de Agente de Campo y Asistente de Gerencia General" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 150mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Conexiones de navegación e interacción del prototipo web para ambos roles.</figcaption>
+</figure>
+
+**Agente de Campo**
+
+El recorrido de Marco Quispe Huamán comienza con el acceso a Terrenos. Desde el listado puede crear un registro con el archivo de la estación total o mediante el ingreso manual de vértices. Los datos incompletos llevan a una respuesta de validación; cuando están completos, el agente guarda un borrador y revisa el perímetro antes de validar. Los terrenos enviados desde Android se incorporan a este mismo proceso de revisión de vértices.
+
+Una vez validado el terreno, su detalle permite abrir Subir ficha. El prototipo representa la selección del PDF, el archivo listo para enviar y el rechazo de una copia inválida o dañada. La confirmación de carga conduce al seguimiento en Mis fichas, donde el agente reconoce el estado En revisión y puede consultar el resultado posterior. La recepción del documento y su aprobación son momentos distintos del proceso.
+
+La interacción mantiene próximos el terreno, sus vértices y las fichas vinculadas. Las acciones de guardar, validar y subir identifican el resultado de cada paso; Cancelar permite abandonar el formulario y regresar al contexto de consulta.
+
+**Asistente de Gerencia General**
+
+El recorrido de Rocío Fernández Salas parte de la vista general y permite consultar beneficiarios, agentes y terrenos. En Fichas, los filtros localizan el documento que se revisará. Una búsqueda sin resultados permite ajustar los criterios; al iniciar la validación, el estado de integridad determina si se puede continuar con la comparación de datos o si la ficha queda Alterada y se bloquea su aprobación.
+
+La revisión presenta los datos extraídos junto al PDF original para compararlos dentro de la misma vista. Si un valor puede corregirse con el documento, la asistente lo modifica y vuelve a revisar. Cuando los datos son correctos y completos, Aprobar ficha conduce a la confirmación y al estado Aprobada en la bandeja. Si falta evidencia o una diferencia no puede resolverse, Observar ficha solicita un motivo y deja el documento en estado Observada para su atención por el agente.
+
+Los resultados distinguen la aprobación registrada, la corrección solicitada y el bloqueo por integridad. El aviso de aprobación comunica la notificación al sistema POI, mientras que la observación conserva el vínculo con el documento y explica qué requiere corrección. La vuelta a Fichas permite comprobar el estado resultante sin perder la referencia del registro evaluado.
+
+**Acceso y gestión de cuenta.** Ambos roles disponen de solicitud de acceso institucional, recuperación de contraseña, edición de los datos permitidos de su cuenta y cierre de sesión. La solicitud queda pendiente de revisión institucional. La recuperación web utiliza un enlace recibido por correo, con estados de vencimiento y confirmación del cambio. Guardar cambios confirma la edición del perfil; Cerrar sesión termina el acceso, mientras que cerrar únicamente el panel conserva la sesión activa.
+
+**Video de demostración en Microsoft Stream (ambos roles):** [Demostración de los prototipos Android y web](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202310210_upc_edu_pe/IQBtG5oadjsDQ62zfPdxv4FNAeFjwB8qI9xASyOH8ayCvtw?e=nRaTCT&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D).
+
+<figure style="margin: 12px 0 18px; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+  <img src="./assets/ux_design/applications-design/app-web/prototyping/video-prototipo-web.png" alt="Captura del video del prototipo web de SGT: consulta de beneficiarios" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 145mm; object-fit: contain; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+  <figcaption style="font-size: 0.9em; margin-top: 6px;">Demostración del prototipo web: consulta de beneficiarios.</figcaption>
+</figure>
+
+
+<div style="page-break-after: always;"></div>
+
+# Capítulo VII: Product Implementation, Validation & Deployment
+
+## Software Configuration Management
+
+### Software Development Environment Configuration
+
+Los productos de software que el equipo usa a lo largo del ciclo de vida de la solución se agrupan por el tipo de actividad que soportan. Los productos SaaS se indican con su ruta de referencia, y los que se ejecutan en el computador de cada integrante, con su ruta de descarga.
+
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Actividad</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Producto</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Propósito</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Ruta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Project Management</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">GitHub</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Aloja los repositorios de la organización, las pull requests y su revisión.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://github.com/Soulware-Emergentes</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Requirements Management</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Miro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Soporta las sesiones colaborativas de As-Is Scenario Mapping.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://miro.com</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Product Design</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Figma</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Concentra las guías de estilo, los wireframes y los wireflows de la Landing Page y las aplicaciones.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://www.figma.com</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Product Design</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Structurizr</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Mantiene el workspace C4 de la solución, del que salen los diagramas de contexto, contenedores, componentes y despliegue.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://structurizr.com</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Product Design</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">LucidChart</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Elabora los diagramas de clases y de base de datos de cada bounded context.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://www.lucidchart.com</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Product Design</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Archi</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Modela la solución en ArchiMate.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://www.archimatetool.com/download</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Development</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Eclipse Temurin JDK 25</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Compila y ejecuta los servicios, escritos en Java 25.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://adoptium.net/temurin/releases</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Development</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Spring Boot 4.1 y Spring Modulith 2.1</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sirven de base a cada servicio como monolito modular, con un módulo por bounded context.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://spring.io/projects/spring-boot</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Development</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Maven Wrapper</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Resuelve las dependencias y construye cada servicio con la versión de Maven fijada en su repositorio.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Incluido en cada repositorio como mvnw</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Development</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Visual Studio Code</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Edita y ejecuta los servicios con la configuración de lanzamiento y las extensiones que recomienda cada repositorio.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://code.visualstudio.com/download</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Development</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">PostgreSQL con PostGIS</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Almacena los datos de cada servicio y las geometrías de los terrenos.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://www.postgresql.org/download</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Development</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Git</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Controla las versiones del código y del informe.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://git-scm.com/downloads</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Testing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">JUnit 5 y ArchUnit</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ejecutan las pruebas unitarias y verifican las reglas de arquitectura de cada capa.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Dependencias Maven de cada servicio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Testing</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Docker y Testcontainers</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Levantan un PostgreSQL desechable para las pruebas de integración.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://docs.docker.com/get-docker</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Deployment</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">GitHub Actions</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ejecuta las pruebas de cada servicio y reconstruye el informe en cada push.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://github.com/features/actions</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Documentation</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">mdm</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Genera el informe a partir de las secciones en Markdown versionadas.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://github.com/overGDev/mdm</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Documentation</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">springdoc-openapi</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Publica el documento OpenAPI y la interfaz Swagger UI de cada API.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Dependencia Maven de cada servicio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Software Documentation</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Microsoft Stream</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Aloja los videos de exposiciones y de entrevistas.</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">https://www.microsoft.com/microsoft-365/microsoft-stream</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+### Source Code Management
+
+El equipo usa Git como sistema de control de versiones y GitHub como plataforma, bajo la organización Soulware-Emergentes. Cada API tiene su propio repositorio, que incluye el proyecto y sus pruebas, y el informe tiene uno aparte:
+- SGT API: https://github.com/Soulware-Emergentes/sgt
+- POI API: https://github.com/Soulware-Emergentes/poi
+- Staff (identity provider y directorio): https://github.com/Soulware-Emergentes/staff
+- Beneficiarios API: https://github.com/Soulware-Emergentes/beneficiarios
+- Informe del proyecto: https://github.com/Soulware-Emergentes/report
+
+El flujo de trabajo sigue GitFlow, según el modelo de Vincent Driessen. Cada repositorio mantiene dos ramas permanentes:
+- main contiene solo versiones liberadas. Cada merge a main corresponde a un release y se etiqueta con su número de versión.
+- develop integra el trabajo terminado que irá en el siguiente release. Es la rama base de todo feature.
+
+Sobre ellas se crean ramas temporales, cada una con su convención de nombre:
+- Feature branches: feature/nombre-corto, en inglés o español y en kebab-case, por ejemplo feature/core o feature/capitulo-7. Salen de develop y vuelven a develop mediante una pull request.
+- Release branches: release/vX.Y.Z, con el número de versión que se va a liberar. Salen de develop cuando el sprint cierra su alcance, admiten solo correcciones, y se integran a main y a develop.
+- Hotfix branches: hotfix/nombre-corto, por ejemplo hotfix/anexo-video-tb1. Salen de main para corregir una versión ya liberada, se integran a main y a develop, y aumentan la versión de parche.
+
+Los releases se numeran con Semantic Versioning 2.0.0, en el formato MAJOR.MINOR.PATCH. MAJOR aumenta cuando un cambio rompe la compatibilidad de una API con sus consumidores, MINOR cuando se agrega funcionalidad compatible, y PATCH cuando solo se corrigen errores. La etiqueta de Git de cada release lleva el prefijo v, por ejemplo v1.2.0.
+
+Los mensajes de commit siguen Conventional Commits, con la forma tipo(alcance): descripción. El alcance es el módulo afectado, que en las APIs coincide con el bounded context (monitoring, plots, planning, registry, directory, identityprovider) o con shared para el kernel compartido. La descripción va en inglés, en modo imperativo y en minúsculas. Los tipos usados son:
+- feat: agrega funcionalidad, por ejemplo feat(planning): page, filter and sort the task list.
+- fix: corrige un error.
+- refactor: cambia la estructura del código sin cambiar su comportamiento, por ejemplo refactor(plots): hold the registration date as a value object.
+- test: agrega o modifica pruebas.
+- docs: modifica documentación.
+- style: cambia el formato o los nombres sin afectar la lógica.
+- build: cambia la construcción o las dependencias, por ejemplo build(deps): add the OAuth2 resource server starter.
+- ci: cambia los workflows de integración continua.
+- chore: tareas de mantenimiento que no encajan en los tipos anteriores.
+
+Ningún cambio llega a develop ni a main sin pull request. En las APIs, el workflow de GitHub Actions ejecuta las pruebas que no necesitan base de datos en cada push a cualquier rama, y la suite completa, con PostgreSQL en un contenedor, en cada pull request y en cada push a main y develop. En el informe, cada push a main o develop reconstruye el documento con mdm y abre una pull request con el resultado desde una rama mdm-build/rama-destino.
+
+
+<div style="page-break-after: always;"></div>
+
+### Source Code Style Guide & Conventions
+
+Todo el código de la solución se escribe en inglés: nombres de paquetes, clases, métodos, variables, tablas, columnas, endpoints, claves de mensajes y comentarios. El español queda solo en los textos que ve el usuario. Las convenciones se agrupan por lenguaje.
+
+Java sigue las Code Conventions for the Java Programming Language de Oracle y la Google Java Style Guide en nombres y estructura, con estas decisiones propias del equipo:
+- Clases e interfaces en PascalCase, métodos y variables en camelCase, constantes en UPPER_SNAKE_CASE y paquetes en minúsculas sin separadores, por ejemplo identityprovider o publishedlanguage.
+- Indentación de cuatro espacios. Cuando una lista de argumentos o parámetros no cabe en una línea, la continuación se indenta un nivel y el paréntesis de cierre va en su propia línea.
+- En una cadena de métodos, el receptor y la primera llamada quedan en la misma línea y cada llamada siguiente va en una línea propia, indentada un nivel.
+- Todo acceso a un miembro de instancia se califica con this, para distinguir un campo de una variable local y un método heredado de uno estático.
+- Una expresión cuyo significado no es evidente, como la condición de un if, se asigna antes a una variable con un nombre que diga qué significa.
+- Los nombres de clase dicen el rol que cumplen: FieldSheet es un agregado, FieldSheetRepository su repositorio, FieldSheetController la puerta REST, y las clases de prueba terminan en Test o, si necesitan base de datos, en IT.
+
+La organización del código sigue los patrones tácticos de Domain-Driven Design descritos en el Capítulo V. Cada bounded context es un módulo de Spring Modulith con los paquetes domain, application, infrastructure e interfaces, más publishedlanguage cuando el módulo publica tipos para otros módulos. ArchUnit y Spring Modulith verifican en cada build las reglas de dependencia entre capas y módulos, y una violación falla las pruebas.
+
+Las APIs REST siguen las convenciones de recursos: rutas versionadas bajo /api/v1, sustantivos en plural y kebab-case para los recursos (/field-sheets, /plots), identificadores como variables de ruta ({fieldSheetId}), y subrecursos para las acciones que cambian el estado de un recurso (/field-sheets/{fieldSheetId}/approval). Los errores responden con un formato de sobre común y claves de mensaje con la forma error.modulo.motivo, por ejemplo error.shared.unauthenticated.
+
+SQL usa snake_case para tablas y columnas, con tablas en plural (plots, field_sheets) y palabras reservadas en mayúsculas. Cada cambio de esquema es una migración de Flyway llamada VN__descripcion.sql, donde N es su número de versión, por ejemplo V4__plots.sql, y una migración ya aplicada no se modifica: cualquier corrección va en una migración nueva. Cada migración explica en un comentario inicial las decisiones de modelado que el esquema no muestra por sí solo.
+
+Gherkin se usa para los criterios de aceptación de las User Stories, en inglés y con las palabras clave Scenario, Given, When y Then, siguiendo Gherkin Conventions for Readable Specifications: cada escenario describe un solo comportamiento, Given establece el contexto, When contiene una única acción del usuario y Then el resultado observable, redactado desde la perspectiva del negocio y sin detalles de la interfaz.
+
+
+<div style="page-break-after: always;"></div>
+
+### Software Deployment Configuration
+
+La solución se despliega en la infraestructura on-premise de la institución, porque los datos de los beneficiarios no pueden salir de ella (TS-01). Cada API (SGT, POI, Staff y Beneficiarios) se construye a partir de su repositorio como un JAR ejecutable de Spring Boot, con su Tomcat embebido, y corre en el servidor de aplicaciones. Cada una tiene su propia base de datos PostgreSQL en el servidor de base de datos.
+
+Los pasos para desplegar una API desde su repositorio son los mismos en los cuatro servicios:
+- Preparar la base de datos. En el servidor de base de datos, con PostgreSQL instalado (y PostGIS en el caso de SGT, que guarda las geometrías de los terrenos), se ejecuta el script scripts/db/setup-roles.sql del repositorio. El script crea la base de datos y dos roles: el rol migrator, dueño del esquema, que usa Flyway, y el rol app, con permisos de lectura y escritura sobre los datos, que usa la aplicación en ejecución. Las contraseñas de ambos se leen de variables de entorno, para que no queden en el historial de la consola.
+- Construir el artefacto. Desde la raíz del repositorio, ./mvnw verify ejecuta toda la suite de pruebas, incluidas las de integración con PostgreSQL en un contenedor, y ./mvnw package genera el JAR en target/. GitHub Actions ejecuta la misma suite en cada pull request y en cada push a main y develop, así que el release que se despliega ya pasó por ella.
+- Configurar el entorno. Cada repositorio trae un archivo .env.example con todas las variables que la aplicación necesita, comentadas: las credenciales de los dos roles de base de datos, el emisor de tokens de Staff, la audiencia con la que la API está registrada en Staff, las URLs de los servicios que consume y el origen permitido de la aplicación web. Las propiedades de base de datos no tienen valores por defecto, así que una variable faltante detiene el arranque en lugar de conectar a una base equivocada. En producción, API_DOCS_ENABLED se fija en false para no publicar Swagger UI.
+- Arrancar el servicio. Al iniciar, Flyway aplica las migraciones pendientes con el rol migrator, y Hibernate valida que las entidades coincidan con el esquema resultante.
+
+El orden de arranque sigue las dependencias entre servicios. Staff va primero, porque emite los tokens que las demás APIs validan; antes de su primer arranque se genera el par de claves RSA con el que firma esos tokens, con los comandos openssl indicados en su .env.example. Después arrancan Beneficiarios y POI, y al final SGT, que consume a los tres con tokens de servicio obtenidos de Staff mediante el grant client credentials.
+
+SGT además necesita un almacén de objetos compatible con S3 en el servidor de archivos, con el bucket donde se guardan los PDF de las fichas; su endpoint, región, bucket y credenciales se configuran con las variables SCANS_* del entorno.
+
+El diagrama de despliegue resume esta configuración, con la aplicación web servida como archivos estáticos.
+
+<img src="assets/strategic_design/architecture/deployment/despliegue.png" alt="Diagrama de despliegues" style="display: block; width: 100%; height: auto; margin: 0 auto;">
+
+
+<div style="page-break-after: always;"></div>
+
+## Solution Implementation
+
+### Sprint 1
+
+<h4 id="sprint-1-planning">Sprint Planning 1</h4>
+
+El Sprint 1 es el primer sprint de implementación del proyecto. Parte del diseño estratégico y táctico de los Capítulos IV y V, y se concentra en los servicios web de la solución: SGT, POI, Staff y Beneficiarios. En el Sprint Planning Meeting el equipo eligió del Product Backlog las historias que no dependen directamente de la IA ni de la cadena de bloques, en el orden de prioridad del backlog: primero el inicio y cierre de sesión con credenciales institucionales, sobre los que se apoya el resto, y después el registro de terrenos, la subida de fichas y las consultas que necesita la asistente de gerencia general.
+
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sprint #</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sprint 1</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Sprint Planning Background</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Date</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-11-02</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Time</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">09:00 PM</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Location</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reunión virtual</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Prepared By</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Attendees (to planning meeting)</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco / Esteban Roman, Henry Kalet / Orozco Torres, Álvaro Joaquín / Reaño Delgadillo, Henry Paolo / Vilca Saboya, Diego Alejandro</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sprint 0 Review Summary</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Es el primer sprint de implementación, por lo que no hay un sprint anterior que revisar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sprint 0 Retrospective Summary</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Es el primer sprint de implementación, por lo que no hay una retrospectiva previa.</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Sprint Goal &amp; User Stories</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sprint 1 Goal</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Nuestro foco está en la implementación inicial de los servicios web de SGT, POI, Staff y Beneficiarios, que sostienen el registro de terrenos y fichas y su vínculo con el beneficiario y la tarea del POI. Creemos que esta base permite que las aplicaciones web y móvil eliminen la transcripción manual de datos entre sistemas. Se confirmará durante las pruebas unitarias y de integración entre sistemas.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sprint 1 Velocity</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">29</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Sum of Story Points</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">29 (SGT-10: 5, SGT-11: 3, SGT-2: 5, SGT-3: 8, SGT-7: 2, SGT-4: 2, SGT-8: 2, SGT-9: 2)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-backlog">Sprint Backlog 1</h4>
+
+El Sprint Backlog 1 descompone las historias de usuario del Sprint 1 en las tareas que el equipo realizó para implementarlas en los servicios web y la aplicación web.
+
+<div style="width: 100%; margin: 0 auto; font-family: Arial, sans-serif; font-size: 12px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th colspan="2" style="border: 1px solid #333; padding: 8px 10px; text-align: left;">User Story</th>
+                <th colspan="6" style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Work-Item / Task</th>
+            </tr>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Id</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Title</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Id</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Title</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Description</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Estimation (Hours)</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Assigned To</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Iniciar sesión con credenciales institucionales</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T01</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Directorio de personas y grupos</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Staff guarda a las personas y sus grupos, verifica contraseñas y pagina el listado de personas.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Iniciar sesión con credenciales institucionales</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T02</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Emisión de tokens para personas y servicios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El proveedor de identidad de Staff emite tokens a personas con sus roles y a servicios con sus scopes, firmados con un par de claves RSA.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Iniciar sesión con credenciales institucionales</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T03</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Página de inicio de sesión y hub de aplicaciones</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Staff sirve su página de inicio de sesión en inglés y español, un hub con las aplicaciones de cada persona y el inicio de sesión silencioso entre aplicaciones.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Iniciar sesión con credenciales institucionales</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T04</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Validación de tokens en los servicios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT, POI y Beneficiarios aceptan solo tokens emitidos por Staff para su audiencia.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Iniciar sesión con credenciales institucionales</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T05</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Inicio de sesión en la aplicación web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La aplicación web redirige al SSO de Staff bajo OIDC a través de su BFF, que guarda la sesión y renueva los tokens.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-11</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cerrar sesión</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T06</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cierre de sesión en la aplicación web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La aplicación web cierra la sesión en el BFF y en Staff, y avisa cuando la sesión está por terminar.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Enviar coordenadas de georreferenciación de terreno mediante archivo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T07</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Registro de terrenos por beneficiario</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT registra un terreno por beneficiario, lo asigna al distrito del INEI 2025 con el que comparte más superficie e informa los terrenos con los que se superpone.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Enviar coordenadas de georreferenciación de terreno mediante archivo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T08</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Consulta de terrenos</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT devuelve los terrenos por id, por región, por propietario y los que tocan el área visible del mapa, en GeoJSON.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Enviar coordenadas de georreferenciación de terreno mediante archivo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T09</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Mapa y registro de terrenos en la aplicación web</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La aplicación web muestra el mapa de terrenos y el diálogo de registro, que lee los vértices escritos a mano o desde el archivo de la estación total.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Enviar coordenadas de georreferenciación de terreno mediante archivo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Búsqueda del beneficiario al registrar un terreno</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El diálogo busca el nombre del beneficiario en el padrón por su documento, con un token que Staff entrega al frontend.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Subir la ficha diligenciada para su almacenamiento y verificación de integridad</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T11</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Envío de fichas de campo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT registra la ficha enviada y le asigna un código FI-NNNN-YYYY.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Subir la ficha diligenciada para su almacenamiento y verificación de integridad</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T12</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Enlaces firmados para el PDF escaneado</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT genera enlaces firmados para subir y descargar el PDF de la ficha directamente desde el almacén de objetos.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-7</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Consultar los datos del beneficiario durante la validación de una ficha</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T13</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Padrón de beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Beneficiarios carga el padrón, permite buscar y paginar beneficiarios y admite varios formatos de documento legal.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-7</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Consultar los datos del beneficiario durante la validación de una ficha</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T14</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Consulta de beneficiarios desde SGT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT resuelve a los beneficiarios en Beneficiarios con un token de servicio obtenido de Staff.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Buscar y filtrar las fichas registradas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T15</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Listado de fichas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT pagina, filtra por estado, código, código de tarea y rango de fechas, y ordena las fichas registradas.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Buscar y filtrar las tareas registradas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T16</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Tareas del POI y sus entregas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">POI define las tareas y recibe las entregas y revisiones de SGT, que completa o reabre la tarea al aprobar o rechazar una ficha.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Buscar y filtrar las tareas registradas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T17</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Listado de tareas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">POI pagina, filtra por estado, código y actividad, y ordena las tareas.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Consultar el avance del PEI y del POI según las tareas registradas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T18</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Plan operativo como árbol</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">POI modela el plan con sus objetivos, actividades y tareas, y lo devuelve como un árbol.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Consultar el avance del PEI y del POI según las tareas registradas</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">T19</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cierre en cascada del plan</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Al completarse sus tareas, POI cierra en cascada la actividad, el objetivo y el plan.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Done</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-dev-evidence">Development Evidence for Sprint Review</h4>
+
+Durante el Sprint 1 el equipo avanzó en seis repositorios de la organización Soulware-Emergentes: la landing page, la aplicación web y los servicios web SGT, POI, Staff y Beneficiarios. El trabajo de cada producto se hizo en ramas feature y se integró en develop mediante pull requests, siguiendo el flujo descrito en Source Code Management.
+
+En Staff quedó la base sobre la que se apoyan los demás servicios. El directorio guarda a las personas y sus grupos y verifica contraseñas, y el proveedor de identidad emite tokens tanto para personas como para servicios. Al final del sprint se sumaron la página de inicio de sesión propia con los tokens de diseño de SGT, en inglés y español, un hub con las aplicaciones a las que cada persona tiene acceso y el inicio de sesión silencioso entre aplicaciones. Staff también entrega al frontend de SGT un segundo token, obtenido en silencio, para que el agente de campo consulte el padrón de beneficiarios.
+
+SGT acepta solo tokens emitidos por Staff y consulta a Staff y Beneficiarios con tokens de servicio. Permite registrar un terreno por beneficiario y consultarlo por id, por región o por propietario. Los límites distritales del INEI 2025 se cargan en PostGIS, así que cada terreno se asigna al distrito con el que comparte más superficie y se rechaza uno que no cae en ningún distrito. El mapa pide los terrenos que tocan el área visible y los recibe en GeoJSON. Si un registro se superpone con terrenos existentes, la respuesta indica cuáles son, y cada error de dominio trae un código propio para que el cliente distinga un rechazo de otro. Las fichas de campo reciben un código FI-NNNN-YYYY al enviarse y se listan con paginación, filtros y orden. Al aprobar o rechazar una ficha, SGT completa o reabre la tarea correspondiente en POI.
+
+POI modela el plan operativo con sus objetivos, actividades y tareas, y lo devuelve como un árbol. Las tareas reciben las entregas y revisiones que llegan desde SGT, y al completarse cierran en cascada la actividad, el objetivo y el plan. Beneficiarios carga el padrón de beneficiarios, permite buscarlos y paginarlos, y admite varios formatos de documento legal. La búsqueda de beneficiarios ahora también acepta el token de un agente de campo, para que el frontend de SGT la use directamente. Los cuatro servicios documentan su API con springdoc.
+
+En el frontend, la landing page publicó su contenido con soporte de varios idiomas, con inglés por defecto, y la configuración para enlazar la URL de SGT en el despliegue. La aplicación web incorporó los tokens de diseño de SGT como tema de Tailwind y el inicio de sesión que redirige al SSO de Staff bajo el estándar OIDC. Después sumó el mapa de los terrenos registrados y el diálogo para registrar uno nuevo. En el diálogo se ingresa el documento del beneficiario, cuyo nombre se busca en el padrón, y los vértices del terreno, escritos a mano o leídos desde el archivo de la estación total. Antes de registrar es obligatorio ver el terreno en el mapa, que lo colorea según si parece cruzarse con uno ya registrado. La aplicación también ganó un menú lateral con íconos que se puede expandir.
+
+La siguiente tabla reúne los commits de implementación de cada repositorio, con la rama en la que se hicieron.
+
+<div style="width: 100%; margin: 0 auto; font-family: Arial, sans-serif; font-size: 12px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Repository</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Branch</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Commit Id</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Commit Message</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Commit Message Body</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Committed on (Date)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/landing</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">605b5a6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(landing): add landing page content</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/landing</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">0174c84</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci(sgt-integration): add config for sgt url setup on deploy</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/landing</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">e1e1f99</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">docs: add README.md</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/landing</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">cbaa0ce</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(i18n): add i18n feature</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">The app now defaults to 'en' as requested by NFR</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a83071a</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1076b33</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat: add SGT design tokens as Tailwind theme and self-hosted Roboto</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4b6f2b3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(login): add login feature</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Welcome page to redirect into the staff microservice SSO under OIDC standard.<br>- i18n translation, compatible with the SSO login page language feature to preserve good UX.<br>- AUthGuard that restores the session if the user already logged in and they try to go into /login.<br>- Fake spiner interaction when moving out of the web page.<br>- Test of the fade in interaction to ease the visual of jumping across views and websites.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">95dc580</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">style(login): space the callback error alert with a flex gap</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">The message and the retry button were separated only by the whitespace between them; the alert is now a wrapping flex row.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7976ed2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">87793b9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): add plot map and plot registration</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Map of the registered plots, loaded by cells around the view.<br>- Create plot dialog: beneficiary document (DNI, foreigner ID card, passport) with the holder's name looked up in the beneficiary registry, vertices typed in or read from a total station file, estimated area and perimeter preview.<br>- Mandatory "show on map" step before registering: the map keeps the drafted plot, previews it coloured by whether it looks like it crosses a registered plot, and hands it back to the dialog, which only offers to register while its vertices are unchanged.<br>- Shortcut to glide back to the drafted plot.<br>- Second silent authorization after login for a beneficiary registry token, kept in session storage; each API gets its own bearer token.<br>- Shell, home page and icons.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2a2f380</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(map): upgrade user experience by adding extra interactions</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Added a few interactions, animations and feedback messages to futher improve UX.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2975dd5</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(sidenav): add SGT icon to sidenav</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4c53e09</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(sidenav): add navigation item icons</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7c495d1</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(sidenav): add toggle extended sidenav button</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">b8c2fa7</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">72da98f</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">01/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/domain</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">b22cfe4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: passthrough</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">01/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">d7ed34a</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">build(deps): add the OAuth2 resource server and client starters</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt accepts staff-issued tokens on its own API and gets tokens from staff for the APIs it calls.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1e03632</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): admit only staff-issued person tokens</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Every request carries a token staff issued to a person for sgt, checked against staff's signing keys, issuer and audience. Controllers receive the caller it names through Caller, and an operation refuses a caller not acting in the role it needs. sgt gets its own tokens for the APIs it calls with the client credentials grant, through ServiceTokens.<br><br>The README explains the token and the roles.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">f3fd8b4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(people): resolve staff and beneficiaries with service tokens</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Field agents and general management assistants are both staff, so they are resolved through the directory's v3 lookup by GUID as staff members, and each gets a profile in the published language. Beneficiaries are resolved through the registry's v1 lookup. Both clients send a token staff issues to sgt for that API instead of an API key.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1a133b1</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(monitoring): complete and reopen poi tasks with a service token</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">An approved field sheet completes its poi task and a rejected one reopens it, through poi's v1 completion and reopening endpoints. The commands, handlers and TaskLedger methods are named after that outcome. The client sends a token staff issues to sgt for poi instead of an API key.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">acec2ae</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(monitoring): drop the poi task pass-through</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt served poi's pending tasks and task lookup under its own API by calling poi. Clients read tasks from poi itself, so the endpoints, their query results and the HTTP projection behind them are gone.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a3232be</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(monitoring): take actors from the token and answer writes with the field sheet</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">The field agent submitting and the assistant reviewing are the caller the token names, refused when not acting in the role the operation records, so neither travels in the request body any more. A field sheet cannot be reviewed by the person who submitted it.<br><br>Submitting answers 201 with the field sheet it created, and approving, rejecting and relinking answer 200 with the field sheet as it stands.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a615281</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): register each plot to one beneficiary, in a district</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">A plot names the beneficiary it is registered to by legal document, the district it lies in by ubigeo, and when it was registered. A beneficiary holds a single plot: registering a second one is refused, and the table's unique owner backs the rule up.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2f573ba</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): read plots by id, by region and by owner</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">A region is any level of the ubigeo, matched as a prefix: two digits for a department, four for a province, six for a district. A beneficiary's plot is read by their legal document, and one who holds none is not found. The boundary is read back through the same mapping the repository stores it with.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3dc8e9a</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): expose plots over REST</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">POST /api/v1/plots registers a plot and answers 201 with it. GET reads one by id, the plots of a region, or the plot of an owner. A field agent or an admin may call every endpoint.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">b60f097</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(monitoring): number field sheets FI-NNNN-YYYY</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">A field sheet gets a code when it is submitted: its four-digit number among the field sheets of its submission year, and that year. Numbering restarts at 0001 each year, and a year past 9999 takes no more field sheets. Submission is serializable so two field sheets never take the same number, and the table's unique code backs that up. Every field sheet read answers with its code.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7281aca</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(monitoring): page, filter and sort the field sheet list</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">GET /api/v1/field-sheets answers one page for a table, in the same envelope staff's people page uses. Every filter is optional: status, text in the code or the task code, and a submission range by day. It sorts by code, task code, submission date or status, newest submission first by default, and pages hold from 1 to 100 field sheets. The page and sort refusals live in the shared kernel, for the other tables to reuse.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ccc504f</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">style(shared): name the identity in the bulk load's key mapping</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">The lambda maps aggregate identities to storage keys, so its parameter is named after what it receives.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">66de5e8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: ignore only the root docs folder</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">The docs/ pattern matched every directory named docs, so the API docs packages under shared were never tracked.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4bd4b83</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): document the API with springdoc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">The OpenAPI document and the Swagger UI are served without a token, and only where API_DOCS_ENABLED is on. The UI takes a staff-issued bearer token to send with every call. Endpoints are grouped by the aggregate their controller serves, read from the value its root declares in @PackagedAs, and each one carries a summary of what it does.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">dce0a61</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track the test support and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ApplicationLaunchIT, the one test the repository tracks, extends PostgresIntegrationTest, which was ignored along with the other tests, so a clone could not compile its tests. The support package is tracked now, and the CI workflow with it, so the build passes on a clean checkout.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6b5d9bf</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">test: track every test except the architecture rules</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a27fc46</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(monitoring): hold every field sheet date as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1b0d7dc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(plots): hold the registration date as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">67bf4c4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3a71427</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): serve plots in view and file plots under their district</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- GET /plots/within answers the plots whose footprint touches a bounding box, as GeoJSON, at most 1000 and saying when it held more.<br>- The INEI 2025 district boundaries in PostGIS, seeded by migration.<br>- A registered plot is filed under the district it shares the most ground with, so the request no longer carries a ubigeo; a plot in no district is refused.<br>- The frontend origin the browser calls come from is now port 4200.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">389f59b</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): tell domain failures apart and name the plots an overlap hits</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Every domain error response carries its message key as code, so a client tells failures apart without reading the message.<br>- A failure that has details beyond its message implements DomainException.Detailed; its response carries them as details.<br>- An overlap refusal names the registered plots it overlaps, under details.overlappingPlots.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7655c28</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">fc0c063</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">03/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">c12ab0b</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">build(deps): add the OAuth2 resource server starter</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5a926fd</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): admit only tokens staff issued for poi, to people by role and to services by scope</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">d87d379</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: ignore only the root docs folder</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a619e11</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): document the API with springdoc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">34f2d50</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(planning): model the operational plan, its objectives, activities and tasks</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">bbc8223</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(planning): define plans, objectives and activities, and read them back as a tree</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5f653eb</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(planning): define tasks and take their deliveries and reviews from sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">96edcde</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(planning): page, filter and sort the task list</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a58b2d6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(planning): complete activities, objectives and plans as their tasks complete</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">bc3eb32</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">style(shared): name the identity in the bulk load's key mapping</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">cfb8dfe</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track every test except the architecture rules, and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">c56ea41</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7952d02</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">build(deps): add the OAuth2 authorization server starter</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a0b1c2c</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(directory): hold people and groups, check passwords and page through people</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">facb515</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): issue person and service tokens over the directory</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">e2dcade</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): register the beneficiarios API and grant it to sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">e5976f0</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">style(shared): name the identity in the bulk load's key mapping</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">fda959e</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: ignore only the root docs folder</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">34526e5</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): document the API with springdoc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">cc3be48</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track every test except the architecture rules, and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">bd73ce6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">e7a60ff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): serve the login, a hub and silent sign-in</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Staff now renders its own pages instead of Spring's defaults, knows which application and environment a login is for, and lets a browser that already logged in reach any of its applications without typing credentials again. (...)</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">c26e484</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">perf(ui): add ease in and ease out effects via css</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">799b09f</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">088bca6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): give sgt's frontend a beneficiary registry token</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Dev seed: a field-agent role on the beneficiary registry for sgt's field agents and developers, and sgt-web-dev allowed to ask for it.<br>- Tests that a field agent gets the second token silently and that a person with no role on the registry is denied it.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">9b922bd</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #3 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): give sgt's frontend a beneficiary registry token</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/legal-document</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1d7f165</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">first commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">30/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/legal-document</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">33c7387</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(legal-document): add mutli-format legal document type support</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">01/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">152ea0e</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">04e772c</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">build(deps): add the OAuth2 resource server starter</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">f36a83d</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): admit only service tokens staff issued for beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">18d1948</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(registry): seed the beneficiary registry, look beneficiaries up and page through them</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">28aa1dd</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">style(shared): name the identity in the bulk load's key mapping</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3d64c00</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: ignore only the root docs folder</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">69c72e9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): document the API with springdoc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7e1f116</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track every test except the architecture rules, and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4dae890</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(registry): hold the date of birth as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2bc87be</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #1 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">60fa159</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #2 from Soulware-Emergentes/feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(registry): hold the date of birth as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1cd0367</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): let field agents look beneficiaries up from sgt's frontend</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Person tokens for the registry are accepted, with their roles as authorities; service tokens keep their scopes.<br>- POST /beneficiaries/lookup is open to the field-agent role as well as to the read scope; the rest of the API stays service-only.<br>- CORS for the lookup, from BENEFICIARIOS_WEB_ORIGIN only.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">develop</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a07d55b</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Merge pull request #3 from Soulware-Emergentes/feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): let field agents look beneficiaries up from sgt's frontend</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-test-evidence">Testing Suite Evidence for Sprint Review</h4>
+
+En el Sprint 1 las pruebas automatizadas se concentraron en los servicios web SGT, POI, Staff y Beneficiarios. SGT reúne el registro de terrenos y fichas, y los otros tres forman la base de planificación, identidad y padrón sobre la que trabaja. Cada servicio separa sus pruebas en dos grupos. Las pruebas unitarias se ejecutan con JUnit 5 y no necesitan base de datos. Las pruebas de integración levantan la aplicación completa con Spring Boot Test, llaman a la API con MockMvc y usan una base PostgreSQL real que Testcontainers crea en un contenedor para cada ejecución.
+
+Maven ejecuta las unitarias con Surefire (mvnw test) y las de integración con Failsafe (mvnw verify). El workflow de GitHub Actions de cada servicio corre las unitarias en cada push y la suite completa en los pull requests y en las ramas develop y main, así que ningún cambio se integra sin que la suite pase. En la aplicación web, Angular ejecuta sus pruebas con Vitest mediante ng test.
+
+En total el sprint cerró con 144 pruebas unitarias y 158 pruebas de integración, repartidas así:
+- SGT: 53 unitarias y 56 de integración.
+- POI: 60 unitarias y 38 de integración.
+- Staff: 13 unitarias y 45 de integración.
+- Beneficiarios: 17 unitarias y 19 de integración.
+- Aplicación web: 1 prueba unitaria del componente raíz.
+
+La siguiente tabla relaciona las pruebas unitarias con las clases que prueban y los comportamientos que verifican.
+
+<div style="width: 100%; margin: 0 auto; font-family: Arial, sans-serif; font-size: 12px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Repositorio</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Clase de prueba</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Clases probadas</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Comportamientos verificados</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Casos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheetTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheet</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Una ficha se envía para una tarea con un código de tarea en el formato de POI y queda sin evaluación. Al enviarse recibe el número siguiente al último del año, la primera del año es la 0001 y un año que agotó sus números no acepta más. Aprobar y rechazar anuncian la ficha revisada, y aprobar guarda lo que el revisor confirmó, incluido el beneficiario. Una ficha se revisa una sola vez y solo después de que POI acepta su entrega, y si POI la rechaza el envío se anula. Nadie revisa su propio envío. Una ficha entregada puede reasignarse a otra tarea mientras sigue en revisión.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">19</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheetCodeTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheetCode</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El código se escribe con su número de cuatro dígitos y su año, y se lee de vuelta igual. El siguiente código conserva el año, un año se detiene en su último número, el código exige año y cualquier otro formato se rechaza.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlotTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Plot</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Un terreno se registra si no tiene vecinos superpuestos. Se rechaza un terreno sin propietario, uno que no cae en ningún distrito y un segundo terreno para el mismo beneficiario. Un vecino que comparte exactamente la tolerancia se acepta, y el rechazo nombra solo a los vecinos que comparten más que la tolerancia.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">UbigeoTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Ubigeo</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Seis dígitos identifican un distrito, cualquier otra cantidad se rechaza y el ubigeo exige un código.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">JtsPlotGeometryTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">JtsPlotGeometry</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Mide el área que comparten dos linderos, incluso si se levantaron en zonas UTM distintas, y no mide nada cuando solo comparten un borde.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">HttpPersonProjectionTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">HttpPersonProjection</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Busca a las personas por GUID en el directorio de Staff con un token para esa API, envía un lote grande en partes del tamaño que admite el directorio y trata una falla del directorio como falla de infraestructura.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlanningAggregatesTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Plan, Objective, Activity, Task</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Un plan exige nombre y descripción, y su código pertenece a un solo plan. Objetivos, actividades y tareas se numeran en el orden en que se definen, y una tarea nueva queda pendiente. Una tarea recibe una entrega a la vez: confirmarla completa la tarea y rechazarla la devuelve a pendiente. Una entrega puede reasignarse a otra tarea pendiente o intercambiarse con la de una tarea entregada. Los eventos repetidos no cambian nada. Al completarse la última tarea abierta se completan en cascada la actividad, el objetivo y el plan, y una tarea definida después los vuelve a abrir.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">34</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlanningCodesTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlanCode, ObjectiveCode, ActivityCode, TaskCode</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cada código se escribe como el código de su padre más su número con ceros a la izquierda y se lee de vuelta igual. El código de plan son dos años de cuatro dígitos y un plan no puede terminar antes de empezar. El código de tarea exige sus cuatro dígitos y cada código nombra a su padre.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">8</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlanningValueObjectsTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Description, BeneficiaryId, Target</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Una descripción o un id de beneficiario en blanco se rechaza. Una meta pide al menos una unidad. Dos BeneficiaryId que nombran al mismo beneficiario son iguales.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">LegalDocumentTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">LegalDocument</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cada tipo de documento acepta el formato de número que le corresponde y rechaza un número que no lo cumple. Un documento exige tipo, y el tipo debe nombrarse exactamente.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt, poi, staff, beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">JpaRepositoryToDomainRepositoryAdapterTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">JpaRepositoryToDomainRepositoryAdapter</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El adaptador publica todos los eventos que registró el agregado y lo hace después de la escritura. Si la escritura falla no publica nada. Vacía los eventos del agregado para que un segundo guardado no los anuncie otra vez.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5 por repositorio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt, poi, staff, beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">RequestIdFilterTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">RequestIdFilter</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cada petición recibe un identificador propio de 32 caracteres hexadecimales, que se publica en el MDC de los logs y en la respuesta. Se reutiliza si la misma petición se despacha otra vez, se ignora el que envía el cliente y el MDC se limpia al terminar.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6 por repositorio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt, poi, staff, beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">MessageBundleTest</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Jerarquía de DomainException y archivos messages*.properties</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cada excepción de dominio tiene su traducción y todos los idiomas definen las mismas claves.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2 por repositorio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">app.spec.ts</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">App</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El componente raíz de la aplicación se crea correctamente.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+Las pruebas de integración recorren cada API como lo haría un cliente, con tokens emitidos por Staff y datos guardados en PostgreSQL. La siguiente tabla las relaciona con las historias de usuario del sprint que respaldan.
+
+<div style="width: 100%; margin: 0 auto; font-family: Arial, sans-serif; font-size: 12px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Repositorio</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Clase de prueba</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Comportamientos verificados</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">User Story</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Casos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlotControllerIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Un terreno registrado se devuelve y se lee por id, por región y por propietario. Un administrador puede registrar y leer, y un revisor no puede registrar, leer ni consultar el mapa. Se rechaza un segundo terreno para el mismo beneficiario, uno que se superpone con otro ya registrado, al que nombra, y uno fuera de todo distrito. Un terreno inexistente o un beneficiario sin terreno responden no encontrado. La vista del mapa responde en GeoJSON con los terrenos que tocan el área y rechaza un área mal formada.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlotRegistrationIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Encuentra los terrenos superpuestos o colindantes y ningún otro. Un terreno guardado se carga de vuelta en su zona, con su propietario, su distrito y su fecha de registro, y queda asignado al distrito en el que se ubica. Con aislamiento serializable, de dos registros concurrentes que se superponen solo uno pasa. La tabla admite un solo terreno por beneficiario.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">8</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlotQueriesIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Un departamento devuelve todos los terrenos de sus provincias ordenados por distrito, y una provincia o un distrito acotan la búsqueda. Se rechaza una región que no es un nivel del ubigeo. El terreno de un beneficiario se lee tal como se levantó, y uno sin terreno responde no encontrado.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-2</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheetControllerIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Se firma un enlace de subida para una clave nueva, y una ficha enviada se lee de vuelta con su escaneo. Cada envío recibe el número siguiente al último del año, y se rechaza una ficha cuyo escaneo no se subió. Se rechaza una llamada sin token o con un token que Staff no emitió para SGT. Un agente de campo no puede revisar, un revisor no puede enviar y nadie puede enviar sin actuar con un rol válido.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheetDeliveryFlowIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Un envío que POI rechaza queda anulado. Aprobar una ficha completa la tarea en POI y rechazarla la devuelve. Una reasignación sobre una tarea pendiente mueve la ficha, sobre una tarea ya entregada intercambia ambas fichas, y si POI la rechaza la ficha se queda donde estaba.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FieldSheetsPageIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La lista de fichas muestra primero el envío más reciente, ordena los códigos por año y número, aplica los filtros, incluye ambos días del rango de envío, cuenta la selección completa en cada página y rechaza una página que no puede existir.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-4</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">IdentityProviderIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El documento de discovery publica el emisor y sus llaves. El formulario de inicio de sesión valida la contraseña contra el directorio y continúa la autorización de la aplicación que lo pidió. Una persona recibe un token para la API actuando con uno de sus roles, puede cambiar de rol sin volver a ingresar y se le rechaza un rol que no tiene. Un servicio recibe solo los permisos que se le concedieron. El hub lista las aplicaciones que la persona puede abrir y cerrar sesión desde el hub termina la sesión. El inicio de sesión silencioso devuelve un código si hay sesión y pide iniciar sesión si no la hay. El frontend de SGT obtiene en silencio un segundo token para el padrón de beneficiarios cuando la persona es agente de campo, y no lo obtiene si no tiene rol en el padrón.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10, SGT-11</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">29</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PersonApiIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La API del directorio pagina a las personas, filtra por cargo y nombre y ordena por cualquier columna en ambos sentidos. La búsqueda por lote resuelve a cada persona e informa las que no encontró. Se rechaza una llamada sin token de servicio o con un token emitido para otra API.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-10</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">8</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">BeneficiaryApiIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El padrón se carga una sola vez y se pagina por nombre, con filtros y orden por columna. La búsqueda por documento legal resuelve los beneficiarios que encuentra e informa los que faltan, y rechaza una consulta vacía o demasiado grande. Solo un token de servicio con el permiso de lectura puede listar el padrón. Un agente de campo puede buscar a los beneficiarios cuyos documentos tiene, una persona sin ese rol no puede, y el frontend puede hacer la búsqueda desde el navegador.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-7</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">TaskControllerIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Las tareas pendientes se listan por código. Una entrega saca a la tarea de la lista de pendientes, una segunda entrega para la misma tarea se rechaza y la misma entrega enviada otra vez se acepta. Rechazar la entrega devuelve la tarea a pendientes y confirmarla la completa. Una entrega puede reasignarse a otra tarea, salvo a una ya completada. Se valida que solo los servicios y roles autorizados llamen a cada endpoint.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-3, SGT-8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">18</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">TasksPageIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La lista de tareas muestra primero la ejecución más reciente y deja al final las pendientes, ordena los códigos en el orden del plan, aplica los filtros, cuenta la selección completa en cada página y rechaza una página que no puede existir.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-8</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlanningTreeIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Cada definición de plan, objetivo, actividad y tarea responde con lo que creó, y cada nivel se numera según el nivel superior. Se rechaza un nivel bajo un padre que no existe, un código de plan ya tomado y que un servicio defina tareas.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">5</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">PlanCompletionIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El plan se completa cuando SGT confirma la entrega de su última tarea, y una tarea definida después lo vuelve a abrir.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">SGT-9</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">2</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt, poi, staff, beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">FlywayMigrationIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Todas las migraciones se aplican, crean el registro de publicación de eventos e Hibernate valida las entidades contra el esquema resultante.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Transversal</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3 por repositorio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt, poi, staff, beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">DatabaseRoleSeparationIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">La aplicación se conecta con el rol de menor privilegio, que lee y escribe las tablas pero no puede cambiar el esquema ni borrar tablas.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Transversal</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4 por repositorio</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">sgt, poi, staff, beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ApplicationLaunchIT</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">El contexto de la aplicación arranca contra una base PostgreSQL real.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Transversal</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1 por repositorio</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+Las pruebas viven en la carpeta src/test de cada repositorio:
+- [https://github.com/Soulware-Emergentes/poi](https://github.com/Soulware-Emergentes/poi)
+- [https://github.com/Soulware-Emergentes/staff](https://github.com/Soulware-Emergentes/staff)
+- [https://github.com/Soulware-Emergentes/beneficiarios](https://github.com/Soulware-Emergentes/beneficiarios)
+- [https://github.com/Soulware-Emergentes/sgt](https://github.com/Soulware-Emergentes/sgt)
+- [https://github.com/Soulware-Emergentes/web-application](https://github.com/Soulware-Emergentes/web-application)
+
+La siguiente tabla reúne los commits de cada repositorio que agregaron o modificaron pruebas durante el sprint.
+
+<div style="width: 100%; margin: 0 auto; font-family: Arial, sans-serif; font-size: 12px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Repository</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Branch</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Commit Id</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Commit Message</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Commit Message Body</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Committed on (Date)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a83071a</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">11/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/web-application</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">4b6f2b3</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(login): add login feature</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Welcome page to redirect into the staff microservice SSO under OIDC standard.<br>- i18n translation, compatible with the SSO login page language feature to preserve good UX.<br>- AUthGuard that restores the session if the user already logged in and they try to go into /login.<br>- Fake spiner interaction when moving out of the web page.<br>- Test of the fade in interaction to ease the visual of jumping across views and websites.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">72da98f</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">01/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">dce0a61</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track the test support and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ApplicationLaunchIT, the one test the repository tracks, extends PostgresIntegrationTest, which was ignored along with the other tests, so a clone could not compile its tests. The support package is tracked now, and the CI workflow with it, so the build passes on a clean checkout.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">6b5d9bf</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">test: track every test except the architecture rules</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">a27fc46</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(monitoring): hold every field sheet date as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1b0d7dc</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">refactor(plots): hold the registration date as a value object</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">3a71427</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(plots): serve plots in view and file plots under their district</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- GET /plots/within answers the plots whose footprint touches a bounding box, as GeoJSON, at most 1000 and saying when it held more.<br>- The INEI 2025 district boundaries in PostGIS, seeded by migration.<br>- A registered plot is filed under the district it shares the most ground with, so the request no longer carries a ubigeo; a plot in no district is refused.<br>- The frontend origin the browser calls come from is now port 4200.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">389f59b</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): tell domain failures apart and name the plots an overlap hits</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Every domain error response carries its message key as code, so a client tells failures apart without reading the message.<br>- A failure that has details beyond its message implements DomainException.Detailed; its response carries them as details.<br>- An overlap refusal names the registered plots it overlaps, under details.overlappingPlots.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">fc0c063</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">03/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/poi</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">cfb8dfe</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track every test except the architecture rules, and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">c56ea41</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">cc3be48</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track every test except the architecture rules, and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/login</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">e7a60ff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): serve the login, a hub and silent sign-in</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Staff now renders its own pages instead of Spring's defaults, knows which application and environment a login is for, and lets a browser that already logged in reach any of its applications without typing credentials again. (...)<br><br>Tests<br>- IdentityProviderIT covers the continued and abandoned logins, the hub and its cards, sign-out, silent sign-in with and without a session, and the environment naming on the login page.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">12/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">088bca6</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(identityprovider): give sgt's frontend a beneficiary registry token</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Dev seed: a field-agent role on the beneficiary registry for sgt's field agents and developers, and sgt-web-dev allowed to ask for it.<br>- Tests that a field agent gets the second token silently and that a person with no role on the registry is denied it.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/legal-document</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1d7f165</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">first commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">30/09/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">main</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">152ea0e</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">chore: initial commit</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/core</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">7e1f116</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">ci: track every test except the architecture rules, and the CI workflow</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">-</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">08/10/2026</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Soulware-Emergentes/beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feature/plots</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">1cd0367</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">feat(shared): let field agents look beneficiaries up from sgt's frontend</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">Includes:<br>- Person tokens for the registry are accepted, with their roles as authorities; service tokens keep their scopes.<br>- POST /beneficiaries/lookup is open to the field-agent role as well as to the read scope; the rest of the API stays service-only.<br>- CORS for the lookup, from BENEFICIARIOS_WEB_ORIGIN only.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; vertical-align: top; text-align: left;">14/11/2026</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-exec-evidence">Execution Evidence for Sprint Review</h4>
+
+Durante el Sprint 1 se incorporaron las primeras pantallas de la aplicación web SGT para el acceso institucional y la gestión visual de terrenos. Las vistas mantienen el logotipo institucional, la navegación lateral y los estilos definidos para la aplicación.
+
+La pantalla de bienvenida introduce el acceso a SGT y ofrece la acción Iniciar sesión con la cuenta institucional. Su composición concentra el logotipo de DEPRO, el mensaje de bienvenida y el botón principal en una tarjeta central.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/execution/01-bienvenida.jpg" alt="Figura 1. Pantalla de bienvenida de la aplicación web SGT." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 1. Pantalla de bienvenida de la aplicación web SGT.</p>
+</div>
+
+La vista del mapa organiza el espacio de trabajo alrededor de la representación territorial. El menú lateral permite acceder a Mapa y Sesión, y puede contraerse para ampliar el área visible. Sobre el mapa se muestran los controles de acercamiento, alejamiento y orientación, junto con el acceso a Crear terreno.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/execution/03-mapa-terrenos.jpg" alt="Figura 2. Pantalla del mapa con navegación lateral y controles territoriales." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 2. Pantalla del mapa con navegación lateral y controles territoriales.</p>
+</div>
+
+El diálogo Crear terreno reúne los datos del beneficiario y la medición del perímetro. A la izquierda se muestran el tipo y número de documento, el nombre del beneficiario, el área estimada y la vista previa. A la derecha se distribuyen la zona de carga de archivos de estación total y la tabla para ingresar los vértices manualmente, con coordenadas Este y Norte en UTM WGS 84, zona 18S. El formulario incluye acciones para agregar o quitar vértices y continuar con Ver en el mapa.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/execution/04-formulario-terreno.jpg" alt="Figura 3. Diálogo Crear terreno: datos del beneficiario, carga de archivo y coordenadas del perímetro." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 3. Diálogo Crear terreno: datos del beneficiario, carga de archivo y coordenadas del perímetro.</p>
+</div>
+
+El formulario muestra el nombre del beneficiario asociado al documento ingresado y tres vértices que definen un contorno triangular. La interfaz representa ese contorno en la vista previa y muestra un área estimada de 0.50 ha, permitiendo revisar visualmente la información antes de continuar.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/execution/05-perimetro-calculo-area.jpg" alt="Figura 4. Formulario con beneficiario de muestra, perímetro triangular y área estimada de 0.50 ha." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 4. Formulario con beneficiario de muestra, perímetro triangular y área estimada de 0.50 ha.</p>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-docs-evidence">Services Documentation Evidence for Sprint Review</h4>
+
+Durante el Sprint 1 se incorporó la documentación de los servicios web SGT, Staff y Beneficiarios con OpenAPI 3.1 mediante springdoc. Swagger UI permite consultar las rutas publicadas, las acciones HTTP, los parámetros y los esquemas de solicitud y respuesta.
+
+La siguiente tabla relaciona las rutas de documentación y los repositorios de los servicios.
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 16%;"><col style="width: 49%;"><col style="width: 35%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Servicio</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Documentación</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Repositorio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">sgt</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/sgt">Soulware-Emergentes/sgt</a></td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">staff</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/staff">Soulware-Emergentes/staff</a></td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">beneficiarios</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code>/swagger-ui/index.html</code><br><code>/v3/api-docs</code></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/beneficiarios">Soulware-Emergentes/beneficiarios</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+Los servicios utilizan autenticación Bearer con tokens JWT emitidos por Staff. Para explorar operaciones protegidas desde Swagger se emplea Authorize con un token de la audiencia y los permisos correspondientes.
+
+En SGT, la documentación del módulo de terrenos describe el registro de la medición y las consultas por región, identificador, propietario y área visible del mapa.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/services/03-sgt-openapi.jpg" alt="Figura 1. Swagger UI de SGT: operaciones publicadas para la gestión de terrenos." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 1. Swagger UI de SGT: operaciones publicadas para la gestión de terrenos.</p>
+</div>
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 31%;"><col style="width: 41%;"><col style="width: 28%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Acción HTTP y endpoint</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Parámetros y solicitud</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Respuesta documentada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/plots</code><br>Consulta de terrenos por región administrativa.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">region</code> (query, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PlotsResponse</code><br>Colección de terrenos de la región solicitada.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/plots</code><br>Registro de un terreno asociado a un beneficiario.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Cuerpo JSON <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">RegisterPlotRequest</code>: <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">ownerDocumentType</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">ownerDocumentNumber</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">utmZone</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">boundary</code>.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">201 Created</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PlotResponse</code><br>Datos del terreno, propietario, distrito, zona UTM, perímetro y fecha de registro.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/plots/{plotId}</code><br>Consulta de un terreno por su identificador.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">plotId</code> (path, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PlotResponse</code><br>Datos del terreno, propietario, distrito, zona UTM, perímetro y fecha de registro.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/plots/within</code><br>Consulta geográfica de terrenos dentro del área visible del mapa.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">bbox</code> (query, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PlotFeatureCollectionResponse</code><br>Colección GeoJSON de polígonos y señal de resultados truncados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/plots/owner</code><br>Consulta de un terreno por el documento de su propietario.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">documentType</code> (query, obligatorio).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">documentNumber</code> (query, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PlotResponse</code><br>Datos del terreno, propietario, distrito, zona UTM, perímetro y fecha de registro.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+El registro recibe un cuerpo JSON con el documento del propietario, la zona UTM y los vértices del perímetro:
+
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>{
+  &quot;ownerDocumentType&quot;: &quot;DNI&quot;,
+  &quot;ownerDocumentNumber&quot;: &quot;49407359&quot;,
+  &quot;utmZone&quot;: &quot;ZONE_18S&quot;,
+  &quot;boundary&quot;: [
+    {
+      &quot;easting&quot;: 464210,
+      &quot;northing&quot;: 9239812
+    },
+    {
+      &quot;easting&quot;: 464310,
+      &quot;northing&quot;: 9239812
+    },
+    {
+      &quot;easting&quot;: 464310,
+      &quot;northing&quot;: 9239912
+    }
+  ]
+}</code></pre>
+
+Para esta operación, OpenAPI documenta una respuesta 201 Created con el identificador del terreno, el documento del propietario, el ubigeo asignado, la zona UTM, el perímetro y la fecha de registro. Las consultas del mapa reciben bbox con los límites oeste, sur, este y norte, separados por comas, y devuelven una colección GeoJSON.
+
+La documentación de fichas de campo reúne las operaciones de listado, entrega, revisión, reasignación y acceso al escaneo.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/services/07-sgt-fichas-openapi.jpg" alt="Figura 2. Swagger UI de SGT: operaciones publicadas para fichas de campo." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 2. Swagger UI de SGT: operaciones publicadas para fichas de campo.</p>
+</div>
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 31%;"><col style="width: 41%;"><col style="width: 28%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Acción HTTP y endpoint</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Parámetros y solicitud</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Respuesta documentada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/field-sheets</code><br>Listado paginado de fichas de campo.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">status</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">code</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">taskCode</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">submittedFrom</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">submittedTo</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">sort</code> (query, opcional; valor por defecto: submittedAt).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">direction</code> (query, opcional; valor por defecto: desc).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">page</code> (query, opcional; valor por defecto: 0).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">size</code> (query, opcional; valor por defecto: 10).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">FieldSheetsPageResponse</code><br>Página de fichas con datos de paginación.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/field-sheets</code><br>Envío de una ficha de campo asociada a una tarea.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Cuerpo JSON <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">SubmitFieldSheetRequest</code>: <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">taskCode</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">scanKey</code>.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">201 Created</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">FieldSheetResponse</code><br>Detalle de la ficha y sus datos asociados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/field-sheets/{fieldSheetId}/relink</code><br>Reasignación de la tarea vinculada a una ficha.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">fieldSheetId</code> (path, obligatorio).<br>Cuerpo JSON <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">RelinkFieldSheetRequest</code>: <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">taskCode</code>.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">FieldSheetResponse</code><br>Detalle de la ficha y sus datos asociados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/field-sheets/{fieldSheetId}/rejection</code><br>Rechazo de una ficha entregada.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">fieldSheetId</code> (path, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">FieldSheetResponse</code><br>Detalle de la ficha y sus datos asociados.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 31%;"><col style="width: 41%;"><col style="width: 28%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Acción HTTP y endpoint</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Parámetros y solicitud</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Respuesta documentada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/field-sheets/{fieldSheetId}/approval</code><br>Aprobación de una ficha entregada.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">fieldSheetId</code> (path, obligatorio).<br>Cuerpo JSON <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">ApproveFieldSheetRequest</code>: <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">beneficiaryDocumentType</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">beneficiaryDocumentNumber</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">usedSupplies</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">evaluationDate</code>, <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">securementDate</code>.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">FieldSheetResponse</code><br>Detalle de la ficha y sus datos asociados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/field-sheets/scan-uploads</code><br>Obtención de un enlace firmado para cargar el escaneo de una ficha.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Sin cuerpo ni parámetros externos.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">ScanLinkResponse</code><br>Enlace firmado del escaneo.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/field-sheets/{fieldSheetId}</code><br>Consulta del detalle de una ficha.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">fieldSheetId</code> (path, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">FieldSheetResponse</code><br>Detalle de la ficha y sus datos asociados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/field-sheets/{fieldSheetId}/scan</code><br>Obtención de un enlace firmado para descargar el escaneo.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">fieldSheetId</code> (path, obligatorio).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">ScanLinkResponse</code><br>Enlace firmado del escaneo.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+Las operaciones de consulta y revisión de una ficha comparten el esquema FieldSheetResponse. La aprobación recibe el documento del beneficiario, los insumos utilizados y las fechas de evaluación y aseguramiento. Las operaciones de escaneo devuelven ScanLinkResponse con el enlace firmado para realizar la transferencia del archivo.
+
+Staff documenta las consultas del directorio de personas. El listado admite filtros por puesto, departamento, usuario y nombre visible, además de orden y paginación. La búsqueda por identificadores recibe una colección ids y distingue las personas encontradas de los identificadores que no tienen coincidencia.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/services/04-staff-openapi.jpg" alt="Figura 3. Swagger UI de Staff: listado y búsqueda de personas del directorio." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 3. Swagger UI de Staff: listado y búsqueda de personas del directorio.</p>
+</div>
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 31%;"><col style="width: 41%;"><col style="width: 28%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Acción HTTP y endpoint</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Parámetros y solicitud</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Respuesta documentada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v3/people/lookup</code><br>Búsqueda de personas por sus identificadores.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Cuerpo JSON <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PeopleLookupRequest</code>: <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">ids</code>.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PeopleLookupResponse</code><br>Personas encontradas e identificadores no encontrados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v3/people</code><br>Listado de personas del directorio con filtros y paginación.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">jobTitle</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">department</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">username</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">displayName</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">sort</code> (query, opcional; valor por defecto: displayName).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">direction</code> (query, opcional; valor por defecto: asc).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">page</code> (query, opcional; valor por defecto: 0).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">size</code> (query, opcional; valor por defecto: 10).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">PeoplePageResponse</code><br>Personas del directorio y datos de paginación.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+La interacción de ejemplo solicita dos personas de la primera página, ordenadas por nombre visible. Swagger muestra HTTP 200 y una respuesta con content, totalPages, totalElements, actualPage y pageSize. La respuesta indica un total de 41 personas.
+
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>GET /api/v3/people?sort=displayName&amp;direction=asc&amp;page=0&amp;size=2</code></pre>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/services/05-staff-get-200.jpg" alt="Figura 4. Consulta del directorio desde Swagger: respuesta HTTP 200 con personas de muestra." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 4. Consulta del directorio desde Swagger: respuesta HTTP 200 con personas de muestra.</p>
+</div>
+
+Beneficiarios documenta el listado del padrón y la búsqueda por documentos legales. El listado incluye filtros por nombres, apellidos y documento, junto con orden y paginación. La búsqueda recibe legalDocuments, cuyos elementos contienen type y number, y devuelve las coincidencias y los documentos no encontrados.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/services/01-beneficiarios-openapi.jpg" alt="Figura 5. Swagger UI de Beneficiarios: listado y búsqueda por documentos legales." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 5. Swagger UI de Beneficiarios: listado y búsqueda por documentos legales.</p>
+</div>
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 31%;"><col style="width: 41%;"><col style="width: 28%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Acción HTTP y endpoint</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Parámetros y solicitud</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Respuesta documentada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">POST /api/v1/beneficiaries/lookup</code><br>Búsqueda de beneficiarios por sus documentos legales.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Cuerpo JSON <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">BeneficiaryLookupRequest</code>: <code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">legalDocuments</code>.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">BeneficiaryLookupResponse</code><br>Beneficiarios encontrados y documentos no encontrados.</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">GET /api/v1/beneficiaries</code><br>Listado de beneficiarios con filtros y paginación.</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">names</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">paternalSurname</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">maternalSurname</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">legalDocumentType</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">legalDocumentNumber</code> (query, opcional).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">sort</code> (query, opcional; valor por defecto: paternalSurname).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">direction</code> (query, opcional; valor por defecto: asc).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">page</code> (query, opcional; valor por defecto: 0).<br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">size</code> (query, opcional; valor por defecto: 10).</td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">200 OK</code><br><code style="font-size: inherit; white-space: normal; overflow-wrap: anywhere;">BeneficiariesPageResponse</code><br>Beneficiarios y datos de paginación.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+La consulta de ejemplo solicita dos beneficiarios de la primera página, ordenados por apellido paterno. La respuesta HTTP 200 contiene los datos de los beneficiarios y la información de paginación. La respuesta indica un total de 150 beneficiarios.
+
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>GET /api/v1/beneficiaries?sort=paternalSurname&amp;direction=asc&amp;page=0&amp;size=2</code></pre>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/services/02-beneficiarios-get-200.jpg" alt="Figura 6. Consulta del padrón desde Swagger: respuesta HTTP 200 con beneficiarios de muestra." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+    <p style="margin: 8px 0 0; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.4;">Figura 6. Consulta del padrón desde Swagger: respuesta HTTP 200 con beneficiarios de muestra.</p>
+</div>
+
+Los siguientes ejemplos resumen la sintaxis de los cuerpos JSON de búsqueda y la estructura de una respuesta paginada. El campo content contiene los registros de la página solicitada; totalElements indica la cantidad total de coincidencias, totalPages el número de páginas, actualPage la página devuelta y pageSize el tamaño de página.
+
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>POST /api/v3/people/lookup
+{&quot;ids&quot;:[&quot;0463d8c5-5b64-47a4-8c74-d63c36a55078&quot;]}
+
+POST /api/v1/beneficiaries/lookup
+{&quot;legalDocuments&quot;:[{&quot;type&quot;:&quot;DNI&quot;,&quot;number&quot;:&quot;49407359&quot;}]}</code></pre>
+
+<pre style="margin: 12px 0 18px; padding: 12px; border: 1px solid #ccc; font-size: 11px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid; page-break-inside: avoid;"><code>{
+  &quot;content&quot;: [
+    {
+      &quot;legalDocument&quot;: {
+        &quot;type&quot;: &quot;DNI&quot;,
+        &quot;number&quot;: &quot;49407359&quot;
+      },
+      &quot;names&quot;: &quot;Jesús&quot;,
+      &quot;paternalSurname&quot;: &quot;Acevedo&quot;,
+      &quot;maternalSurname&quot;: &quot;Rendón&quot;,
+      &quot;dateOfBirth&quot;: &quot;1998-08-30&quot;,
+      &quot;ubigeo&quot;: &quot;295134&quot;
+    },
+    {
+      &quot;legalDocument&quot;: {
+        &quot;type&quot;: &quot;DNI&quot;,
+        &quot;number&quot;: &quot;62642120&quot;
+      },
+      &quot;names&quot;: &quot;Luz&quot;,
+      &quot;paternalSurname&quot;: &quot;Acevedo&quot;,
+      &quot;maternalSurname&quot;: &quot;Trujillo&quot;,
+      &quot;dateOfBirth&quot;: &quot;1943-03-23&quot;,
+      &quot;ubigeo&quot;: &quot;354105&quot;
+    }
+  ],
+  &quot;totalPages&quot;: 75,
+  &quot;totalElements&quot;: 150,
+  &quot;actualPage&quot;: 0,
+  &quot;pageSize&quot;: 2
+}</code></pre>
+
+Los commits relacionados con la configuración de la documentación se presentan a continuación. En los tres servicios incorporan ApiDocsConfiguration y la documentación de la API mediante springdoc.
+
+<div style="width: 100%; margin: 14px auto 20px; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #333; break-inside: auto; page-break-inside: auto;">
+        <colgroup><col style="width: 34%;"><col style="width: 16%;"><col style="width: 50%;"></colgroup>
+        <thead style="display: table-header-group;">
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Repositorio</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Commit Id</th>
+                <th scope="col" style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">Commit Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/sgt">Soulware-Emergentes/sgt</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/sgt/commit/4bd4b83ffa4321ec9d2cbca9d0a7ce8665f2e5c9">4bd4b83</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">feat(shared): document the API with springdoc</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/staff">Soulware-Emergentes/staff</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/staff/commit/34526e510cccba8668b5dbc4e18a9e92453771ec">34526e5</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">feat(shared): document the API with springdoc</td>
+            </tr>
+            <tr style="break-inside: avoid; page-break-inside: avoid;">
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/beneficiarios">Soulware-Emergentes/beneficiarios</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;"><a href="https://github.com/Soulware-Emergentes/beneficiarios/commit/69c72e9882c88565a79d17f4b5b9a43f6aa4afdf">69c72e9</a></td>
+                <td style="border: 1px solid #333; padding: 8px 10px; text-align: left; vertical-align: top; overflow-wrap: anywhere; word-break: normal;">feat(shared): document the API with springdoc</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-deploy-evidence">Software Deployment Evidence for Sprint Review</h4>
+
+Al cierre del Sprint 1 las cuatro APIs de la solución (Staff, Beneficiarios, POI y SGT) se desplegaron en Render como entorno de pruebas (dev). Cada API corre como un web service en el plan gratuito, construido a partir del Dockerfile de su repositorio, y las cuatro comparten una misma instancia de PostgreSQL en la región Oregon, donde cada una tiene su propia base de datos.
+
+La instancia de PostgreSQL se creó desde el panel de Render con el nombre sgt-postgres, dentro del proyecto SGT y en la región Oregon. Los campos Database y User se dejaron vacíos, por lo que Render generó la base de datos inicial y el usuario administrador de la instancia.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/01-render-postgres-creacion.png" alt="Creación de la instancia PostgreSQL sgt-postgres en la región Oregon." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Para el entorno de pruebas se eligió el plan gratuito, con 0.1 CPU y 256 MB de RAM. Render advierte que las bases de datos gratuitas expiran a los 30 días y están pensadas para pruebas y prototipos.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/02-render-postgres-plan.png" alt="Selección del plan gratuito de cómputo para la instancia PostgreSQL." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Con la instancia creada, el equipo se conectó a ella con psql a través de su host externo, usando el usuario administrador generado por Render.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/03-psql-conexion.png" alt="Conexión a la instancia con psql mediante su host externo." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Desde esa sesión se ejecutó el script que prepara las bases de datos de los cuatro servicios, con la misma separación de roles que define el script scripts/db/setup-roles.sql de cada repositorio:
+- Crea, por servicio, el rol migrator, que usa Flyway, y el rol app, que usa la aplicación en ejecución, y asigna sus contraseñas.
+- Hace al rol migrator dueño de la base de datos de su servicio, para que pueda crear y modificar el esquema.
+- Otorga al rol app permiso de conexión y de uso del esquema public, y define privilegios por defecto para que reciba permisos de lectura y escritura sobre cada tabla y secuencia que el rol migrator cree.
+- Crea la extensión PostGIS en la base de datos de SGT, que guarda las geometrías de los terrenos.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/04-psql-roles-bases.png" alt="Script de roles, propietarios y privilegios de las bases de datos de los cuatro servicios." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Cada repositorio de API incluye un archivo render.yaml, el Blueprint de Render, que declara su web service: el runtime Docker, el plan, la región y las variables de entorno. Las variables con valor fijo, como la audiencia con la que la API está registrada en Staff, quedan en el archivo; las credenciales de base de datos y las URLs de los otros servicios se declaran sin valor, para que Render las solicite al crear el servicio y no queden en el repositorio. Cada Blueprint se crea desde el panel de Render conectando el repositorio de la organización Soulware-Emergentes.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/05-render-blueprint-repositorio.png" alt="Creación de un Blueprint en Render a partir de los repositorios de la organización." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Los servicios se desplegaron en el orden de sus dependencias. Staff fue el primero, porque emite los tokens que las demás APIs validan. Su Blueprint solicita solo las credenciales de base de datos de sus dos roles: su emisor de tokens se toma de la URL pública que Render asigna al servicio, y el par de claves RSA con el que firma los tokens se carga como Secret Files del servicio.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/06-staff-blueprint-variables.png" alt="Variables solicitadas por el Blueprint de Staff para el servicio staff-dev." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+El despliegue de staff-dev terminó con éxito en 2 minutos y 38 segundos. Al arrancar, Flyway aplicó las migraciones y la semilla del entorno dev, y el servicio quedó disponible en https://staff-dev.onrender.com.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/07-staff-despliegue.png" alt="Despliegue exitoso de staff-dev y su URL pública." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Beneficiarios se desplegó después. Además de las credenciales de sus dos roles, su Blueprint solicita STAFF_ISSUER, la URL pública de Staff, contra la que valida los tokens que recibe.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/08-beneficiarios-blueprint-variables.png" alt="Variables solicitadas por el Blueprint de Beneficiarios." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+En el arranque, Beneficiarios cargó el padrón de muestra desde beneficiaries.sql y quedó disponible en https://beneficiarios-dev.onrender.com.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/09-beneficiarios-despliegue.png" alt="Despliegue de beneficiarios-dev, con la carga del padrón de muestra y su URL pública." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+POI solicita las mismas variables que Beneficiarios: las credenciales de sus dos roles y la URL pública de Staff.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/10-poi-blueprint-variables.png" alt="Variables solicitadas por el Blueprint de POI." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+El servicio poi-dev quedó disponible en https://poi-dev.onrender.com.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/11-poi-despliegue.png" alt="Despliegue de poi-dev y su URL pública." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+SGT se desplegó al final, porque consume a las otras tres APIs. Su Blueprint solicita, además de las credenciales de sus dos roles, las URLs públicas de Beneficiarios, del directorio de Staff y de POI, y la de Staff como emisor de tokens. Las variables del almacén de objetos de las fichas de campo (SCANS_*) tienen valores de relleno en este entorno, porque sus endpoints todavía no se usan.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/12-sgt-blueprint-variables.png" alt="Variables solicitadas por el Blueprint de SGT." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+El despliegue de sgt-dev terminó con éxito en 4 minutos y 28 segundos, y el servicio quedó disponible en https://sgt-dev.onrender.com.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/13-sgt-despliegue.png" alt="Despliegue exitoso de sgt-dev y su URL pública." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+La aplicación web SGT se despliega junto con su BFF (backend for frontend), que sirve la aplicación Angular, inicia sesión en Staff a nombre del usuario y llama a las APIs de SGT y Beneficiarios desde el servidor. Su imagen Docker construye la aplicación web a partir de su repositorio y la incluye como archivos estáticos. El Blueprint del repositorio backend-for-frontend solicita la URL pública del propio BFF, la de Staff como emisor de tokens y las URLs de las APIs de SGT y Beneficiarios.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/14-bff-blueprint-variables.png" alt="Variables solicitadas por el Blueprint del BFF de SGT." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Staff solo redirige el navegador a las direcciones registradas para cada cliente, y la semilla del entorno dev registra las del BFF sobre localhost. Por eso, en la base de datos de Staff y con el rol staff_migrator, dueño de sus tablas, se actualizaron las URIs de redirección de inicio y cierre de sesión del cliente sgt-bff-dev y su URI de inicio a la URL pública del BFF en Render.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/15-staff-redirect-uris-bff.png" alt="Actualización de las URIs de redirección del cliente sgt-bff-dev en la base de datos de Staff." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Para que los usuarios accedan a la aplicación con un dominio propio, se agregó app.sgt.soulware.lat como dominio personalizado del servicio sgt-bff-dev.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/16-bff-dominio-personalizado.png" alt="Registro del dominio app.sgt.soulware.lat en el servicio sgt-bff-dev." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+En el proveedor DNS del dominio se crearon dos registros CNAME, app.sgt y www.app.sgt, que apuntan a sgt-bff-dev.onrender.com.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/17-dns-registros-cname.png" alt="Registros CNAME de app.sgt y www.app.sgt hacia el servicio en Render." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Render verificó el dominio y emitió su certificado TLS, por lo que la aplicación responde por HTTPS en app.sgt.soulware.lat. El subdominio de Render sigue habilitado, así que el servicio también es accesible en https://sgt-bff-dev.onrender.com.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/18-bff-dominio-verificado.png" alt="Dominio app.sgt.soulware.lat verificado y con certificado emitido." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Con el dominio verificado, el BFF se volvió a desplegar manualmente desde el panel, con la caché de construcción limpia para que la imagen reconstruya la aplicación web. Al arrancar, el BFF reporta que atiende como https://app.sgt.soulware.lat, y Render publica el servicio con ese dominio como su URL principal.
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/deployment/19-bff-despliegue.png" alt="Despliegue de sgt-bff-dev disponible en app.sgt.soulware.lat." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 105mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+
+<div style="page-break-after: always;"></div>
+
+<h4 id="sprint-1-collaboration">Team Collaboration Insights during Sprint</h4>
+
+En esta sección se presentan los insights de cada repositorio que avanzó durante este sprint.
+
+
+Landing Page
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/01-landing.png" alt="Contribuidores del repositorio landing." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/01-landing-commits.png" alt="Commits por semana del repositorio landing." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Web Application
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/02-web-application.png" alt="Contribuidores del repositorio web-application." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/02-web-application-commits.png" alt="Commits por semana del repositorio web-application." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Beneficiarios
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/03-beneficiarios.png" alt="Contribuidores del repositorio beneficiarios." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/03-beneficiarios-commits.png" alt="Commits por semana del repositorio beneficiarios." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+POI
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/04-poi.png" alt="Contribuidores del repositorio poi." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/04-poi-commits.png" alt="Commits por semana del repositorio poi." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+Staff
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/05-staff.png" alt="Contribuidores del repositorio staff." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/05-staff-commits.png" alt="Commits por semana del repositorio staff." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+SGT
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/06-sgt.png" alt="Contribuidores del repositorio sgt." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
+
+<div style="margin: 18px 0; text-align: center; break-inside: avoid; page-break-inside: avoid;">
+    <img src="./assets/product_impl/sprint-1/collaboration/06-sgt-commits.png" alt="Commits por semana del repositorio sgt." style="display: block; width: auto; height: auto; max-width: 100%; max-height: 80mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+</div>
 
 
 <div style="page-break-after: always;"></div>

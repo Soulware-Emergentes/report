@@ -63,6 +63,10 @@ package "plots.domain" {
     interface PlotGeometry <<Domain Service>> {
         + sharedArea(first, second) : SharedArea
     }
+
+    interface PlotDistricts <<Domain Service>> {
+        + districtOf(boundary) : Ubigeo
+    }
 }
 
 Plot "1" *-left- "1" PlotId : identified by >
@@ -76,4 +80,6 @@ PlotGeometry .right.> SharedArea : measures >
 PlotGeometry .left.> PlotBoundary : relates >
 PlotRepository "1" --> "0..*" Plot : stores >
 Plot ..> PlotGeometry : checks overlap with >
+PlotDistricts .up.> Ubigeo : gives >
+PlotDistricts .left.> PlotBoundary : locates >
 @enduml

@@ -1,4 +1,4 @@
-La capa de aplicación del proveedor de identidad define los puertos de lectura que usa el servidor de autorización. No tiene comandos: los registros de aplicaciones y API, y las asignaciones de roles y scopes, se cargan en la base de datos. El flujo de autenticación lo conduce el servidor de autorización de la capa de infraestructura, que consulta estos puertos y la interfaz DirectoryApi del módulo Directory.
+La capa de aplicación del proveedor de identidad define los puertos de lectura que usan el servidor de autorización y las páginas de inicio de sesión y del hub. No tiene comandos: los registros de aplicaciones y API, y las asignaciones de roles y scopes, se cargan en la base de datos. El flujo de autenticación lo conduce el servidor de autorización de la capa de infraestructura, que consulta estos puertos y la interfaz DirectoryApi del módulo Directory.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -17,7 +17,7 @@ La capa de aplicación del proveedor de identidad define los puertos de lectura 
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Projection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Puerto de lectura de las aplicaciones registradas.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findByClientId(ClientByClientId): Optional&lt;ClientResult&gt;<br>+ findById(ClientById): Optional&lt;ClientResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findByClientId(ClientByClientId): Optional&lt;ClientResult&gt;<br>+ findById(ClientById): Optional&lt;ClientResult&gt;<br>+ findLaunchable(ClientsOfGroups): List&lt;LaunchableClientResult&gt;</td>
         </tr>
         <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ClientByClientId</td>
@@ -34,10 +34,24 @@ La capa de aplicación del proveedor de identidad define los puertos de lectura 
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ClientsOfGroups</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Criteria</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Aplicaciones en las que pueden iniciar sesión las personas de ciertos grupos: los clientes públicos de las API en las que alguno de esos grupos tiene un rol.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ groupIds: List&lt;UUID&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">ClientResult</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Aplicación registrada con todo lo que el servidor de autorización verifica en sus solicitudes.</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ id: UUID<br>+ clientId, kind, secretHash<br>+ loginRedirectUris, logoutRedirectUris<br>+ resources, roles, grantedScopes</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ id: UUID<br>+ clientId, applicationName<br>+ environment, environmentName<br>+ kind, secretHash<br>+ loginRedirectUris, logoutRedirectUris<br>+ resources, roles, grantedScopes</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">LaunchableClientResult</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Query Result</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Aplicación que una persona puede abrir, tal como la lista el hub.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ clientId, applicationName<br>+ environment, environmentName<br>+ homeUri: String</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Ninguno</td>
         </tr>
         <tr>

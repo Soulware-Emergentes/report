@@ -48,5 +48,6 @@
     </table>
     <div style="margin-top: 40px;">
         <p style="margin: 5px;">Periodo 2620</p>
+        <p style="margin: 5px;">Noviembre 2026</p>
     </div>
 </div>
