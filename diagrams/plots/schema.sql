@@ -1,4 +1,4 @@
--- Tablas del contexto plots, tomadas de las migraciones Flyway: sgt/V4__plots.sql
+-- Tablas del contexto plots, tomadas de las migraciones Flyway: sgt/V4__plots.sql y sgt/V6__districts.sql
 
 CREATE TABLE plots (
     id UUID PRIMARY KEY,
@@ -13,3 +13,13 @@ CREATE TABLE plots (
 
 CREATE INDEX plots_footprint_idx ON plots USING GIST (footprint);
 CREATE INDEX plots_ubigeo_idx ON plots (ubigeo text_pattern_ops);
+
+CREATE TABLE districts (
+    ubigeo VARCHAR(6) PRIMARY KEY CHECK (ubigeo ~ '^[0-9]{6}$'),
+    name VARCHAR(255) NOT NULL,
+    province VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL,
+    boundary geometry(MultiPolygon, 4326) NOT NULL CHECK (ST_IsValid(boundary))
+);
+
+CREATE INDEX districts_boundary_idx ON districts USING GIST (boundary);

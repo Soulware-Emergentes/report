@@ -16,6 +16,8 @@ package "identityprovider.domain" {
         - clientId : ClientId
         - kind : ClientKind
         - secretHash : ClientSecretHash
+        - grantTypes : Set<ClientGrantType>
+        - homeUri : HomeUri
         - loginRedirectUris : Set<RedirectUri>
         - logoutRedirectUris : Set<RedirectUri>
         - resources : Set<ResourceIdentifier>
@@ -51,7 +53,17 @@ package "identityprovider.domain" {
         CONFIDENTIAL
     }
 
+    enum ClientGrantType <<Value Object>> {
+        AUTHORIZATION_CODE
+        REFRESH_TOKEN
+        CLIENT_CREDENTIALS
+    }
+
     class ClientSecretHash <<Value Object>> {
+        + value : String
+    }
+
+    class HomeUri <<Value Object>> {
         + value : String
     }
 
@@ -68,6 +80,8 @@ ClientRegistration "1" *-- "1" ClientRegistrationId : identified by >
 ClientRegistration "1" *-- "1" ClientId : named >
 ClientRegistration "1" *-- "1" ClientKind : is of kind >
 ClientRegistration "1" *-- "0..1" ClientSecretHash : proves itself with >
+ClientRegistration "1" *-- "1..*" ClientGrantType : gets tokens by >
+ClientRegistration "1" *-- "0..1" HomeUri : opens at >
 ClientRegistration "1" *-- "0..*" RedirectUri : redirects to >
 ClientRegistration "0..*" --> "0..*" ResourceIdentifier : linked to >
 @enduml

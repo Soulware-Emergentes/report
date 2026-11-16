@@ -1,4 +1,4 @@
-La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión PostGIS y delega en la librería JTS el cálculo geométrico que el dominio pide a PlotGeometry.
+La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión PostGIS y delega en la librería JTS el cálculo geométrico que el dominio pide a PlotGeometry. El distrito que el dominio pide a PlotDistricts se resuelve con una consulta espacial sobre los límites distritales guardados en la misma base de datos.
 
 <div style="width: 100%; overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #333; font-family: Arial, sans-serif; font-size: 12px; table-layout: fixed; overflow-wrap: anywhere; word-break: break-word;">
@@ -48,14 +48,23 @@ La capa de infraestructura guarda los terrenos en PostgreSQL con la extensión P
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ sharedArea(first, second): SharedArea</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">JdbcPlotDistricts</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Domain Service Adapter</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa PlotDistricts con una consulta PostGIS que devuelve el distrito que comparte más área con el perímetro.</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- jdbc: NamedParameterJdbcTemplate</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ districtOf(boundary): Ubigeo</td>
+        </tr>
+        <tr>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">JdbcPlotProjection</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Projection Adapter</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">Implementa PlotProjection con consultas SQL sobre plots.</td>
             <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">- jdbc: NamedParameterJdbcTemplate</td>
-            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findById(PlotById): Optional&lt;PlotResult&gt;<br>+ findInRegion(PlotsInRegion): List&lt;PlotResult&gt;<br>+ findOfOwner(PlotOfOwner): Optional&lt;PlotResult&gt;</td>
+            <td style="border: 1px solid #333; padding: 6px 8px; vertical-align: top;">+ findById(PlotById): Optional&lt;PlotResult&gt;<br>+ findInRegion(PlotsInRegion): List&lt;PlotResult&gt;<br>+ findOfOwner(PlotOfOwner): Optional&lt;PlotResult&gt;<br>+ findInView(PlotsInView, limit): List&lt;PlotFootprintResult&gt;</td>
         </tr>
     </tbody>
 </table>
 </div>
 
-La tabla plots guarda el perímetro en las coordenadas UTM en que se midió y, además, una columna footprint generada en coordenadas geográficas WGS84 con un índice espacial GIST. Así, la búsqueda de vecinos compara terrenos medidos en zonas UTM distintas, y la consulta por región usa un índice sobre el prefijo del ubigeo.
+La tabla plots guarda el perímetro en las coordenadas UTM en que se midió y, además, una columna footprint generada en coordenadas geográficas WGS84 con un índice espacial GIST. Así, la búsqueda de vecinos compara terrenos medidos en zonas UTM distintas, y la consulta por región usa un índice sobre el prefijo del ubigeo. La consulta por vista del mapa usa el mismo índice de footprint para encontrar los terrenos que tocan el rectángulo pedido y los devuelve ya en WGS84.
+
+La tabla districts guarda los límites distritales del INEI de 2025 en WGS84, con su propio índice GIST. Son datos de referencia que todo entorno necesita iguales, por lo que se cargan con una migración Flyway y no como datos de prueba.

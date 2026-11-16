@@ -10,6 +10,8 @@ class people <<Table>> {
     {field} job_title : VARCHAR(255) [NN]
     {field} department : VARCHAR(255) [NN]
     {field} password_hash : VARCHAR(255)
+    {field} photo : BYTEA
+    {field} photo_media_type : VARCHAR(100)
 }
 
 class groups <<Table>> {
