@@ -12,15 +12,15 @@ El Sprint 1 es el primer sprint de implementación del proyecto. Parte del dise�
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Date</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-10-30</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-11-02</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Time</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">HH:MM</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">21:00</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Location</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Ubicación de la reunión</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reunión virtual</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Prepared By</td>
