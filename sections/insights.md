@@ -165,3 +165,65 @@ Contribuciones de los integrantes durante TP1:
 
 <img src="insights.assets/tp1/contributors.png" alt="Contribuciones por integrante durante TP1" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 200mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
+
+
+{{page_break}}
+
+**TB2**
+
+Tareas asignadas
+
+Para el desarrollo del TB2, cada participante del equipo realizó las siguientes tareas:
+
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Integrante</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Tareas asignadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Esteban Román, Henry Kalet</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reaño Delgadillo, Henry Paolo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{{page_break}}
+
+GitHub Collaboration Insights
+
+Para el TB2 el equipo trabajó en la organización [https://github.com/Soulware-Emergentes](https://github.com/Soulware-Emergentes), que contiene el repositorio report con el informe del proyecto, gestionado con el flujo GitFlow y ramas de trabajo por capítulo y por sección para cada integrante.
+
+Gráfico de commits por integrante durante TB2:
+
+<img src="insights.assets/tb2/commits.png" alt="Gráfico de commits del repositorio durante TB2" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Gráfico de red (network graph) de ramas en el repositorio durante TB2:
+
+<img src="insights.assets/tb2/network.png" alt="Network graph de las ramas del repositorio durante TB2" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+{{page_break}}
+
+Contribuciones de los integrantes durante TB2:
+
+<img src="insights.assets/tb2/contributors.png" alt="Contribuciones por integrante durante TB2" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 200mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
