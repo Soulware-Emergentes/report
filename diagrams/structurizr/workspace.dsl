@@ -11,6 +11,14 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
                 web = container "Aplicación web" "Revisión de fichas, consulta de terrenos y seguimiento de tareas." "" "Web Browser"
                 movil = container "Aplicación móvil" "Registro de terrenos y envío de fichas desde el campo." "" "Mobile App"
 
+                bff = container "BFF de SGT" "Inicia sesión con staff por la aplicación web, guarda en el servidor los tokens de cada persona y llama a las API con ellos. Sirve los archivos de la aplicación web." "Bun, Hono, openid-client" {
+                    bffSession = component "Rutas de sesión" "/bff/login, /bff/callback, /bff/me y /bff/logout: inician y cierran la sesión con staff, y responden quién es la persona y cuánto le queda a su sesión." "Hono" "BFF"
+                    bffProxy = component "Proxy de API" "Reenvía /api/sgt y /api/beneficiarios con el token de cada API, tras comprobar el token CSRF de los cambios." "Hono" "BFF"
+                    bffSessions = component "Sessions" "Guarda en memoria la sesión de cada navegador: sus tokens, su ID token y las solicitudes de autorización pendientes." "TypeScript" "BFF"
+                    bffStaff = component "Cliente de staff" "Arma las solicitudes de autorización con PKCE, canjea códigos y renueva tokens como cliente confidencial." "openid-client" "BFF"
+                    bffStatic = component "Archivos de la aplicación web" "Sirve los archivos de la aplicación web, y su index.html para sus propias rutas." "Hono" "BFF"
+                }
+
                 api = container "API de SGT" "Lógica de negocio de terrenos, fichas y personas, como monolito modular." "Java 25, Spring Boot 4.1, Spring Modulith" {
                     serviceTokens = component "OAuth2ServiceTokens" "Obtiene de staff los tokens de servicio con el flujo client credentials." "Spring Security OAuth2 Client" "Shared"
 
@@ -66,13 +74,14 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
                     directoryQueries = component "AccountQueryService, PersonQueryService y GroupQueryService" "Responden las consultas del directorio." "Spring" "Directory"
                     directoryProjections = component "Proyecciones JDBC del directorio" "JdbcCredentialProjection, JdbcPersonProjection y JdbcGroupMembershipProjection." "Spring JDBC" "Directory"
 
-                    authServer = component "Servidor de autorización" "Endpoints OAuth 2.1 y OpenID Connect, incluido el inicio de sesión silencioso con prompt=none." "Spring Authorization Server" "IdentityProvider"
-                    staffPages = component "Páginas de staff" "Formulario de inicio de sesión, aviso de regreso a la aplicación y hub de aplicaciones, en inglés y español." "Spring MVC, Thymeleaf" "IdentityProvider"
+                    authServer = component "Servidor de autorización" "Endpoints OAuth 2.1 y OpenID Connect, incluidos el inicio de sesión silencioso con prompt=none, los refresh tokens y el cierre de sesión iniciado por la aplicación." "Spring Authorization Server" "IdentityProvider"
+                    staffPages = component "Páginas de staff" "Formulario de inicio de sesión, aviso de regreso a la aplicación, hub de aplicaciones y confirmación del cierre de sesión, en inglés y español." "Spring MVC, Thymeleaf" "IdentityProvider"
+                    unhintedLogout = component "UnhintedLogout y PostLogoutRedirect" "Aceptan el cierre de sesión que una aplicación pide sin ID token, que la persona confirma, y validan a dónde vuelve." "Spring Authorization Server, Spring Security" "IdentityProvider"
                     loginProvider = component "DirectoryAuthenticationProvider" "Verifica las credenciales del formulario contra el directorio." "Spring Security" "IdentityProvider"
                     eligibility = component "EligibilityValidator" "Admite a una persona solo si sus grupos tienen un rol en la API solicitada." "Spring Authorization Server" "IdentityProvider"
                     tokenCustomizer = component "StaffTokenCustomizer" "Agrega roles, scopes y perfil a los tokens." "Spring Authorization Server" "IdentityProvider"
-                    clientRepository = component "ProjectedRegisteredClientRepository" "Entrega las aplicaciones registradas al servidor de autorización." "Spring Authorization Server" "IdentityProvider"
-                    grantProjections = component "JdbcClientProjection y JdbcGrantProjection" "Leen aplicaciones registradas, sus sistemas y entornos, roles y scopes." "Spring JDBC" "IdentityProvider"
+                    clientRepository = component "ProjectedRegisteredClientRepository" "Entrega las aplicaciones registradas al servidor de autorización: cómo se autentican según su tipo, y sus flujos, con refresh tokens de duración fija para las que inician sesión de personas y guardan un secreto." "Spring Authorization Server" "IdentityProvider"
+                    grantProjections = component "JdbcClientProjection y JdbcGrantProjection" "Leen aplicaciones registradas, sus flujos, sistemas y entornos, roles y scopes." "Spring JDBC" "IdentityProvider"
                 }
                 db = container "Base de datos de Staff" "Personas, grupos, API y aplicaciones registradas." "PostgreSQL" "Database"
             }
@@ -104,14 +113,23 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
         sgt.movil -> sgt.api.fsController "Envía fichas" "JSON/HTTPS"
         sgt.movil -> sgt.api.plotController "Registra y consulta terrenos" "JSON/HTTPS"
         sgt.movil -> sgt.scans "Sube el PDF con un enlace firmado" "HTTPS"
-        sgt.web -> sgt.api.fsController "Lista, revisa y reasigna fichas" "JSON/HTTPS"
-        sgt.web -> sgt.api.plotController "Consulta los terrenos del mapa y registra terrenos" "JSON/HTTPS"
-        sgt.web -> beneficiarios.api.controller "Busca al beneficiario por documento" "JSON/HTTPS"
+        sgt.web -> sgt.bff.bffStatic "Descarga sus archivos de" "HTTPS"
+        sgt.web -> sgt.bff.bffSession "Inicia y cierra sesión, y consulta quién es la persona con" "HTTPS, cookie de sesión"
+        sgt.web -> sgt.bff.bffProxy "Llama a las API con" "JSON/HTTPS, cookie de sesión"
         sgt.web -> sgt.scans "Descarga el PDF con un enlace firmado" "HTTPS"
-        sgt.web -> poi.api.planController "Consulta y define planes" "JSON/HTTPS"
-        sgt.web -> poi.api.taskController "Consulta y define tareas" "JSON/HTTPS"
-        sgt.web -> staff.api.authServer "Obtiene el token de la persona" "OpenID Connect, PKCE"
         sgt.movil -> staff.api.authServer "Obtiene el token de la persona" "OpenID Connect, PKCE"
+
+        # BFF de SGT
+        sgt.bff.bffSession -> sgt.bff.bffStaff "Inicia sesión y obtiene los tokens de la persona con"
+        sgt.bff.bffSession -> sgt.bff.bffSessions "Abre, lee y cierra sesiones en"
+        sgt.bff.bffProxy -> sgt.bff.bffSessions "Lee los tokens de la persona de"
+        sgt.bff.bffProxy -> sgt.bff.bffStaff "Renueva el token por vencer con"
+        sgt.bff.bffStaff -> staff.api.authServer "Inicia sesión de la persona, canjea códigos y renueva tokens" "OpenID Connect, PKCE, refresh token"
+        sgt.bff.bffProxy -> sgt.api.fsController "Lista, revisa y reasigna fichas" "JSON/HTTPS"
+        sgt.bff.bffProxy -> sgt.api.plotController "Consulta los terrenos del mapa y registra terrenos" "JSON/HTTPS"
+        sgt.bff.bffProxy -> beneficiarios.api.controller "Busca al beneficiario por documento" "JSON/HTTPS"
+        sgt.bff.bffProxy -> poi.api.planController "Consulta y define planes" "JSON/HTTPS" "Planificado"
+        sgt.bff.bffProxy -> poi.api.taskController "Consulta y define tareas" "JSON/HTTPS" "Planificado"
 
         # Monitoring
         sgt.api.fsController -> sgt.api.fsCommands "Envía comandos a"
@@ -184,6 +202,9 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
         staff.api.authServer -> staff.api.eligibility "Valida el acceso con"
         staff.api.authServer -> staff.api.tokenCustomizer "Arma los tokens con"
         staff.api.authServer -> staff.api.clientRepository "Busca aplicaciones registradas en"
+        staff.api.authServer -> staff.api.unhintedLogout "Atiende el cierre de sesión sin ID token con"
+        staff.api.unhintedLogout -> staff.api.staffPages "Pide a la persona que confirme el cierre de sesión en"
+        staff.api.unhintedLogout -> staff.api.clientRepository "Valida la aplicación y su URI de vuelta con"
         staff.api.loginProvider -> staff.api.directoryApi "Verifica credenciales con"
         staff.api.eligibility -> staff.api.directoryApi "Lista los grupos de la persona con"
         staff.api.eligibility -> staff.api.grantProjections "Lee roles de"
@@ -238,11 +259,14 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
                         scans = containerInstance sgt.scans
                     }
                 }
-                web = deploymentNode "Servidor web" "Sirve la aplicación web." "Linux" {
-                    staticFiles = deploymentNode "Servidor de archivos estáticos" "Entrega los archivos de la aplicación web al navegador." "Nginx" {
-                        webApp = containerInstance sgt.web
+                web = deploymentNode "Servidor web" "Sirve la aplicación web y su BFF." "Linux" {
+                    bffProcess = deploymentNode "Proceso del BFF" "Una instancia, con las sesiones en memoria; entrega los archivos de la aplicación web al navegador." "Bun 1.4" {
+                        bff = containerInstance sgt.bff
                     }
                 }
+            }
+            browser = deploymentNode "Navegador" "Navegador con el que el asistente o el agente usa la aplicación web." "Navegador web" {
+                webApp = containerInstance sgt.web
             }
             device = deploymentNode "Dispositivo del agente de campo" "Teléfono con el que el agente trabaja en campo." "Android" {
                 mobileApp = containerInstance sgt.movil
@@ -257,7 +281,7 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
             prod.onprem.app.staffJvm.staffApi -> prod.onprem.data.pooler "Abre conexiones a través de" "JDBC"
             prod.onprem.data.pooler -> prod.onprem.data.postgres "Multiplexa conexiones hacia" "PostgreSQL"
             prod.device.mobileApp -> prod.onprem.app.proxy "Llama a las API a través de" "HTTPS"
-            prod.onprem.web.staticFiles.webApp -> prod.onprem.app.proxy "Llama a las API a través de" "HTTPS"
+            prod.onprem.web.bffProcess.bff -> prod.onprem.app.proxy "Llama a las API y a staff a través de" "HTTPS"
         }
     }
 
@@ -274,14 +298,19 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
             include *
         }
 
+        component sgt.bff "Componentes-BFF" "Componentes del BFF de la aplicación web de SGT." {
+            include "element.tag==BFF"
+            include sgt.web sgt.api beneficiarios.api poi.api staff.api
+        }
+
         component sgt.api "Componentes-Monitoring" "Componentes del módulo Monitoring de la API de SGT." {
             include "element.tag==Monitoring"
-            include sgt.api.serviceTokens sgt.web sgt.movil sgt.db sgt.scans poi.api
+            include sgt.api.serviceTokens sgt.bff sgt.movil sgt.db sgt.scans poi.api
         }
 
         component sgt.api "Componentes-Plots" "Componentes del módulo Plots de la API de SGT." {
             include "element.tag==Plots"
-            include sgt.movil sgt.web sgt.db
+            include sgt.movil sgt.bff sgt.db
         }
 
         component sgt.api "Componentes-People" "Componentes del módulo People de la API de SGT." {
@@ -291,7 +320,7 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
 
         component poi.api "Componentes-Planning" "Componentes del contexto Planning de la API de POI." {
             include "element.tag==Planning"
-            include sgt.web sgt.api poi.db
+            include sgt.bff sgt.api poi.db
         }
 
         component staff.api "Componentes-Directory" "Componentes del módulo Directory de la API de Staff." {
@@ -301,12 +330,12 @@ workspace "SGT" "Arquitectura de la solución SGT del programa de apoyo agrícol
 
         component staff.api "Componentes-IdentityProvider" "Componentes del módulo Identity Provider de la API de Staff." {
             include "element.tag==IdentityProvider"
-            include sgt.web sgt.movil sgt.api poi.api beneficiarios.api staff.api.directoryApi staff.db
+            include sgt.bff sgt.movil sgt.api poi.api beneficiarios.api staff.api.directoryApi staff.db
         }
 
         component beneficiarios.api "Componentes-Beneficiarios" "Componentes del módulo Registry de la API de Beneficiarios." {
             include "element.tag==Registry"
-            include sgt.api sgt.web beneficiarios.db staff.api
+            include sgt.api sgt.bff beneficiarios.db staff.api
         }
 
         deployment * "Producción" "Despliegue" "Despliegue on-premise de la solución." {
