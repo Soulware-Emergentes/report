@@ -453,8 +453,8 @@
           # alias: "registro"
         # - title: "Evaluaciones según heurísticas"
           # alias: "heuristicas"
-    - title: "Video About-the-Product"
-      alias: "about-product"
+    # - title: "Video About-the-Product"
+      # alias: "about-product"
 
 - title: "Conclusiones"
   children:

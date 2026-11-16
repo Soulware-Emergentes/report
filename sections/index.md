@@ -148,7 +148,6 @@
       - [Services Documentation Evidence for Sprint Review](#sprint-1-docs-evidence)
       - [Software Deployment Evidence for Sprint Review](#sprint-1-deploy-evidence)
       - [Team Collaboration Insights during Sprint](#sprint-1-collaboration)
-  - [Video About-the-Product](#video-about-the-product)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
 - [Bibliografía](#bibliografía)
