@@ -46,6 +46,11 @@ class client_registrations <<Table>> {
     {field} home_uri : VARCHAR(1000)
 }
 
+class client_grant_types <<Table>> {
+    {field} client_registration_id : UUID [PK, FK]
+    {field} grant_type : VARCHAR(30) [PK]
+}
+
 class client_redirect_uris <<Table>> {
     {field} client_registration_id : UUID [PK, FK]
     {field} uri : VARCHAR(1000) [PK]
@@ -73,7 +78,6 @@ end note
 
 note bottom of client_registrations
     CHECK: secret_hash solo si kind = CONFIDENTIAL
-    CHECK: home_uri solo si kind = PUBLIC
 end note
 
 note bottom of api_roles
@@ -90,6 +94,7 @@ client_registrations "0..*" --> "1" applications : application_id
 client_registrations "0..*" --> "1" environments : environment
 api_roles "0..*" --> "1" api_resources : resource_id
 api_scopes "0..*" --> "1" api_resources : resource_id
+client_grant_types "0..*" --> "1" client_registrations : client_registration_id
 client_redirect_uris "0..*" --> "1" client_registrations : client_registration_id
 client_resources "0..*" --> "1" client_registrations : client_registration_id
 client_resources "0..*" --> "1" api_resources : resource_id

@@ -45,8 +45,13 @@ CREATE TABLE client_registrations (
     kind VARCHAR(20) NOT NULL CHECK (kind IN ('PUBLIC', 'CONFIDENTIAL')),
     secret_hash VARCHAR(255),
     home_uri VARCHAR(1000),
-    CHECK ((kind = 'CONFIDENTIAL') = (secret_hash IS NOT NULL)),
-    CHECK ((kind = 'PUBLIC') = (home_uri IS NOT NULL))
+    CHECK ((kind = 'CONFIDENTIAL') = (secret_hash IS NOT NULL))
+);
+
+CREATE TABLE client_grant_types (
+    client_registration_id UUID NOT NULL REFERENCES client_registrations (id) ON DELETE CASCADE,
+    grant_type VARCHAR(30) NOT NULL CHECK (grant_type IN ('AUTHORIZATION_CODE', 'REFRESH_TOKEN', 'CLIENT_CREDENTIALS')),
+    PRIMARY KEY (client_registration_id, grant_type)
 );
 
 CREATE TABLE client_redirect_uris (
