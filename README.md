@@ -48,6 +48,7 @@
     </table>
     <div style="margin-top: 40px;">
         <p style="margin: 5px;">Periodo 2620</p>
+        <p style="margin: 5px;">Noviembre 2026</p>
     </div>
 </div>
 
@@ -55,7 +56,7 @@
 
 # Registro de Versiones del Informe
 
-Esta sección resume las modificaciones relevantes realizadas al informe durante el ciclo de vida del proyecto. Cada versión corresponde a la incorporación, corrección o mejora de una o más secciones, y todas las registradas a la fecha forman parte del avance hacia las entregas TB1 y TP1.
+Esta sección resume las modificaciones relevantes realizadas al informe durante el ciclo de vida del proyecto. Cada versión corresponde a la incorporación, corrección o mejora de una o más secciones, y todas las registradas a la fecha forman parte del avance hacia las entregas TB1, TP1 y TB2.
 
 <div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
     <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
@@ -79,6 +80,12 @@ Esta sección resume las modificaciones relevantes realizadas al informe durante
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-10-09</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco<br>Esteban Román, Henry Kalet<br>Orozco Torres, Álvaro Joaquín<br>Reaño Delgadillo, Henry Paolo<br>Vilca Saboya, Diego Alejandro</td>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Incorporación de los Capítulos V y VI para la entrega TP1.<br>Capítulo V: Tactical-Level Software Design<br>- Bounded Contexts: Beneficiarios, Directory, IdentityProvider, Monitoring, People, Planning y Plots<br>- Por cada contexto: Domain Layer, Interface Layer, Application Layer, Infrastructure Layer, diagramas de componentes, de clases y de base de datos<br>- Ajuste del formato de las tablas para la exportación a PDF en tamaño A4<br>Capítulo VI: Solution UX Design<br>- Style Guidelines: General y Web, Mobile &amp; Devices<br>- Information Architecture: Organization, Labeling, SEO Tags y Meta Tags, Navigation y Searching Systems<br>- Landing Page UI Design: wireframes y mock-ups<br>- Applications UX/UI Design: wireframes y wireflows<br>Actualización de Registro de Versiones, Student Outcome, Conclusiones y Bibliografía.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">3.0.0</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">2026-11-15</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco<br>Esteban Román, Henry Kalet<br>Orozco Torres, Álvaro Joaquín<br>Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Incorporación del Capítulo VII para la entrega TB2.<br>Capítulo VI: Solution UX Design<br>- Applications UX/UI Design: mock-ups y User Flow Diagrams por rol<br>- Applications Prototyping: prototipos interactivos y videos<br>Capítulo VII: Product Implementation, Validation &amp; Deployment<br>- Software Configuration Management: Development Environment, Source Code Management, Style Guide &amp; Conventions y Deployment Configuration<br>- Sprint 1: Sprint Planning, Sprint Backlog, evidencias de desarrollo, pruebas, ejecución, documentación de servicios y despliegue, y Team Collaboration Insights<br>Actualización de los diagramas y la documentación técnica de los Capítulos IV y V al código actual.<br>Anexo A: videos de TP1, entrevistas y prototipos.<br>Actualización de Carátula, Registro de Versiones, Project Report Collaboration Insights y Conclusiones.</td>
             </tr>
         </tbody>
     </table>
@@ -256,6 +263,68 @@ Contribuciones de los integrantes durante TP1:
 
 <img src="assets/insights/tp1/contributors.png" alt="Contribuciones por integrante durante TP1" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 200mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
+
+
+<div style="page-break-after: always;"></div>
+
+**TB2**
+
+Tareas asignadas
+
+Para el desarrollo del TB2, cada participante del equipo realizó las siguientes tareas:
+
+<div style="width: 100%; max-width: 680px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #333;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Integrante</th>
+                <th style="border: 1px solid #333; padding: 8px 10px; text-align: left;">Tareas asignadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Crispin Ramos, Daniel Franco</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Esteban Román, Henry Kalet</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Orozco Torres, Álvaro Joaquín</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Reaño Delgadillo, Henry Paolo</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Vilca Saboya, Diego Alejandro</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Por completar.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="page-break-after: always;"></div>
+
+GitHub Collaboration Insights
+
+Para el TB2 el equipo trabajó en la organización [https://github.com/Soulware-Emergentes](https://github.com/Soulware-Emergentes), que contiene el repositorio report con el informe del proyecto, gestionado con el flujo GitFlow y ramas de trabajo por capítulo y por sección para cada integrante.
+
+Gráfico de commits por integrante durante TB2:
+
+<img src="assets/insights/tb2/commits.png" alt="Gráfico de commits del repositorio durante TB2" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+Gráfico de red (network graph) de ramas en el repositorio durante TB2:
+
+<img src="assets/insights/tb2/network.png" alt="Network graph de las ramas del repositorio durante TB2" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 110mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
+
+<div style="page-break-after: always;"></div>
+
+Contribuciones de los integrantes durante TB2:
+
+<img src="assets/insights/tb2/contributors.png" alt="Contribuciones por integrante durante TB2" style="display: block; width: auto; height: auto; max-width: 100%; max-height: 200mm; margin: 0 auto; break-inside: avoid; page-break-inside: avoid;">
 
 
 <div style="page-break-after: always;"></div>
@@ -447,23 +516,29 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
                 <p><strong>Crispin Ramos, Daniel Franco</strong><br>
                 TB1: Condujo la sesión de trabajo en la que el equipo revisó el As-Is de cada User Persona y acordó las fases del To-Be, explicando ante integrantes con distinto grado de conocimiento del dominio por qué cada cambio respondía a una frustración concreta levantada en campo. Expuso el Impact Mapping al equipo y sustentó oralmente la formulación de los objetivos SMART y su trazabilidad hasta las User Stories.<br>
-                TP1: Presentó al equipo los wireframes y mock-ups de la landing page, explicando el orden de lectura de la página, desde qué es el sistema hasta quiénes intervienen, y por qué el acceso del personal autorizado se distingue del recorrido informativo público.</p>
+                TP1: Presentó al equipo los wireframes y mock-ups de la landing page, explicando el orden de lectura de la página, desde qué es el sistema hasta quiénes intervienen, y por qué el acceso del personal autorizado se distingue del recorrido informativo público.<br>
+                TB2: Presentó al equipo los mock-ups de las aplicaciones web y móvil, explicando cómo cada pantalla aplica la guía de estilos sobre los wireframes ya acordados. Expuso la evidencia de desarrollo del Sprint 1, relacionando los commits de cada repositorio con las funcionalidades mostradas en la revisión del sprint, y condujo la grabación del video About-The-Product.</p>
                 <p><strong>Esteban Román, Henry Kalet</strong><br>
                 TB1: Condujo las seis entrevistas de Needfinding ante representantes de dos segmentos sin formación técnica en sistemas, adaptando el lenguaje para evitar terminología de ingeniería y apoyándose en el relato de casos concretos en lugar de preguntas abstractas. Presentó al equipo el análisis de entrevistas y comunicó los dos hallazgos que modificaban el alcance del proyecto.<br>
-                TP1: Presentó al equipo los wireframes y wireflows de las aplicaciones web y móvil, explicando en cada objetivo el recorrido principal y las respuestas alternativas, de modo que integrantes que no participaron en el diseño pudieran seguir cada pantalla.</p>
+                TP1: Presentó al equipo los wireframes y wireflows de las aplicaciones web y móvil, explicando en cada objetivo el recorrido principal y las respuestas alternativas, de modo que integrantes que no participaron en el diseño pudieran seguir cada pantalla.<br>
+                TB2: Presentó al equipo los User Flow Diagrams por rol y los prototipos interactivos, recorriendo las tareas del agente de campo y de la asistente de gerencia general y las respuestas del sistema ante cada error, de modo que quienes trabajaban en el código pudieran contrastarlas con lo implementado.</p>
                 <p><strong>Orozco Torres, Álvaro Joaquín</strong><br>
                 TB1: Explicó al equipo el flujo de trabajo GitFlow y el funcionamiento del generador del documento, dirigiéndose a integrantes con distinto nivel de familiaridad con control de versiones. Sustentó oralmente las decisiones de diseño arquitectónico frente a los drivers de mayor impacto, contrastando ante el equipo los patrones alternativos evaluados y los criterios que llevaron a descartarlos.<br>
-                TP1: Explicó al equipo la descomposición de SGT en bounded contexts y la dependencia entre ellos, traduciendo conceptos de arquitectura táctica, como la separación entre dominio e infraestructura, a integrantes que trabajaban en la interfaz.</p>
+                TP1: Explicó al equipo la descomposición de SGT en bounded contexts y la dependencia entre ellos, traduciendo conceptos de arquitectura táctica, como la separación entre dominio e infraestructura, a integrantes que trabajaban en la interfaz.<br>
+                TB2: Condujo el Sprint Planning Meeting, explicando al equipo qué historias del Product Backlog entraban al Sprint 1 y por qué el inicio de sesión debía resolverse antes que el resto. Explicó a los integrantes que no programaban cómo se integran los servicios web SGT, POI, Staff y Beneficiarios, la aplicación web y su BFF, que implementó durante el sprint, traduciendo conceptos como tokens de servicio, inicio de sesión único y enlaces firmados a su efecto en las pantallas. Explicó también la configuración de despliegue en Render, el flujo de ramas de los repositorios de código y las correcciones aplicadas a los artefactos de entregas anteriores para que coincidieran con lo implementado.</p>
                 <p><strong>Reaño Delgadillo, Henry Paolo</strong><br>
                 TB1: Facilitó la sesión de EventStorming, guiando al equipo por los nueve pasos desde la identificación de eventos hasta la delimitación de los bounded contexts, y traduciendo conceptos de Domain-Driven Design a un lenguaje comprensible para integrantes con distinto grado de experiencia. Explicó los diagramas C4 relacionando el despliegue on-premise con la restricción institucional levantada en las entrevistas.<br>
-                TP1: Explicó al equipo los diagramas de componentes y de clases de cada contexto, mostrando cómo las capas de dominio, aplicación e interfaz se relacionan con las pantallas y con sistemas externos como POI.</p>
+                TP1: Explicó al equipo los diagramas de componentes y de clases de cada contexto, mostrando cómo las capas de dominio, aplicación e interfaz se relacionan con las pantallas y con sistemas externos como POI.<br>
+                TB2: Presentó al equipo la documentación de los servicios web en Swagger UI, mostrando con datos de muestra cómo se llama cada operación y qué responde. Explicó el despliegue de la primera versión de los productos digitales, desde la base de datos hasta la publicación de la aplicación web en su dominio, de modo que el resto del equipo pudiera acceder a ella para la revisión del sprint.</p>
                 <p><strong>Vilca Saboya, Diego Alejandro</strong><br>
                 TB1: Condujo las sesiones de elaboración de Empathy Maps y As-Is Scenario Mapping, moderando los aportes individuales y consolidando las observaciones del equipo en un solo lienzo por User Persona. Presentó el User Task Matrix explicando la distinción entre las tareas que el segmento realiza con o sin software y las funcionalidades del producto.<br>
-                TP1: Explicó al equipo las decisiones de la guía de estilos y de la arquitectura de información, apoyándose en las fichas de persona del Capítulo II para justificar la plataforma móvil y los roles de cada pantalla web, y sustentó que las ilustraciones se presenten como referenciales y no como diseño final.</p>
+                TP1: Explicó al equipo las decisiones de la guía de estilos y de la arquitectura de información, apoyándose en las fichas de persona del Capítulo II para justificar la plataforma móvil y los roles de cada pantalla web, y sustentó que las ilustraciones se presenten como referenciales y no como diseño final.<br>
+                TB2: Presentó al equipo la suite de pruebas del Sprint 1, explicando la diferencia entre las pruebas unitarias y las de integración y por qué ningún cambio se integra sin que la suite pase. Mostró la ejecución de la aplicación web en la revisión del sprint y expuso los analíticos de colaboración de cada repositorio.</p>
             </td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
                 <p><strong>Conclusiones TB1:</strong> Durante el TB1 el equipo comprobó que la comunicación oral fue determinante en dos momentos distintos: la recolección de información con usuarios ajenos al dominio técnico y la construcción colectiva de los artefactos de diseño. Las entrevistas obligaron a adaptar el lenguaje al del entrevistado, quien describe su trabajo en términos de fichas, sacos y visitas y no de sistemas o integraciones. Las sesiones de EventStorming y de mapeo de escenarios exigieron lo contrario, que cada integrante explicara su razonamiento técnico ante compañeros con distinto grado de conocimiento del dominio. El resultado fue que decisiones como la delimitación de los bounded contexts o la priorización del Product Backlog se tomaron con acuerdo explícito del equipo y no por imposición de quien redactaba la sección.</p>
                 <p><strong>Conclusiones TP1:</strong> Durante el TP1 la comunicación oral sirvió para alinear trabajos hechos en niveles distintos del producto. Las decisiones del Capítulo V, formuladas en lenguaje de arquitectura, debieron explicarse a quienes diseñaban las pantallas, y las decisiones de interfaz a quienes definían los contextos. Una reunión de equipo permitió acordar que la aplicación móvil registra y envía como borrador la medición de la estación total y que la web valida los terrenos y gestiona las fichas, un acuerdo que luego se reflejó en los wireframes, los wireflows y la arquitectura de información.</p>
+                <p><strong>Conclusiones TB2:</strong> En el TB2 la comunicación oral acompañó el paso del diseño a la implementación. El Sprint Planning exigió explicar a todo el equipo por qué el orden de las historias seguía sus dependencias técnicas, y la revisión del sprint exigió lo inverso: que quienes programaron mostraran el resultado en términos de lo que el agente de campo y la asistente pueden hacer, y no de servicios o tokens. Presentar los prototipos junto a la aplicación en ejecución permitió al equipo distinguir lo que ya funciona de lo que queda para los siguientes sprints.</p>
             </td>
         </tr>
         <tr>
@@ -471,23 +546,29 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
                 <p><strong>Crispin Ramos, Daniel Franco</strong><br>
                 TB1: Redactó las secciones de To-Be Scenario Mapping e Impact Mapping, describiendo por escrito el contraste entre el escenario actual y el propuesto para cada User Persona. Documentó los objetivos SMART indicando la mejora medible, la línea base y el plazo, de modo que un lector externo pueda verificar cómo se evaluará el resultado.<br>
-                TP1: Redactó la sección de Landing Page UI Design, con los wireframes y mock-ups que describen la estructura y la identidad visual de la página informativa de SGT, relacionando cada decisión con la guía de estilos.</p>
+                TP1: Redactó la sección de Landing Page UI Design, con los wireframes y mock-ups que describen la estructura y la identidad visual de la página informativa de SGT, relacionando cada decisión con la guía de estilos.<br>
+                TB2: Redactó la sección de Applications Mock-ups, describiendo cada pantalla de las aplicaciones web y móvil con la identidad visual definida en la guía de estilos, y la Development Evidence for Sprint Review, con el resumen del avance de cada repositorio y la tabla de commits de implementación.</p>
                 <p><strong>Esteban Román, Henry Kalet</strong><br>
                 TB1: Redactó el diseño, el registro y el análisis de entrevistas del Capítulo II, incluyendo las seis fichas de entrevistado con su resumen descriptivo y el análisis con sustento estadístico por segmento. Elaboró el Registro de Versiones del Informe, el Project Report Collaboration Insights y la presente sección de Student Outcome.<br>
-                TP1: Redactó la sección de Applications UX/UI Design, con los wireframes de las aplicaciones web y móvil y seis wireflows que describen, objetivo por objetivo, el Task Flow, el recorrido principal y la respuesta alternativa, vinculados a las User Stories.</p>
+                TP1: Redactó la sección de Applications UX/UI Design, con los wireframes de las aplicaciones web y móvil y seis wireflows que describen, objetivo por objetivo, el Task Flow, el recorrido principal y la respuesta alternativa, vinculados a las User Stories.<br>
+                TB2: Redactó las secciones de Applications User Flow Diagrams y Applications Prototyping, describiendo por rol el recorrido de cada tarea y las decisiones de cada proceso. Actualizó el Registro de Versiones del Informe, el Project Report Collaboration Insights y la presente sección de Student Outcome para el TB2.</p>
                 <p><strong>Orozco Torres, Álvaro Joaquín</strong><br>
                 TB1: Redactó el Solution Profile con la problemática estructurada bajo 5W+2H, el análisis competitivo, las User Stories con criterios de aceptación en formato Gherkin, el Architectural Drivers Backlog, las Architectural Design Decisions y las conclusiones. Documentó además las convenciones de trabajo del repositorio para que el equipo pudiera seguirlas sin asistencia.<br>
-                TP1: Redactó junto con Paolo el Capítulo V, describiendo en cada bounded context las capas de dominio, interfaz, aplicación e infraestructura, con sus clases, reglas de negocio y operaciones, de modo que un desarrollador que no participó en el diseño pueda implementarlas.</p>
+                TP1: Redactó junto con Paolo el Capítulo V, describiendo en cada bounded context las capas de dominio, interfaz, aplicación e infraestructura, con sus clases, reglas de negocio y operaciones, de modo que un desarrollador que no participó en el diseño pueda implementarlas.<br>
+                TB2: Redactó el Software Configuration Management completo, con el entorno de desarrollo, la gestión del código fuente, la guía de estilo y convenciones y la configuración de despliegue, junto con el Sprint Planning 1 y el Sprint Backlog 1, cuyas tareas se derivaron de lo efectivamente implementado. Escribió los README, los archivos .env.example comentados, los Dockerfiles y los Blueprints de Render de los repositorios de código, de modo que cualquier integrante pudiera levantar y desplegar cada servicio sin asistencia. Corrigió los diagramas y la documentación técnica de los Capítulos IV y V para que reflejen el código actual, y actualizó las Conclusiones, la Bibliografía y los Anexos.</p>
                 <p><strong>Reaño Delgadillo, Henry Paolo</strong><br>
                 TB1: Redactó el Capítulo IV en sus componentes de Domain-Driven Design y Software Architecture, explicando por escrito el proceso de EventStorming paso a paso, los flujos de mensajes entre contextos, los patrones de Context Mapping aplicados y la lectura de cada diagrama C4 para un lector que no participó en su elaboración.<br>
-                TP1: Redactó junto con Álvaro el Capítulo V, documentando los diagramas de componentes, de clases y de base de datos de cada contexto y las operaciones que expone cada uno.</p>
+                TP1: Redactó junto con Álvaro el Capítulo V, documentando los diagramas de componentes, de clases y de base de datos de cada contexto y las operaciones que expone cada uno.<br>
+                TB2: Redactó la Services Documentation Evidence for Sprint Review, describiendo las operaciones de cada servicio web con su verbo HTTP, sus parámetros y un ejemplo de respuesta, y la Software Deployment Evidence for Sprint Review, con los pasos y las capturas del despliegue de la primera versión de los productos digitales.</p>
                 <p><strong>Vilca Saboya, Diego Alejandro</strong><br>
                 TB1: Redactó las secciones de Needfinding, describiendo el proceso seguido para elaborar cada artefacto y el análisis de las tareas de mayor frecuencia e importancia. Elaboró el Ubiquitous Language definiendo los términos del dominio en inglés con su equivalente en español, de modo que el vocabulario sea común entre el equipo y los stakeholders del programa.<br>
-                TP1: Redactó la Style Guidelines general y la de web y móvil, y la Information Architecture, definiendo en Figma los colores, la tipografía, el espaciado y los componentes, y las reglas de organización, etiquetado, navegación y búsqueda.</p>
+                TP1: Redactó la Style Guidelines general y la de web y móvil, y la Information Architecture, definiendo en Figma los colores, la tipografía, el espaciado y los componentes, y las reglas de organización, etiquetado, navegación y búsqueda.<br>
+                TB2: Redactó la Testing Suite Evidence y la Execution Evidence for Sprint Review, describiendo las pruebas de cada servicio y las pantallas de la aplicación web en ejecución, y la sección Team Collaboration Insights during Sprint con los analíticos de cada repositorio.</p>
             </td>
             <td style="border: 1px solid #333; padding: 10px; vertical-align: top;">
                 <p><strong>Conclusiones TB1:</strong> La redacción del informe se realizó de forma distribuida sobre un mismo documento, lo que obligó al equipo a acordar convenciones comunes de estilo y estructura desde el inicio en lugar de uniformizar al final. El trabajo por secciones independientes bajo control de versiones permitió que cinco personas escribieran en paralelo manteniendo un registro auditable de quién redactó cada parte y cuándo. El equipo también constató que escribir para un lector externo exige un nivel de precisión distinto al de la conversación interna: afirmaciones que en una reunión se daban por entendidas tuvieron que sustentarse en una cita bibliográfica, en una respuesta concreta de entrevista o en una decisión de diseño documentada con sus alternativas.</p>
                 <p><strong>Conclusiones TP1:</strong> En el TP1 la redacción se dirigió a dos lectores distintos: quienes implementarán el sistema, que necesitan clases, operaciones y reglas de negocio precisas, y quienes evaluarán la experiencia de usuario, que necesitan ver el criterio detrás de cada pantalla. El equipo respondió escribiendo cada decisión de interfaz junto con su sustento, citando las fuentes que respaldan los principios de diseño y aclarando por escrito cuando una ilustración es referencial y no el diseño final.</p>
+                <p><strong>Conclusiones TB2:</strong> En el TB2 la escritura se extendió del informe a los repositorios de código. Los README, los archivos de configuración comentados y la documentación OpenAPI se escribieron para que otro integrante pudiera ejecutar, probar y desplegar cada servicio sin preguntar a quien lo implementó, y las evidencias del sprint se redactaron a partir de commits, pruebas y capturas verificables. El equipo también corrigió por escrito los artefactos de entregas anteriores cuando el código mostró que el diseño había cambiado, para que el informe describa la solución que existe y no solo la que se planificó.</p>
             </td>
         </tr>
     </tbody>
@@ -11040,6 +11121,16 @@ Resultados de avance TP1:
 - La Information Architecture define cómo se organizan, se nombran, se recorren y se buscan los contenidos de la landing page y de las aplicaciones, e incluye los valores de SEO y metadatos de cada pieza.
 - Las pantallas se diseñaron en tres niveles: wireframes y mock-ups de la landing page, y wireframes y seis wireflows de las aplicaciones web y móvil, con su recorrido principal y sus respuestas alternativas.
 - Una decisión de alcance tomada en reunión de equipo ordenó el reparto entre plataformas: la aplicación móvil registra y envía como borrador la medición de la estación total, y la web valida los terrenos, y carga y valida las fichas.
+
+En el TB2 el equipo completó el diseño de experiencia de las aplicaciones e implementó y desplegó el primer sprint de SGT.
+
+Resultados de avance TB2:
+- El Capítulo VI suma los mock-ups de las aplicaciones web y móvil, los User Flow Diagrams por rol y los prototipos interactivos, que recorren las tareas del agente de campo y de la asistente de gerencia general antes de su implementación.
+- En el Sprint 1 se implementaron los servicios web SGT, POI, Staff y Beneficiarios, la aplicación web y la landing page, sobre las ocho historias planificadas con 29 story points.
+- Staff funciona como proveedor de identidad de toda la solución: emite los tokens con los que las personas inician sesión en la aplicación web y con los que los servicios se consultan entre sí.
+- La aplicación web registra terrenos a partir del archivo de la estación total, los asigna a su distrito y advierte la superposición con terrenos ya registrados.
+- El sprint cerró con 144 pruebas unitarias y 158 de integración, ejecutadas en GitHub Actions antes de integrar cada cambio, y los cuatro servicios documentan su API con OpenAPI.
+- La solución se desplegó en Render como entorno de pruebas, con una instancia de PostgreSQL compartida y una base de datos por servicio, y la aplicación web quedó publicada en app.sgt.soulware.lat.
 
 
 <div style="page-break-after: always;"></div>
