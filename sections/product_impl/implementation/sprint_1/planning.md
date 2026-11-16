@@ -16,7 +16,7 @@ El Sprint 1 es el primer sprint de implementaci√≥n del proyecto. Parte del dise√
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Time</td>
-                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">21:00</td>
+                <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">09:00 PM</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333; padding: 10px; vertical-align: top; text-align: left;">Location</td>
